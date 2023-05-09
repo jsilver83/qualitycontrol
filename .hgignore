@@ -1,0 +1,7 @@
+.pyc
+.mo
+.idea
+.DS_Store
+.sqlite
+.sqlite3
+.sql

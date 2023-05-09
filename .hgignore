@@ -1,7 +1,9 @@
-.pyc
-.mo
+syntax: glob
+
+*.pyc
+*.mo
 .idea
 .DS_Store
-.sqlite
-.sqlite3
-.sql
+*.sqlite
+*.sqlite3
+*.sql

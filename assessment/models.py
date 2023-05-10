@@ -1,3 +1,4 @@
+from constrainedfilefield.fields import ConstrainedFileField
 from django.conf import settings
 from django.db import models
 from django.utils.translation import gettext_lazy as _
@@ -217,4 +218,55 @@ class Answer(models.Model):
 
 
 class Evidence(models.Model):
-    pass
+    class Types(models.TextChoices):
+        PICTURE = 'PICTURE', _('Picture'),
+        MISC = 'misc', _('Miscellaneous'),
+
+    question = models.ForeignKey(
+        'Question',
+        null=True,
+        blank=False,
+        on_delete=models.CASCADE,
+        related_name='list_of_evidence',
+    )
+
+    uploaded_file = ConstrainedFileField(
+        null=True,
+        blank=False,
+        upload_to='evidence',
+        content_types=[
+            'application/pdf',
+            'image/png',
+            'image/bmp',
+            'image/jpg',
+            'image/jpeg',
+            'image/gif',
+        ],
+        max_upload_size=2000000,  # 2.0 mb limit
+    )
+
+    notes = models.TextField(
+        _('Notes'),
+        blank=True,
+    )
+
+    type = models.CharField(
+        _('Type'),
+        blank=False,
+        max_length=256,
+        choices=Types.choices,
+    )
+
+    uploaded_on = models.DateTimeField(
+        _('Uploaded On'),
+        auto_now_add=True,
+        null=True,
+    )
+
+    uploaded_by = models.ForeignKey(
+        User,
+        verbose_name=_('Uploaded By'),
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+    )

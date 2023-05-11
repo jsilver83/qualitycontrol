@@ -1,6 +1,6 @@
 from django.contrib.auth import get_user_model
 from django.db import models
-from django.utils.translation import gettext_lazy as _
+from django.utils.translation import gettext_lazy as _, get_language
 from django_countries.fields import CountryField
 from phonenumber_field.modelfields import PhoneNumberField
 
@@ -49,6 +49,12 @@ class Organization(models.Model):
     )
     # endregion fields
 
+    def __str__(self):
+        if get_language() == 'ar':
+            return '{} ({})'.format(self.name_ar, self.get_type_display())
+        else:
+            return '{} ({})'.format(self.name_en, self.get_type_display())
+
 
 class Department(models.Model):
     # region fields
@@ -73,6 +79,12 @@ class Department(models.Model):
         blank=False,
     )
     # endregion fields
+
+    def __str__(self):
+        if get_language() == 'ar':
+            return self.title_ar
+        else:
+            return self.title_en
 
 
 class Employee(models.Model):
@@ -146,3 +158,9 @@ class Employee(models.Model):
         verbose_name=_('Mobile'),
     )
     # endregion fields
+
+    def __str__(self):
+        if get_language() == 'ar':
+            return '{} {}'.format(self.first_name_ar, self.last_name_ar)
+        else:
+            return '{} {}'.format(self.first_name_en, self.last_name_en)

@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     'constrainedfilefield',
+    'phonenumber_field',
 
     'assessment',
 ]
@@ -130,6 +131,10 @@ LANGUAGES = (
     ('en', _('English')),
 
 )
+
+PHONENUMBER_DB_FORMAT = 'E164'
+PHONENUMBER_DEFAULT_REGION = 'SA'
+PHONENUMBER_DEFAULT_FORMAT = PHONENUMBER_DB_FORMAT
 
 
 # Static files (CSS, JavaScript, Images)

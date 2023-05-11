@@ -1,8 +1,7 @@
 from constrainedfilefield.fields import ConstrainedFileField
 from django.conf import settings
 from django.db import models
-from django.utils.translation import gettext_lazy as _
-
+from django.utils.translation import gettext_lazy as _, get_language
 
 User = settings.AUTH_USER_MODEL
 
@@ -13,6 +12,7 @@ class Assessment(models.Model):
         HOTELS = 'HOTELS', _('Hotels')
         MISC = 'MISC', _('Miscellaneous')
 
+    # region fields
     title_ar = models.CharField(
         _('Title (AR)'),
         max_length=512,
@@ -52,6 +52,7 @@ class Assessment(models.Model):
         verbose_name=_('Derived From'),
         related_name='driven_assessments',
     )
+    # endregion fields
 
     # region audit fields
     created_on = models.DateTimeField(
@@ -87,8 +88,15 @@ class Assessment(models.Model):
     )
     # endregion audit
 
+    def __str__(self):
+        if get_language() == 'ar':
+            return self.title_ar
+        else:
+            return self.title_en
+
 
 class Section(models.Model):
+    # region fields
     title_ar = models.CharField(
         _('Title (AR)'),
         max_length=256,
@@ -121,9 +129,17 @@ class Section(models.Model):
         default=True,
         blank=True,
     )
+    # endregion fields
+
+    def __str__(self):
+        if get_language() == 'ar':
+            return self.title_ar
+        else:
+            return self.title_en
 
 
 class Question(models.Model):
+    # region fields
     assessment = models.ForeignKey(
         "Assessment",
         null=True,
@@ -167,9 +183,17 @@ class Question(models.Model):
         null=True,
         blank=False,
     )
+    # endregion fields
+
+    def __str__(self):
+        if get_language() == 'ar':
+            return self.prompt_ar
+        else:
+            return self.prompt_en
 
 
 class Answer(models.Model):
+    # region fields
     question = models.ForeignKey(
         "Question",
         null=True,
@@ -215,6 +239,13 @@ class Answer(models.Model):
         verbose_name=_('Answered By'),
         related_name='answers',
     )
+    # endregion fields
+
+    def __str__(self):
+        if get_language() == 'ar':
+            return self.prompt_ar
+        else:
+            return self.prompt_en
 
 
 class Evidence(models.Model):
@@ -222,6 +253,7 @@ class Evidence(models.Model):
         PICTURE = 'PICTURE', _('Picture'),
         MISC = 'misc', _('Miscellaneous'),
 
+    # region fields
     question = models.ForeignKey(
         'Question',
         null=True,
@@ -270,3 +302,7 @@ class Evidence(models.Model):
         blank=True,
         on_delete=models.SET_NULL,
     )
+    # endregion fields
+
+    def __str__(self):
+        return '{} {}'.format(self.type, self.question)

@@ -136,6 +136,38 @@ PHONENUMBER_DB_FORMAT = 'E164'
 PHONENUMBER_DEFAULT_REGION = 'SA'
 PHONENUMBER_DEFAULT_FORMAT = PHONENUMBER_DB_FORMAT
 
+COUNTRIES_FIRST = [
+    'SA',
+
+    'SY',
+    'EG',
+    'LB',
+    'JO',
+    'IQ',
+    'YE',
+
+    'QA',
+    'KW',
+    'OM',
+    'AE',
+    'BH',
+
+    'SD',
+    'MA',
+    'DZ',
+    'TN',
+    'LY',
+    'MR',
+]
+COUNTRIES_FIRST_BREAK = '  ____________  '
+COUNTRIES_OVERRIDE = {
+    'SA': _('Saudi Arabia'),
+    'IL': None,  # ISRAEL
+    'AW': None,  # Aruba
+    'IR': None,  # IRAN
+    'XX': _('Moqeem'),
+}
+
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/

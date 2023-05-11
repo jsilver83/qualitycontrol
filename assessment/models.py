@@ -42,7 +42,14 @@ class Assessment(models.Model):
         choices=Types.choices,
     )
 
-    # created_for
+    created_for = models.ForeignKey(
+        "clients.Organization",
+        null=True,
+        blank=False,
+        on_delete=models.SET_NULL,
+        verbose_name=_('Created For'),
+        related_name='assessments',
+    )
 
     derived_from = models.ForeignKey(
         "Assessment",

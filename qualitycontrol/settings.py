@@ -163,8 +163,6 @@ COUNTRIES_FIRST_BREAK = '  ____________  '
 COUNTRIES_OVERRIDE = {
     'SA': _('Saudi Arabia'),
     'IL': None,  # ISRAEL
-    'AW': None,  # Aruba
-    'IR': None,  # IRAN
     'XX': _('Moqeem'),
 }
 

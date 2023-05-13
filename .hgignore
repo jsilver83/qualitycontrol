@@ -1,5 +1,7 @@
 syntax: glob
 
+local_settings.py
+
 *.pyc
 *.mo
 .idea

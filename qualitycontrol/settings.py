@@ -45,6 +45,7 @@ INSTALLED_APPS = [
 
     'assessment',
     'clients',
+    'tasks',
 ]
 
 MIDDLEWARE = [

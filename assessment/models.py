@@ -1,5 +1,6 @@
 from constrainedfilefield.fields import ConstrainedFileField
 from django.conf import settings
+from django.contrib.auth import get_user_model
 from django.db import models
 from django.utils.translation import gettext_lazy as _, get_language
 
@@ -70,7 +71,7 @@ class Assessment(models.Model):
     )
 
     created_by = models.ForeignKey(
-        User,
+        get_user_model(),
         null=True,
         blank=False,
         on_delete=models.SET_NULL,
@@ -86,7 +87,7 @@ class Assessment(models.Model):
     )
 
     updated_by = models.ForeignKey(
-        User,
+        get_user_model(),
         null=True,
         blank=False,
         on_delete=models.SET_NULL,

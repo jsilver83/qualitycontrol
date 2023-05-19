@@ -2,6 +2,7 @@ from constrainedfilefield.fields import ConstrainedFileField
 from django.conf import settings
 from django.contrib.auth import get_user_model
 from django.db import models
+from django.db.models import Max
 from django.utils.translation import gettext_lazy as _, get_language
 
 User = settings.AUTH_USER_MODEL
@@ -102,6 +103,30 @@ class Assessment(models.Model):
         else:
             return self.title_en
 
+    def full_score(self):
+        full_score = 0
+        for question in self.questions.all():
+            if question.is_scored():
+                full_score += question.weight()
+
+        return full_score
+
+    def total_score(self):
+        total = 0
+        for question in self.questions.all():
+            if question.is_scored():
+                total += question.score()
+
+        return total
+
+    def weighted_total(self):
+        if self.full_score():
+            return self.total_score() / self.full_score() * 100
+    weighted_total.short_description = _('Weighted Total (%)')
+
+    def score_in_words(self):
+        return '{} out of {}'.format(self.total_score(), self.full_score())
+
 
 class Section(models.Model):
     # region fields
@@ -159,7 +184,7 @@ class Question(models.Model):
 
     prompt_ar = models.TextField(
         _('Prompt (AR)'),
-        blank=False,
+        blank=True,
     )
 
     prompt_en = models.TextField(
@@ -169,12 +194,12 @@ class Question(models.Model):
 
     help_text_ar = models.TextField(
         _('Help Text (AR)'),
-        blank=False,
+        blank=True,
     )
 
     help_text_en = models.TextField(
         _('Help Text (EN)'),
-        blank=False,
+        blank=True,
     )
 
     section = models.ForeignKey(
@@ -193,11 +218,37 @@ class Question(models.Model):
     )
     # endregion fields
 
+    class Meta:
+        ordering = ('assessment', 'display_order', )
+
     def __str__(self):
         if get_language() == 'ar':
             return self.prompt_ar
         else:
             return self.prompt_en
+
+    def prompt(self):
+        return str(self)
+
+    def get_the_answer(self):
+        return self.answers.filter(selected_answer=True).first()
+
+    def is_answered(self):
+        return self.answers.filter(selected_answer=True).exists()
+    is_answered.boolean = True
+    is_answered.short_description = _('Answered?')
+
+    def weight(self):
+        return self.answers.aggregate(Max('weight')).get('weight__max', 0.0)
+
+    def score(self):
+        if self.is_answered():
+            return self.get_the_answer().weight
+
+    def is_scored(self):
+        return self.score() is not None
+    is_scored.boolean = True
+    is_scored.short_description = _('Scored?')
 
 
 class Answer(models.Model):
@@ -213,7 +264,7 @@ class Answer(models.Model):
 
     prompt_ar = models.TextField(
         _('Prompt (AR)'),
-        blank=False,
+        blank=True,
     )
 
     prompt_en = models.TextField(
@@ -224,8 +275,9 @@ class Answer(models.Model):
     weight = models.FloatField(
         _('Weight'),
         null=True,
-        blank=False,
+        blank=True,
         default=1,
+        help_text=_('Empty wight indicate N/A answers which are not going to be calculated in the total score'),
     )
 
     selected_answer = models.BooleanField(
@@ -255,10 +307,14 @@ class Answer(models.Model):
         else:
             return self.prompt_en
 
+    def prompt(self):
+        return str(self)
+
 
 class Evidence(models.Model):
     class Types(models.TextChoices):
         PICTURE = 'PICTURE', _('Picture'),
+        VIDEO = 'VIDEO', _('Video'),
         MISC = 'misc', _('Miscellaneous'),
 
     # region fields
@@ -281,6 +337,7 @@ class Evidence(models.Model):
             'image/jpg',
             'image/jpeg',
             'image/gif',
+            # TODO: add video file formats like mp4 and avi
         ],
         max_upload_size=2000000,  # 2.0 mb limit
     )

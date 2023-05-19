@@ -11,6 +11,9 @@ class AssessmentAdmin(admin.ModelAdmin):
         'title_ar',
         'title_en',
         'type',
+        'total_score',
+        'weighted_total',
+        'score_in_words',
         'derived_from',
         'created_by',
         'created_on',
@@ -36,9 +39,12 @@ class SectionAdmin(admin.ModelAdmin):
 class QuestionAdmin(admin.ModelAdmin):
     list_display = (
         'assessment',
-        'prompt_ar',
-        'prompt_en',
+        'prompt',
         'section',
+        'is_answered',
+        'weight',
+        'score',
+        'is_scored',
         'display_order',
     )
 
@@ -50,8 +56,7 @@ class QuestionAdmin(admin.ModelAdmin):
 class AnswerAdmin(admin.ModelAdmin):
     list_display = (
         'question',
-        'prompt_ar',
-        'prompt_en',
+        'prompt',
         'selected_answer',
         'weight',
         'answered_by',

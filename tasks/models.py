@@ -1,14 +1,14 @@
 from constrainedfilefield.fields import ConstrainedFileField
 from django.contrib.auth import get_user_model
 from django.db import models
-from django.utils.translation import gettext_lazy as _
+from django.utils.translation import gettext_lazy as _, get_language
 
 
 class Task(models.Model):
     # region fields
     description_ar = models.TextField(
         _('Description (AR)'),
-        blank=False,
+        blank=True,
     )
 
     description_en = models.TextField(
@@ -126,3 +126,9 @@ class Task(models.Model):
 
     def __str__(self):
         return '{} {}'.format(self.assigned_employee, self.question)
+
+    def description(self):
+        if get_language() == 'ar':
+            return self.description_ar
+        else:
+            return self.description_en

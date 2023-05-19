@@ -4,8 +4,7 @@ from .models import *
 
 class TaskAdmin(admin.ModelAdmin):
     list_display = [
-        'description_ar',
-        'description_en',
+        'description',
         'question',
         'due_date',
         'assigned_employee',

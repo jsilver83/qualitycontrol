@@ -4,3 +4,4 @@ django-phonenumber-field==7.1.0
 phonenumbers==8.13.11
 Babel==2.12.1
 django-countries==7.5.1
+python-magic==0.4.27

@@ -63,7 +63,7 @@ class Department(models.Model):
         null=True,
         blank=False,
         on_delete=models.CASCADE,
-        verbose_name=_('Department'),
+        verbose_name=_('Organization'),
         related_name='departments',
     )
 

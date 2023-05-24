@@ -18,10 +18,14 @@ from django.conf import settings
 from django.conf.urls.i18n import i18n_patterns
 from django.conf.urls.static import static
 from django.contrib import admin
+from django.contrib.auth.views import LogoutView
 from django.urls import path, include
 
+from shared.views import HomeView
 
 urlpatterns = i18n_patterns(
+    path('', HomeView.as_view(), name='home'),
+    path('logout/', LogoutView.as_view(next_page=settings.LOGOUT_REDIRECT_URL), name='logout'),
     path('admin/', admin.site.urls),
     prefix_default_language=False,
 )

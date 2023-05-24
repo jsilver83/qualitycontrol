@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     'assessment',
     'clients',
     'tasks',
+    'shared',
 ]
 
 MIDDLEWARE = [
@@ -133,6 +134,8 @@ LANGUAGES = (
     ('en', _('English')),
 
 )
+
+LOGOUT_REDIRECT_URL = 'home'
 
 PHONENUMBER_DB_FORMAT = 'E164'
 PHONENUMBER_DEFAULT_REGION = 'SA'

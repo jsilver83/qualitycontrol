@@ -15,19 +15,20 @@ Circles.create({
 	styleText:    true
 })
 
+// TODO: create a generic alert function that reads from a hidden div with all django messages
 //Notify
-$.notify({
-	icon: 'flaticon-alarm-1',
-	title: 'Atlantis Lite',
-	message: 'Free Bootstrap 4 Admin Dashboard',
-},{
-	type: 'info',
-	placement: {
-		from: "bottom",
-		align: "right"
-	},
-	time: 1000,
-});
+// $.notify({
+// 	icon: 'flaticon-alarm-1',
+// 	title: 'Atlantis Lite',
+// 	message: 'Free Bootstrap 4 Admin Dashboard',
+// },{
+// 	type: 'info',
+// 	placement: {
+// 		from: "bottom",
+// 		align: "right"
+// 	},
+// 	time: 1000,
+// });
 
 // JQVmap
 $('#map-example').vectorMap(

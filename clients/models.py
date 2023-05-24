@@ -1,3 +1,4 @@
+from constrainedfilefield.fields import ConstrainedFileField
 from django.contrib.auth import get_user_model
 from django.db import models
 from django.utils.translation import gettext_lazy as _, get_language
@@ -38,8 +39,57 @@ class Organization(models.Model):
         help_text=_('Which city is this organization located in?')
     )
 
+    commercial_registration_no = models.CharField(
+        _('Commercial Registration Number'),
+        blank=False,
+        max_length=256,
+        unique=True,
+    )
+
+    commercial_licence = ConstrainedFileField(
+        verbose_name=_('Commercial Licence'),
+        null=True,
+        blank=False,
+        upload_to='licences',
+        content_types=[
+            'application/pdf',
+            'image/png',
+            'image/bmp',
+            'image/jpg',
+            'image/jpeg',
+            'image/gif',
+        ],
+        max_upload_size=2048000,  # 2.0 mb limit
+    )
+
+    commercial_licence_end_date = models.DateField(
+        _('Commercial Licence End Date'),
+        null=True,
+        blank=False,
+    )
+
+    logo = ConstrainedFileField(
+        verbose_name=_('Logo'),
+        null=True,
+        blank=False,
+        upload_to='logos',
+        content_types=[
+            'image/png',
+            'image/bmp',
+            'image/jpg',
+            'image/jpeg',
+            'image/gif',
+        ],
+        max_upload_size=512000,  # 0.5 mb limit
+    )
+
     address = models.TextField(
         _('Address'),
+        blank=True,
+    )
+
+    address_on_map = models.TextField(
+        _('Address on Map'),
         blank=True,
     )
 
@@ -146,6 +196,21 @@ class Employee(models.Model):
         on_delete=models.CASCADE,
         verbose_name=_('Department'),
         related_name='employees',
+    )
+
+    personal_picture = ConstrainedFileField(
+        verbose_name=_('Personal Picture'),
+        null=True,
+        blank=False,
+        upload_to='employees',
+        content_types=[
+            'image/png',
+            'image/bmp',
+            'image/jpg',
+            'image/jpeg',
+            'image/gif',
+        ],
+        max_upload_size=512000,  # 0.5 mb limit
     )
 
     nationality = CountryField(

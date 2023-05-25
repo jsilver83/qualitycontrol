@@ -24,6 +24,18 @@
 			</div>
 		</div>
 		<div class="page-inner mt--5">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card full-height">
+                        <h2>Form</h2><br>
+                        <form method="post">
+                            {% csrf_token %}
+                            {{ form.as_p }}
+                            <button>Submit</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
 			<div class="row mt--2">
 				<div class="col-md-6">
 					<div class="card full-height">
@@ -257,7 +269,7 @@
 						<div class="card-body pb-0">
 							<div class="d-flex">
 								<div class="avatar">
-									<img src="{% static 'img/logoproduct.svg" alt="..." class="avatar-img rounded-circle">
+									<img src="{% static 'img/logoproduct.svg' %}" alt="..." class="avatar-img rounded-circle">
 								</div>
 								<div class="flex-1 pt-1 ml-2">
 									<h6 class="fw-bold mb-1">CSS</h6>
@@ -270,7 +282,7 @@
 							<div class="separator-dashed"></div>
 							<div class="d-flex">
 								<div class="avatar">
-									<img src="{% static 'img/logoproduct.svg" alt="..." class="avatar-img rounded-circle">
+									<img src="{% static 'img/logoproduct.svg' %}" alt="..." class="avatar-img rounded-circle">
 								</div>
 								<div class="flex-1 pt-1 ml-2">
 									<h6 class="fw-bold mb-1">J.CO Donuts</h6>
@@ -283,7 +295,7 @@
 							<div class="separator-dashed"></div>
 							<div class="d-flex">
 								<div class="avatar">
-									<img src="{% static 'img/logoproduct3.svg" alt="..." class="avatar-img rounded-circle">
+									<img src="{% static 'img/logoproduct3.svg' %}" alt="..." class="avatar-img rounded-circle">
 								</div>
 								<div class="flex-1 pt-1 ml-2">
 									<h6 class="fw-bold mb-1">Ready Pro</h6>
@@ -307,7 +319,7 @@
 							<div class="card-list">
 								<div class="item-list">
 									<div class="avatar">
-										<img src="{% static 'img/jm_denis.jpg" alt="..." class="avatar-img rounded-circle">
+										<img src="{% static 'img/jm_denis.jpg' %}" alt="..." class="avatar-img rounded-circle">
 									</div>
 									<div class="info-user ml-3">
 										<div class="username">Jimmy Denis</div>
@@ -319,7 +331,7 @@
 								</div>
 								<div class="item-list">
 									<div class="avatar">
-										<img src="{% static 'img/chadengle.jpg" alt="..." class="avatar-img rounded-circle">
+										<img src="{% static 'img/chadengle.jpg' %}" alt="..." class="avatar-img rounded-circle">
 									</div>
 									<div class="info-user ml-3">
 										<div class="username">Chad</div>
@@ -331,7 +343,7 @@
 								</div>
 								<div class="item-list">
 									<div class="avatar">
-										<img src="{% static 'img/talha.jpg" alt="..." class="avatar-img rounded-circle">
+										<img src="{% static 'img/talha.jpg' %}" alt="..." class="avatar-img rounded-circle">
 									</div>
 									<div class="info-user ml-3">
 										<div class="username">Talha</div>
@@ -343,7 +355,7 @@
 								</div>
 								<div class="item-list">
 									<div class="avatar">
-										<img src="{% static 'img/mlane.jpg" alt="..." class="avatar-img rounded-circle">
+										<img src="{% static 'img/mlane.jpg' %}" alt="..." class="avatar-img rounded-circle">
 									</div>
 									<div class="info-user ml-3">
 										<div class="username">John Doe</div>
@@ -355,7 +367,7 @@
 								</div>
 								<div class="item-list">
 									<div class="avatar">
-										<img src="{% static 'img/talha.jpg" alt="..." class="avatar-img rounded-circle">
+										<img src="{% static 'img/talha.jpg' %}" alt="..." class="avatar-img rounded-circle">
 									</div>
 									<div class="info-user ml-3">
 										<div class="username">Talha</div>
@@ -367,7 +379,7 @@
 								</div>
 								<div class="item-list">
 									<div class="avatar">
-										<img src="{% static 'img/jm_denis.jpg" alt="..." class="avatar-img rounded-circle">
+										<img src="{% static 'img/jm_denis.jpg' %}" alt="..." class="avatar-img rounded-circle">
 									</div>
 									<div class="info-user ml-3">
 										<div class="username">Jimmy Denis</div>

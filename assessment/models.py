@@ -8,7 +8,7 @@ from django.utils.translation import gettext_lazy as _, get_language
 User = settings.AUTH_USER_MODEL
 
 
-class Assessment(models.Model):
+class Audit(models.Model):
     class Types(models.TextChoices):
         RESTAURANTS = 'RESTAURANTS', _('Restaurants')
         HOTELS = 'HOTELS', _('Hotels')
@@ -54,7 +54,7 @@ class Assessment(models.Model):
     )
 
     derived_from = models.ForeignKey(
-        "Assessment",
+        "Audit",
         null=True,
         blank=True,
         on_delete=models.SET_NULL,
@@ -174,7 +174,7 @@ class Section(models.Model):
 class Question(models.Model):
     # region fields
     assessment = models.ForeignKey(
-        "Assessment",
+        "Audit",
         null=True,
         blank=False,
         on_delete=models.CASCADE,

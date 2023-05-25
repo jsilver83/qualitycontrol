@@ -84,7 +84,7 @@ class EvidenceAdmin(admin.ModelAdmin):
     date_hierarchy = 'uploaded_on'
 
 
-admin.site.register(Assessment, AssessmentAdmin)
+admin.site.register(Audit, AssessmentAdmin)
 admin.site.register(Section, SectionAdmin)
 admin.site.register(Question, QuestionAdmin)
 admin.site.register(Answer, AnswerAdmin)

@@ -50,7 +50,7 @@ class Audit(models.Model):
         blank=False,
         on_delete=models.SET_NULL,
         verbose_name=_('Created For'),
-        related_name='assessments',
+        related_name='audits',
     )
 
     derived_from = models.ForeignKey(
@@ -59,7 +59,7 @@ class Audit(models.Model):
         blank=True,
         on_delete=models.SET_NULL,
         verbose_name=_('Derived From'),
-        related_name='driven_assessments',
+        related_name='driven_audits',
     )
     # endregion fields
 
@@ -77,7 +77,7 @@ class Audit(models.Model):
         blank=False,
         on_delete=models.SET_NULL,
         verbose_name=_('Created By'),
-        related_name='assessments',
+        related_name='audits',
     )
 
     updated_on = models.DateTimeField(
@@ -93,7 +93,7 @@ class Audit(models.Model):
         blank=False,
         on_delete=models.SET_NULL,
         verbose_name=_('Updated By'),
-        related_name='updated_assessments',
+        related_name='updated_audits',
     )
     # endregion audit
 
@@ -173,12 +173,12 @@ class Section(models.Model):
 
 class Question(models.Model):
     # region fields
-    assessment = models.ForeignKey(
+    audit = models.ForeignKey(
         "Audit",
         null=True,
         blank=False,
         on_delete=models.CASCADE,
-        verbose_name=_('Assessment'),
+        verbose_name=_('Audit'),
         related_name='questions',
     )
 
@@ -219,7 +219,7 @@ class Question(models.Model):
     # endregion fields
 
     class Meta:
-        ordering = ('assessment', 'display_order', )
+        ordering = ('audit', 'display_order', )
 
     def __str__(self):
         if get_language() == 'ar':

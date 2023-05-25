@@ -2,7 +2,7 @@ from django.contrib import admin
 from .models import *
 
 
-class AssessmentAdmin(admin.ModelAdmin):
+class AuditAdmin(admin.ModelAdmin):
     list_filter = (
         'type',
     )
@@ -38,7 +38,7 @@ class SectionAdmin(admin.ModelAdmin):
 
 class QuestionAdmin(admin.ModelAdmin):
     list_display = (
-        'assessment',
+        'audit',
         'prompt',
         'section',
         'is_answered',
@@ -84,7 +84,7 @@ class EvidenceAdmin(admin.ModelAdmin):
     date_hierarchy = 'uploaded_on'
 
 
-admin.site.register(Audit, AssessmentAdmin)
+admin.site.register(Audit, AuditAdmin)
 admin.site.register(Section, SectionAdmin)
 admin.site.register(Question, QuestionAdmin)
 admin.site.register(Answer, AnswerAdmin)

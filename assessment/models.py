@@ -230,6 +230,12 @@ class Question(models.Model):
     def prompt(self):
         return str(self)
 
+    def help_text(self):
+        if get_language() == 'ar':
+            return self.help_text_ar
+        else:
+            return self.help_text_en
+
     def get_the_answer(self):
         return self.answers.filter(selected_answer=True).first()
 
@@ -285,6 +291,12 @@ class Answer(models.Model):
         default=False,
     )
 
+    display_order = models.PositiveSmallIntegerField(
+        _('Display Order'),
+        null=True,
+        blank=False,
+    )
+
     answered_on = models.DateTimeField(
         _('Answered On'),
         null=True,
@@ -300,6 +312,9 @@ class Answer(models.Model):
         related_name='answers',
     )
     # endregion fields
+
+    class Meta:
+        ordering = ('question', 'display_order', '-weight', )
 
     def __str__(self):
         if get_language() == 'ar':

@@ -259,6 +259,16 @@ class Question(models.Model):
     is_scored.boolean = True
     is_scored.short_description = _('Scored?')
 
+    def answered_by(self):
+        answer = self.get_the_answer()
+        if answer:
+            return answer.answered_by
+
+    def answered_on(self):
+        answer = self.get_the_answer()
+        if answer:
+            return answer.answered_on
+
 
 class Answer(models.Model):
     # region fields
@@ -327,6 +337,10 @@ class Answer(models.Model):
 
     def prompt(self):
         return str(self)
+
+    def is_best_answer(self):
+        if self.weight:
+            return self.weight == self.question.weight()
 
 
 class Evidence(models.Model):

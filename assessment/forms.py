@@ -1,4 +1,6 @@
+from crispy_forms.helper import FormHelper
 from django import forms
+from django.utils.safestring import mark_safe
 
 from .models import Audit
 
@@ -7,6 +9,13 @@ class AuditForm(forms.ModelForm):
     class Meta:
         model = Audit
         fields = '__all__'
+
+
+class QuestionAnswersWidget(forms.RadioSelect):
+    template_name = 'assessment/question_and_answers_field.html'
+
+    def render(self, name, value, attrs=None, renderer=None):
+        return super().render(name, value, attrs, renderer)
 
 
 class AuditQuestionsForm(forms.Form):
@@ -24,12 +33,8 @@ class AuditQuestionsForm(forms.Form):
                 help_text=question.help_text(),
                 required=True,
                 choices=choices,
-                widget=forms.RadioSelect(),
+                widget=QuestionAnswersWidget(attrs={'question': question}),
             )
 
             if question.get_the_answer():
                 self.initial['q{}'.format(question.pk)] = question.get_the_answer().pk
-
-
-        # for field in self.fields:
-        #     print(field)

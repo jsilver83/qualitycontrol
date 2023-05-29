@@ -1,0 +1,44 @@
+{% load i18n %}
+{% load questions_tags %}
+{% load humanize %}
+{% with id=widget.attrs.id %}
+<div{% if id %} id="{{ id }}"{% endif %} class="row mt-3 {% if widget.attrs.class %}{{ widget.attrs.class }}{% endif %}">
+    <div class="col-md-1 col-2">
+        <h5><span style="font-size: 99%; writing-mode: tb-rl;" class="badge badge-info pt-3 pb-3">{{ widget.attrs.question.section }}</span></h5>
+    </div>
+    <div class="col-md-11 col-10">
+    {% for group, options, index in widget.optgroups %}
+        {% for option in options %}
+        <div class="row">
+            <div class="col-8">
+                <label class="form-radio-label" for="{{ option.attrs.id }}">
+                    <input class="form-radio-input" type="radio" name="{{ option.name }}" value="{{ option.value }}" id="{{ option.attrs.id }}" {% if option.selected %}checked="checked"{% endif %}{% if option.attrs.required %} required{% endif %}>
+                    <span class="form-radio-sign ml-2">{{ option.label }}</span>
+                </label>
+            </div>
+            <div class="col-4">{% print_answer_weight option.value %}</div>
+        </div>
+        {% endfor %}
+    {% endfor %}
+    </div>
+</div>
+<hr>
+<div class="row">
+    <div class="col-12">
+        {% if widget.attrs.question.is_answered %}
+            {% if widget.attrs.question.is_scored %}
+                {% trans 'Question Score is' %} <span class="badge badge-primary">{{ widget.attrs.question.score }}</span>
+                {% trans 'out of' %} <span class="badge badge-primary">{{ widget.attrs.question.weight }}</span>
+            {% else %}
+                {% trans 'Question Weight is' %} <span class="badge badge-primary">{{ widget.attrs.question.weight }}</span>
+                <em>{% trans 'BUT it is not included in the final score' %}</em>
+            {% endif %}
+            {% if widget.attrs.question.answered_by and widget.attrs.question.answered_on %}
+                <br><small>{% trans 'Answered by' %} <b>{{ widget.attrs.question.answered_by }}</b>&nbsp;&nbsp;(<b>{{ widget.attrs.question.answered_on|naturaltime }}</b>)</small>
+            {% endif %}
+        {% else %}
+            {% trans 'Question Weight is' %} <span class="badge badge-primary">{{ widget.attrs.question.weight }}</span>
+        {% endif %}
+    </div>
+</div>
+{% endwith %}

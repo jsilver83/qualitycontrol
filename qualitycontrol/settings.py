@@ -42,6 +42,8 @@ INSTALLED_APPS = [
 
     'constrainedfilefield',
     'phonenumber_field',
+    'crispy_forms',
+    'crispy_bootstrap4',
 
     'assessment',
     'clients',
@@ -140,6 +142,9 @@ LOGOUT_REDIRECT_URL = 'home'
 PHONENUMBER_DB_FORMAT = 'E164'
 PHONENUMBER_DEFAULT_REGION = 'SA'
 PHONENUMBER_DEFAULT_FORMAT = PHONENUMBER_DB_FORMAT
+
+CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap4"
+CRISPY_TEMPLATE_PACK = "bootstrap4"
 
 COUNTRIES_FIRST = [
     'SA',

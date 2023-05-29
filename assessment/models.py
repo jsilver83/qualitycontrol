@@ -164,6 +164,9 @@ class Section(models.Model):
     )
     # endregion fields
 
+    class Meta:
+        ordering = ('display_order', )
+
     def __str__(self):
         if get_language() == 'ar':
             return self.title_ar
@@ -219,7 +222,7 @@ class Question(models.Model):
     # endregion fields
 
     class Meta:
-        ordering = ('audit', 'display_order', )
+        ordering = ('audit', 'section', 'display_order', )
 
     def __str__(self):
         if get_language() == 'ar':

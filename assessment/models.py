@@ -154,7 +154,7 @@ class Section(models.Model):
     display_order = models.PositiveSmallIntegerField(
         _('Display Order'),
         null=True,
-        blank=False,
+        blank=True,
     )
 
     show_flag = models.BooleanField(
@@ -165,7 +165,7 @@ class Section(models.Model):
     # endregion fields
 
     class Meta:
-        ordering = ('display_order', )
+        ordering = ('display_order', 'title_en', )
 
     def __str__(self):
         if get_language() == 'ar':
@@ -217,7 +217,7 @@ class Question(models.Model):
     display_order = models.PositiveSmallIntegerField(
         _('Display Order'),
         null=True,
-        blank=False,
+        blank=True,
     )
     # endregion fields
 
@@ -307,7 +307,7 @@ class Answer(models.Model):
     display_order = models.PositiveSmallIntegerField(
         _('Display Order'),
         null=True,
-        blank=False,
+        blank=True,
     )
 
     answered_on = models.DateTimeField(

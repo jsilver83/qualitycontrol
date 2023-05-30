@@ -3,6 +3,7 @@ from django.conf import settings
 from django.contrib.auth import get_user_model
 from django.db import models
 from django.db.models import Max
+from django.utils import timezone
 from django.utils.translation import gettext_lazy as _, get_language
 
 User = settings.AUTH_USER_MODEL
@@ -268,6 +269,22 @@ class Question(models.Model):
         answer = self.get_the_answer()
         if answer:
             return answer.answered_on
+
+    def change_the_answer(self, the_new_answer, answerer):
+        current_answer = self.get_the_answer()
+        if current_answer and current_answer == the_new_answer:
+            return
+        else:
+            if current_answer:
+                current_answer.answered_by = None
+                current_answer.answered_on = None
+                current_answer.selected_answer = False
+                current_answer.save()
+
+            the_new_answer.answered_by = answerer
+            the_new_answer.answered_on = timezone.now()
+            the_new_answer.selected_answer = True
+            the_new_answer.save()
 
 
 class Answer(models.Model):

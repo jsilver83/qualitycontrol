@@ -1,10 +1,11 @@
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import get_object_or_404
 from django.views.generic import TemplateView, FormView
 from assessment.forms import AuditQuestionsForm
 from assessment.models import Audit, Answer
 
 
-class HomeView(FormView):
+class HomeView(LoginRequiredMixin, FormView):
     template_name = 'shared/home.html'
     form_class = AuditQuestionsForm
     success_url = '.'

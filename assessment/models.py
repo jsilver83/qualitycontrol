@@ -271,16 +271,18 @@ class Question(models.Model):
             return answer.answered_on
 
     def change_the_answer(self, the_new_answer, answerer):
-        current_answer = self.get_the_answer()
-        if current_answer and current_answer == the_new_answer:
-            return
-        else:
-            if current_answer:
-                current_answer.answered_by = None
-                current_answer.answered_on = None
-                current_answer.selected_answer = False
-                current_answer.save()
+        all_other_selected_answers = self.answers.filter(
+            selected_answer=True,
+        ).exclude(pk=the_new_answer.pk)
 
+        if all_other_selected_answers:
+            all_other_selected_answers.update(
+                answered_by=None,
+                answered_on=None,
+                selected_answer=False,
+            )
+
+        if not the_new_answer.selected_answer:
             the_new_answer.answered_by = answerer
             the_new_answer.answered_on = timezone.now()
             the_new_answer.selected_answer = True

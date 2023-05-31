@@ -37,7 +37,7 @@
                     </div>
                 </div>
             </div>
-            <div class="row">
+            <div class="row mb-4">
                 <div class="col-md-12">
                     <form method="post" class="form-horizontal">
                         {% csrf_token %}
@@ -48,7 +48,15 @@
                                         <div class="card-body">
                                             <div class="card-title">{{ forloop.counter }})&nbsp;&nbsp;{{ field.label }}</div>
                                             <div class="card-category">{{ field.help_text }}</div>
+                                            <div data-notify="container" class="{% if field.errors %}has-error {% endif %}form-group">
                                                 {{ field }}
+                                                {% if field.errors %}
+                                                    <br>
+                                                    <div class="alert alert-danger" role="alert">
+                                                        <span data-notify="title">{% trans 'Errors' %}:</span>
+                                                        <span data-notify="message" class="text-danger">{{ field.errors }}</span>
+                                                    </div>{% endif %}
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -57,17 +65,17 @@
                         </div>
                         <div class="row">
                             <div class="col-12">
-                                <button class="btn btn-primary">
+                                <button class="btn btn-primary float-right ml-3">
 									<span class="btn-label">
 										<i class="fa fa-check-circle"></i>
 									</span>
 									{% trans 'Submit' %}
 								</button>
-                                <button class="btn btn-danger">
+                                <button class="btn btn-danger float-left mr-3">
 									<span class="btn-label">
 										<i class="fa fa-strikethrough"></i>
 									</span>
-									{% trans 'Submit' %}
+									{% trans 'Cancel' %}
 								</button>
                             </div>
                         </div>

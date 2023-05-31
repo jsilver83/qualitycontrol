@@ -17,7 +17,6 @@ class HomeView(LoginRequiredMixin, FormView):
 
     def form_valid(self, form):
         for field in form.fields:
-            print(form.cleaned_data.get(field), form.fields[field].widget.attrs.get('question'), )
             the_question = form.fields[field].widget.attrs.get('question')
             the_answer = get_object_or_404(Answer, pk=form.cleaned_data.get(field))
             the_question.change_the_answer(the_answer, self.request.user)

@@ -14,5 +14,13 @@ class TaskAdmin(admin.ModelAdmin):
 
     date_hierarchy = 'created_on'
 
+    autocomplete_fields = (
+        'question',
+        'assigned_employee',
+        'completed_by',
+        'created_by',
+        'updated_by',
+    )
+
 
 admin.site.register(Task, TaskAdmin)

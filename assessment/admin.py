@@ -2,6 +2,62 @@ from django.contrib import admin
 from .models import *
 
 
+class QuestionTabularInlineAdmin(admin.TabularInline):
+    model = Question
+
+    fields = (
+        'prompt_en',
+        'section',
+        'help_text_en',
+        'display_order',
+    )
+
+    autocomplete_fields = (
+        'audit',
+        'section',
+    )
+
+
+class AnswerTabularInlineAdmin(admin.TabularInline):
+    model = Answer
+
+    autocomplete_fields = (
+        'question',
+        'answered_by',
+    )
+
+    fields = (
+        'prompt_en',
+        'weight',
+        'selected_answer',
+        'display_order',
+    )
+
+
+class QuestionAdmin(admin.ModelAdmin):
+    list_display = (
+        'audit',
+        'prompt',
+        'section',
+        'is_answered',
+        'weight',
+        'score',
+        'is_scored',
+        'display_order',
+    )
+
+    autocomplete_fields = QuestionTabularInlineAdmin.autocomplete_fields
+
+    search_fields = (
+        'audit',
+        'prompt_ar',
+        'prompt_en',
+        'section',
+    )
+
+    inlines = [AnswerTabularInlineAdmin, ]
+
+
 class AuditAdmin(admin.ModelAdmin):
     list_filter = (
         'type',
@@ -21,6 +77,21 @@ class AuditAdmin(admin.ModelAdmin):
 
     date_hierarchy = 'created_on'
 
+    search_fields = (
+        'title_ar',
+        'title_en',
+        'type',
+    )
+
+    autocomplete_fields = (
+        'created_for',
+        'derived_from',
+        'created_by',
+        'updated_by',
+    )
+
+    inlines = [QuestionTabularInlineAdmin, ]
+
 
 class SectionAdmin(admin.ModelAdmin):
     list_display = (
@@ -35,21 +106,9 @@ class SectionAdmin(admin.ModelAdmin):
         'show_flag',
     )
 
-
-class QuestionAdmin(admin.ModelAdmin):
-    list_display = (
-        'audit',
-        'prompt',
-        'section',
-        'is_answered',
-        'weight',
-        'score',
-        'is_scored',
-        'display_order',
-    )
-
-    list_filter = (
-        'section',
+    search_fields = (
+        'title_ar',
+        'title_en',
     )
 
 
@@ -68,6 +127,8 @@ class AnswerAdmin(admin.ModelAdmin):
 
     date_hierarchy = 'answered_on'
 
+    autocomplete_fields = AnswerTabularInlineAdmin.autocomplete_fields
+
 
 class EvidenceAdmin(admin.ModelAdmin):
     list_display = (
@@ -82,6 +143,10 @@ class EvidenceAdmin(admin.ModelAdmin):
     )
 
     date_hierarchy = 'uploaded_on'
+
+    autocomplete_fields = (
+        'question',
+    )
 
 
 admin.site.register(Audit, AuditAdmin)

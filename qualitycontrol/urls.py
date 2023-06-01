@@ -21,10 +21,11 @@ from django.contrib import admin
 from django.contrib.auth.views import LogoutView, LoginView
 from django.urls import path, include
 
-from shared.views import HomeView
+from shared.views import HomeView, CreateEvidenceView
 
 urlpatterns = i18n_patterns(
     path('', HomeView.as_view(), name='home'),
+    path('evidence/create/<int:question_pk>/', CreateEvidenceView.as_view(), name='evidence_create'),
     path('login/', LoginView.as_view(), name='login'),
     path('register/', LoginView.as_view(), name='register'),
     path('logout/', LogoutView.as_view(next_page=settings.LOGOUT_REDIRECT_URL), name='logout'),

@@ -2,7 +2,7 @@ from crispy_forms.helper import FormHelper
 from django import forms
 from django.utils.safestring import mark_safe
 
-from .models import Audit
+from .models import Audit, Evidence
 
 
 class AuditForm(forms.ModelForm):
@@ -35,6 +35,28 @@ class AuditQuestionsForm(forms.Form):
                 choices=choices,
                 widget=QuestionAnswersWidget(attrs={'question': question}),
             )
+            self.fields['q{}'.format(question.pk)].question = question
 
             if question.get_the_answer():
                 self.initial['q{}'.format(question.pk)] = question.get_the_answer().pk
+
+
+class EvidenceForm(forms.ModelForm):
+    question = None
+
+    class Meta:
+        model = Evidence
+        fields = (
+            'question',
+            'type',
+            'uploaded_file',
+            'notes',
+        )
+        widgets = {
+            'question': forms.HiddenInput,
+        }
+
+    def __init__(self, question, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.question = question
+        self.initial['question'] = question

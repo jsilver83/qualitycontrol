@@ -3,7 +3,8 @@ from django.shortcuts import get_object_or_404
 from django.utils.translation import gettext_lazy as _
 from django.utils.safestring import mark_safe
 
-from assessment.models import Answer
+from assessment.models import Answer, Question, Evidence
+from ..forms import EvidenceForm
 
 register = template.Library()
 
@@ -24,3 +25,14 @@ def print_answer_weight(answer_pk):
             return mark_safe(f'<em>{_("Not Weighted")}</em>')
     else:
         return '---'
+
+
+@register.inclusion_tag('assessment/_create_evidence.html', takes_context=True)
+def create_evidence(context, question):
+    form = EvidenceForm(question, context.request.POST or None)
+
+    return {
+        'form': form,
+        'question': question,
+        'prefix': question.pk,
+    }

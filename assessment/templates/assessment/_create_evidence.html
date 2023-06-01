@@ -1,0 +1,52 @@
+{% load crispy_forms_filters %}
+{% load i18n %}
+
+<div class="p-3 h-100 d-flex flex-column">
+    <div class="chat-textarea mt-auto {{ prefix }}-comment-div">
+        <div id="{{ prefix }}-error"></div>
+        <form id="{{ prefix }}_form" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{ form|crispy }}
+            <button class="btn btn-primary" type="submit"><i class="fa fa-check-circle"></i> {% trans 'Submit Evidence' %}</button>
+        </form>
+    </div>
+</div>
+
+<script type="application/javascript">
+    $(function () {
+        $('#{{ prefix }}_form').on('submit', function (e) {
+            e.preventDefault();
+            $.ajax({
+                url: '{% url 'evidence_create' question.pk %}',
+                type: "POST",
+                enctype: 'multipart/form-data',
+                processData: false,
+                contentType: false,
+                data: new FormData(this),
+                success: function (json) {
+                    {#$('.{{ prefix }}-comment-div').html('<div class="alert alert-success" data-alert>{% trans 'Your comment was submitted successfully...' %}</div>');#}
+                    swal("SUCCESS", "Evidence was added successfully", {
+                        icon: "success",
+                        buttons: {
+                            confirm: {
+                                className: 'btn btn-success'
+                            }
+                        },
+                    }).then(
+                        function () {
+                            document.getElementById("{{ prefix }}_form").reset();
+                            $('.modal').modal('hide');
+                        }
+                    );
+                    console.log(json);
+                    console.log("success");
+                },
+                error: function (xhr, errmsg, err) {
+                    $('#{{ prefix }}-error').html("<div class='alert alert-danger' data-alert>{% trans 'Error' %}: " + xhr.responseText +
+                        " <a href='#' class='close'>&times;</a></div>");
+                    console.log(xhr.status + ": " + xhr.responseText);
+                }
+            });
+        });
+    });
+</script>

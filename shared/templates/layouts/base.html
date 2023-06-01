@@ -34,6 +34,9 @@
     <!-- CSS Just for demo purpose, don't include it in your project -->
     <link rel="stylesheet" href="{% static 'css/demo.css' %}">
 
+    <!-- include it here to avoid jquery errors -->
+    <script src="{% static 'js/core/jquery.3.2.1.min.js' %}"></script>
+
     <!-- Specific Page CSS goes HERE  -->
     {% block stylesheets %}{% endblock stylesheets %}
 

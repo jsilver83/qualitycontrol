@@ -7,3 +7,4 @@ django-countries==7.5.1
 python-magic==0.4.27
 django-crispy-forms==2.0
 crispy-bootstrap4==2022.1
+django-addanother==2.2.2

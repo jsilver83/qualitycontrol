@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'phonenumber_field',
     'crispy_forms',
     'crispy_bootstrap4',
+    'django_addanother',
 
     'assessment',
     'clients',

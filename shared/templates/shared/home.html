@@ -59,9 +59,42 @@
                                                     <hr>
                                                 {% endif %}
                                                 <br>
-                                                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal{{ field.field.question.pk }}">
-                                                  <i class="fa fa-plus-square"></i> {% trans 'Add Evidence' %}
+                                                <button class="btn btn-outline-warning" type="button" data-toggle="collapse"
+                                                        data-target="#collapseEv{{ field.field.question.pk }}" aria-expanded="false"
+                                                        aria-controls="collapseEv{{ field.field.question.pk }}">
+                                                    {% trans 'Show/Hide Evidence' %} <small class="badge badge-light">{{ field.field.question.list_of_evidence.count }}</small>
                                                 </button>
+                                                <div class="collapse" id="collapseEv{{ field.field.question.pk }}">
+                                                    <div class="card card-body">
+                                                        <button type="button" class="btn btn-primary btn-block"
+                                                                data-toggle="modal"
+                                                                data-target="#exampleModal{{ field.field.question.pk }}">
+                                                            <i class="fa fa-plus-square"></i> {% trans 'Add Evidence' %}
+                                                        </button>
+                                                        <table class="table" id="ev{{ field.field.question.pk }}">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th style="width: 15%">#</th>
+                                                                    <th style="width: 25%">{% trans 'Type' %}</th>
+                                                                    <th style="width: 25%">{% trans 'File' %}</th>
+                                                                    <th style="width: 35%">{% trans 'Notes' %}</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                            {% for evidence in field.field.question.list_of_evidence.all %}
+                                                                <tr>
+                                                                    <td>{{ forloop.counter }}</td>
+                                                                    <td>{{ evidence.get_type_display }}</td>
+                                                                    <td><a href="{% get_media_prefix %}{{ evidence.uploaded_file }}" target="_blank"><i class="fa fa-download"></i> {% trans 'Download'%}</a> </td>
+                                                                    <td>{{ evidence.notes }}</td>
+                                                                </tr>
+                                                            {% endfor %}
+                                                            </tbody>
+
+                                                        </table>
+                                                    </div>
+                                                </div>
+
                                             </div>
                                         </div>
                                     </div>

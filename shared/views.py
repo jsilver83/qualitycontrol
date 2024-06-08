@@ -22,7 +22,7 @@ class SubmitAssessmentView(LoginRequiredMixin, FormView):
         return kwargs
 
     def get_context_data(self, **kwargs):
-        context = super(SubmitAssessmentView, self).get_context_data(**kwargs)
+        context = super().get_context_data(**kwargs)
         context['audit'] = Audit.objects.get(id=self.kwargs['audit_id'])
         return context
 

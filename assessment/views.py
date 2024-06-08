@@ -18,8 +18,6 @@ from .filters import *
 from shared.mixins import AjaxableModelFormResponseMixin, AjaxableModelDeleteMixin, FilteredSingleTableView
 from shared.utils import is_ajax
 
-# Create your views here.
-
 
 class ListAuditView(FilteredSingleTableView):
     template_name = "assessment/audits.html"
@@ -205,9 +203,6 @@ class ListQuestionView(MultiTableMixin, TemplateView):
         return tables
 
 
-
-
-
 class CreateSectionView(AjaxableModelFormResponseMixin, CreateView):
     template_name = "assessment/create_section.html"
     form_class = SectionForm
@@ -275,8 +270,6 @@ class CreateQuestionView(SuccessMessageMixin, CreateView):
             ])
 
 
-
-
 class UpdateQuestionView(UpdateView):
     template_name = "assessment/create_question.html"
     form_class = CreateQuestionForm
@@ -328,13 +321,6 @@ class DetailQuestionView(DetailView):
         context_data['answers'] = Answer.objects.filter(question=self.kwargs['question_id'])
         return context_data
 
+
 class DeleteQuestionView(AjaxableModelDeleteMixin, DeleteView):
     model = Question
-
-
-
-
-
-
-
-

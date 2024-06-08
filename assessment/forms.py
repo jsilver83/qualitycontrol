@@ -200,8 +200,10 @@ class EvidenceForm(forms.ModelForm):
         if cleaned_data.get('type'):
             if cleaned_data.get('type') == Evidence.Types.TEXT_NOTE and not cleaned_data.get('notes'):
                 raise forms.ValidationError('Note field is required.')
+            if cleaned_data.get('type') == Evidence.Types.TEXT_NOTE and cleaned_data.get('uploaded_file'):
+                raise forms.ValidationError('Can Not upload attachment.')
             if cleaned_data.get('type') != Evidence.Types.TEXT_NOTE and not cleaned_data.get('uploaded_file'):
                 raise forms.ValidationError('Attachment field is required.')
-            
+
         return cleaned_data
 

@@ -1,3 +1,17 @@
 body[data-background-color="dark"] .modal label, body[data-background-color="dark"] .modal-title {
   color: black !important;
 }
+
+/* section to simulate arrow for expanding collapsible */
+button[aria-expanded=true] .fa-angle-double-right {
+  display: none;
+}
+button[aria-expanded=true] .fa-angle-double-down {
+  display: inherit;
+}
+button[aria-expanded=false] .fa-angle-double-right {
+  display: inherit;
+}
+button[aria-expanded=false] .fa-angle-double-down {
+  display: none;
+}

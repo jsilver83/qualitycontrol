@@ -15,8 +15,8 @@
             <div class="page-inner py-5">
                 <div class="d-flex align-items-left align-items-md-center flex-column flex-md-row">
                     <div>
-                        <h2 class="text-white pb-2 fw-bold">Asssessment</h2>
-                        <h5 class="text-white op-7 mb-2">Quality Control System</h5>
+                        <h2 class="text-white pb-2 fw-bold">{% trans "Assessment" %}</h2>
+                        <h5 class="text-white op-7 mb-2">{% trans "Quality Control System" %}</h5>
                     </div>
                 </div>
             </div>
@@ -56,21 +56,19 @@
                                                 <div class="row">
                                                     <div class="col-6">
                                                           <button class="btn btn-outline-warning" type="button" data-toggle="collapse"
-                                                        data-target="#collapseEv{{ field.field.question.pk }}" aria-expanded="false"
-                                                        aria-controls="collapseEv{{ field.field.question.pk }}">
-                                                    {% trans 'Show/Hide Evidence' %} <small id="evCount{{ field.field.question.pk }}" class="badge badge-light">{{ field.field.question.list_of_evidence.count }}</small>
-                                                </button>
+                                                                data-target="#collapseEv{{ field.field.question.pk }}" aria-expanded="false"
+                                                                aria-controls="collapseEv{{ field.field.question.pk }}">
+                                                            <i class="fa fa-angle-double-right mr-1"></i><i class="fa fa-angle-double-down mr-1"></i> {% trans 'Notes & Evidences' %} <small id="evCount{{ field.field.question.pk }}" class="badge badge-light ml-5">{{ field.field.question.list_of_evidence.count }}</small>
+                                                        </button>
                                                     </div>
                                                     <div class="col-6">
                                                           <button  class="btn btn-outline-warning" type="button" data-toggle="collapse"
-                                                        data-target="#collapseTask{{ field.field.question.pk }}" aria-expanded="false"
-                                                        aria-controls="collapseTask{{ field.field.question.pk }}">
-                                                    {% trans 'Tasks' %} <small  id="tasksCount{{ field.field.question.pk }}" class="badge badge-light">{{ field.field.question.question_tasks.count }}</small>
-                                                </button>
-
+                                                                data-target="#collapseTask{{ field.field.question.pk }}" aria-expanded="false"
+                                                                aria-controls="collapseTask{{ field.field.question.pk }}">
+                                                            <i class="fa fa-angle-double-right mr-1"></i><i class="fa fa-angle-double-down mr-1"></i>{% trans 'Tasks' %} <small  id="tasksCount{{ field.field.question.pk }}" class="badge badge-light pull-right ml-5">{{ field.field.question.question_tasks.count }}</small>
+                                                        </button>
                                                     </div>
                                                 </div>
-
 
                                                 <div class="collapse" id="collapseEv{{ field.field.question.pk }}">
                                                     <div class="card card-body">
@@ -82,19 +80,19 @@
                                                         <table class="table" id="ev{{ field.field.question.pk }}">
                                                             <thead>
                                                                 <tr>
-                                                                    <th style="width: 15%">#</th>
-                                                                    <th style="width: 25%">{% trans 'Type' %}</th>
-                                                                    <th style="width: 25%">{% trans 'File' %}</th>
-                                                                    <th style="width: 35%">{% trans 'Notes' %}</th>
+                                                                    <th style="width: 5%">#</th>
+                                                                    <th style="width: 50%">{% trans 'Notes' %}</th>
+                                                                    <th style="width: 30%">{% trans 'File' %}</th>
+                                                                    <th style="width: 15%">{% trans 'Type' %}</th>
                                                                 </tr>
                                                             </thead>
                                                             <tbody>
                                                             {% for evidence in field.field.question.list_of_evidence.all %}
                                                                 <tr>
                                                                     <td>{{ forloop.counter }}</td>
-                                                                    <td>{{ evidence.get_type_display }}</td>
-                                                                    <td><a href="{% get_media_prefix %}{{ evidence.uploaded_file }}" target="_blank"><i class="fa fa-download"></i> {% trans 'Download'%}</a> </td>
-                                                                    <td>{{ evidence.notes }}</td>
+                                                                    <td {% if not evidence.uploaded_file %}colspan="3"{% endif %}>{{ evidence.notes }}</td>
+                                                                    {% if evidence.uploaded_file %}<td><a href="{% get_media_prefix %}{{ evidence.uploaded_file }}" target="_blank"><i class="fa fa-download"></i> {% trans 'Download'%}</a></td>
+                                                                    <td>{{ evidence.get_type_display }}</td>{% endif %}
                                                                 </tr>
                                                             {% endfor %}
                                                             </tbody>
@@ -147,7 +145,7 @@
 									<span class="btn-label">
 										<i class="fa fa-check-circle"></i>
 									</span>
-									{% trans 'Submit' %}
+									{% trans 'Save' %} {% trans 'and' %} {% trans 'Submit' %}
 								</button>
 
                                  <button name="save" class="btn btn-primary float-right ml-3">
@@ -212,6 +210,4 @@
 {% endblock content %}
 
 <!-- Specific Page JS goes HERE  -->
-{% block javascripts %}
-
-{% endblock javascripts %}
+{% block javascripts %}{% endblock javascripts %}

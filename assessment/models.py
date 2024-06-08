@@ -453,6 +453,7 @@ class Evidence(models.Model):
     class Types(models.TextChoices):
         PICTURE = 'PICTURE', _('Picture'),
         VIDEO = 'VIDEO', _('Video'),
+        TEXT_NOTE = 'TEXT_NOTE', _('Note (Text only)')
         MISC = 'misc', _('Miscellaneous'),
 
     # region fields
@@ -465,8 +466,9 @@ class Evidence(models.Model):
     )
 
     uploaded_file = ConstrainedFileField(
+        verbose_name=_('Attachment'),
         null=True,
-        blank=False,
+        blank=True,
         upload_to='evidence',
         content_types=[
             'application/pdf',

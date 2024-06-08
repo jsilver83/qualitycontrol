@@ -11,8 +11,6 @@ from textwrap import indent
 from .models import Audit, Evidence, Question, Answer, Section
 
 
-
-
 class SectionWidget(s2forms.ModelSelect2Widget):
     search_fields = [
         "title_en__icontains",
@@ -195,3 +193,15 @@ class EvidenceForm(forms.ModelForm):
         super().__init__(*args, **kwargs)
         self.question = question
         self.initial['question'] = question
+
+    def clean(self):
+        cleaned_data = super().clean()
+
+        if cleaned_data.get('type'):
+            if cleaned_data.get('type') == Evidence.Types.TEXT_NOTE and not cleaned_data.get('notes'):
+                raise forms.ValidationError('Note field is required.')
+            if cleaned_data.get('type') != Evidence.Types.TEXT_NOTE and not cleaned_data.get('uploaded_file'):
+                raise forms.ValidationError('Attachment field is required.')
+            
+        return cleaned_data
+

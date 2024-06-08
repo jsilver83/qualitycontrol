@@ -46,6 +46,9 @@ INSTALLED_APPS = [
     'crispy_forms',
     'crispy_bootstrap4',
     'django_addanother',
+    'django_tables2',
+    'django_filters',
+    "django_select2",
 
     'assessment',
     'clients',
@@ -140,7 +143,7 @@ LANGUAGES = (
 )
 
 LOGOUT_REDIRECT_URL = 'login'
-LOGIN_REDIRECT_URL = 'home'
+LOGIN_REDIRECT_URL = 'assessments_list'
 LOGIN_URL = 'login'
 
 PHONENUMBER_DB_FORMAT = 'E164'
@@ -191,6 +194,13 @@ MEDIA_URL = 'media/'
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+CACHES = {
+    'default': {
+        'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
+        'LOCATION': 'unique-snowflake',
+    }
+}
 
 try:
     from .local_settings import *

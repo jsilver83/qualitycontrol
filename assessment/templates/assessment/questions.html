@@ -1,0 +1,146 @@
+{% extends "layouts/base.html" %}
+{% load static %}
+{% load crispy_forms_tags %}
+{% load questions_tags %}
+{% load i18n %}
+{% load render_table from django_tables2 %}
+
+{% block title %} Assessment {% endblock %}
+
+<!-- Specific Page CSS goes HERE  -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block content %}
+
+<div class="content">
+    <div class="panel-header bg-primary-gradient">
+        <div class="page-inner py-5">
+            <div class="d-flex align-items-left align-items-md-center flex-column flex-md-row">
+                <div>
+                    <h2 class="text-white pb-2 fw-bold">Assessment Questions</h2>
+                    <h5 class="text-white op-7 mb-2">Quality Control System</h5>
+                </div>
+
+
+            </div>
+        </div>
+
+    </div>
+
+    <div class="page-inner mt--5">
+        <div class="row">
+    <div class="col-md-12">
+        <div class="card full-height">
+
+            <div class="card-body">
+         {% include "assessment/_audit_info.html" with audit=audit %}
+
+            </div>
+        </div>
+    </div>
+        </div>
+            <div class="row">
+            <div class="col-md-12">
+                <div class="card full-height">
+                    <div class="card-body">
+
+
+
+<div class="row">
+    {% if not tables %}
+    <div class="col-12">
+    <a href="{% url 'create_question' audit.id %}">
+                            <button class="btn btn-primary float-right ml-3">
+                                <span class="btn-label">
+                                    <i class="fa fa-plus"></i>
+                                </span>
+                                {% trans 'Create Question' %}
+
+                            </button>
+                        </a>
+        </div>
+    {% endif %}
+	<div class="col-3">
+    <ul class="nav flex-column nav-pills nav-secondary nav-pills-no-bd" id="sections-tab" role="tablist" aria-orientation="vertical" >
+        {% for root_section in root_sections.keys %}
+	<li class="nav-item">
+		<a class="nav-link" id="sections-tab-{{root_section.id}}" data-toggle="pill" href="#section-{{root_section.id}}" role="tab"  aria-selected="true">{{root_section}}</a>
+	</li>
+        {% endfor %}
+    </ul>
+    </div>
+<div class="col-9">
+<div class="tab-content mb-3" id="sections-tabContent">
+      {% for root_section in root_sections.keys %}
+	<div class="tab-pane fade show" id="section-{{root_section.id}}" role="tabpanel" aria-labelledby="section-{{root_section.id}}">
+		<div class="row">
+            <div class="col-6">
+                  <label>Section Score</label>
+        <p class="text-success">{{root_section.score}}</p>
+            </div>
+            <div class="col-6">
+                <a href="{% url 'create_question' audit.id %}">
+                            <button class="btn btn-primary float-right ml-3">
+                                <span class="btn-label">
+                                    <i class="fa fa-plus"></i>
+                                </span>
+                                {% trans 'Create Question' %}
+
+                            </button>
+                        </a>
+            </div>
+
+
+        </div>
+
+
+
+<div class="accordion accordion-secondary">
+	{% for section in root_sections|get_item:root_section %}
+	<div class="card">
+		<div class="card-header" id="headingOne-{{section.id}}" data-toggle="collapse" data-target="#collapse-{{section.id}}" aria-expanded="true" aria-controls="collapse{{section.id}}">
+			<div class="span-title">
+				{{section.full_path}}
+			</div>
+			<div class="span-mode"></div>
+		</div>
+
+		<div id="collapse-{{section.id}}" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
+			<div class="card-body">
+		{% render_table tables|get_item:section.id %}
+			</div>
+		</div>
+	</div>
+	{% endfor %}
+
+
+</div>
+
+
+	</div>
+     {% endfor %}
+
+</div>
+
+
+</div>
+</div>
+
+
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+{% for question in all_questions %}
+{% include "assessment/_delete_confirmation_modal.html" with record=question %}
+{% endfor %}
+
+
+
+{% endblock content %}

@@ -1,14 +1,149 @@
 from crispy_forms.helper import FormHelper
+from crispy_forms.bootstrap import InlineRadios
+from crispy_forms.layout import Layout, Fieldset, Submit, Div, Field
 from django import forms
+from django.forms import BaseFormSet
 from django.utils.safestring import mark_safe
+from django_select2 import forms as s2forms
+from django.urls import reverse_lazy
+from textwrap import indent
 
-from .models import Audit, Evidence
+from .models import Audit, Evidence, Question, Answer, Section
+
+
+
+
+class SectionWidget(s2forms.ModelSelect2Widget):
+    search_fields = [
+        "title_en__icontains",
+        "title_ar__icontains",
+    ]
+
+    def __init__(self, **kwargs):
+        super().__init__(kwargs)
+        self.attrs = {"style": "width: 500px"}
+
+    def label_from_instance(self, obj):
+        section = obj
+        l = [section.title_en]
+        while section.sub_of:
+            l.append(section.sub_of.title_en)
+            section = section.sub_of
+
+        return ' | '.join(l) if obj.sub_of else obj.title_en
+
+
+class SubWidget(s2forms.ModelSelect2Widget):
+    search_fields = [
+        "title_en__icontains",
+        "title_ar__icontains",
+    ]
+
+    def __init__(self, **kwargs):
+        super().__init__(kwargs)
+        self.attrs = {"style": "width: 300px"}
+
+    def label_from_instance(self, obj):
+        print(obj)
+        section = obj
+        l = [section.title_en]
+        while section.sub_of:
+            l.append(section.sub_of.title_en)
+            section = section.sub_of
+
+        return ' | '.join(l) if obj.sub_of else obj.title_en
 
 
 class AuditForm(forms.ModelForm):
     class Meta:
         model = Audit
-        fields = '__all__'
+        fields = ['title_en', 'title_ar', 'type', 'created_for', 'derived_from', 'description_en', 'description_ar']
+
+    def __init__(self, *args, **kwargs):
+        user = kwargs.pop('user', None)
+        derived_from = kwargs.pop('derived_from', None)
+        super(AuditForm, self).__init__(*args, **kwargs)
+        if derived_from:
+            self.initial['derived_from'] = derived_from
+            self.initial['type'] = derived_from.type
+            self.initial['created_for'] = derived_from.created_for
+            self.initial['description_en'] = derived_from.description_en
+            self.initial['description_ar'] = derived_from.description_ar
+        if not (user.is_superuser or user.is_staff):
+            self.initial['type'] = user.employee.organization.type
+            self.initial['created_for'] = user.employee.organization
+            self.fields['type'].widget = forms.Field.hidden_widget()
+            self.fields['created_for'].widget = forms.Field.hidden_widget()
+
+
+class SectionForm(forms.ModelForm):
+    class Meta:
+        model = Section
+        fields = [
+            'title_en',
+            'title_ar',
+            'sub_of',
+        ]
+        widgets = {
+            "sub_of": SubWidget,
+        }
+
+
+class CreateQuestionForm(forms.ModelForm):
+    answers_type = forms.CharField(
+        required=False,
+        widget=forms.Select(choices=[
+            ('yes_no', 'Yes/No'),
+            ('yes_no_na', 'Yes/No N/A'),
+            ('yes_no_moderate_na', 'Yes/No Moderate N/A'),
+            ('custom', 'Custom'),
+        ]),
+        initial="custom")
+
+    class Meta:
+        model = Question
+        fields = [
+            'prompt_en',
+            'prompt_ar',
+            'help_text_en',
+            'help_text_ar',
+            'display_order',
+            'section',
+        ]
+        widgets = {
+            "section": SectionWidget,
+            "prompt_en": forms.Textarea(attrs={"rows": 5, "cols": 20}),
+            "prompt_ar": forms.Textarea(attrs={"rows": 5, "cols": 20}),
+            "help_text_en": forms.Textarea(attrs={"rows": 5, "cols": 20}),
+            "help_text_ar": forms.Textarea(attrs={"rows": 5, "cols": 20}),
+        }
+
+
+class ListQuestionForm(forms.ModelForm):
+    class Meta:
+        model = Question
+        fields = [
+            'prompt_en',
+            'prompt_ar',
+            'display_order',
+            'section',
+        ]
+
+
+class RequiredFormSet(BaseFormSet):
+    def __init__(self, *args, **kwargs):
+        super(RequiredFormSet, self).__init__(*args, **kwargs)
+        for form in self.forms:
+            form.empty_permitted = False
+
+
+class AnswerForm(forms.ModelForm):
+    class Meta:
+        model = Answer
+        fields = ['prompt_en', 'prompt_ar', 'weight', 'display_order']
+
+
+AnswerFormSet = forms.inlineformset_factory(Question, Answer, form=AnswerForm, extra=2)
 
 
 class QuestionAnswersWidget(forms.RadioSelect):

@@ -11,8 +11,8 @@
         {% for option in options %}
         <div class="row">
             <div class="col-8">
-                <label class="form-radio-label" for="{{ option.attrs.id }}">
-                    <input class="form-radio-input" type="radio" name="{{ option.name }}" value="{{ option.value }}" id="{{ option.attrs.id }}" {% if option.selected %}checked="checked"{% endif %}{% if option.attrs.required %} required{% endif %}>
+                <label class="form-radio-label" for="oo{{ option.attrs.id }}">
+                    <input class="form-radio-input" type="radio" name="{{ option.name }}" value="{{ option.value }}"  {% if option.attrs.checked  %} checked {% endif %} {% if option.attrs.required %} required {% endif %} >
                     <span class="form-radio-sign ml-2">{{ option.label }}</span>
                 </label>
             </div>

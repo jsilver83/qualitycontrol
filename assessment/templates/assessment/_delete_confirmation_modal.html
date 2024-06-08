@@ -1,0 +1,19 @@
+{% load questions_tags %}
+
+<div class="modal fade" id="delete_modal{{record.pk}}" role="dialog"
+     aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel{{record.pk}}">Delete Question</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                {% delete_question record %}
+            </div>
+        </div>
+    </div>
+</div>
+

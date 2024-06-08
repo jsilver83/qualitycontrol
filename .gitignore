@@ -1,0 +1,9 @@
+.hg/*
+.idea/*
+*.pyc
+*.sqlite
+*.sqlite3
+*.sql
+evidence/*
+static/*
+qualitycontrol/local_settings.py

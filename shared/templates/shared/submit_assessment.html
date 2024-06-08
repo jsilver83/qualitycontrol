@@ -1,0 +1,217 @@
+{% extends "layouts/base.html" %}
+{% load static %}
+{% load crispy_forms_tags %}
+{% load questions_tags %}
+{% load i18n %}
+
+{% block title %} Dashboard {% endblock %}
+
+<!-- Specific Page CSS goes HERE  -->
+{% block stylesheets %}{% endblock stylesheets %}
+{% block content %}
+
+    <div class="content">
+        <div class="panel-header bg-primary-gradient">
+            <div class="page-inner py-5">
+                <div class="d-flex align-items-left align-items-md-center flex-column flex-md-row">
+                    <div>
+                        <h2 class="text-white pb-2 fw-bold">Asssessment</h2>
+                        <h5 class="text-white op-7 mb-2">Quality Control System</h5>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="page-inner mt--5">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card full-height">
+                        <div class="card-body">
+                           {% include "assessment/_audit_info.html" with audit=audit %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row mb-4">
+                <div class="col-md-12">
+                    <form method="post" class="form-horizontal">
+                        {% csrf_token %}
+                        <div class="row">
+                            {% for field in form %}
+                                <div class="col-md-6">
+                                    <div class="card full-height">
+                                        <div class="card-body">
+                                            <div class="card-title">{{ forloop.counter }})&nbsp;&nbsp;{{ field.label }}</div>
+                                            <div class="card-category">{{ field.help_text }}</div>
+                                            <div data-notify="container" class="{% if field.errors %}has-error {% endif %}form-group">
+                                                {{ field }}
+                                                {% if field.errors %}
+                                                    <br>
+                                                    <div class="alert alert-danger" role="alert">
+                                                        <span data-notify="title">{% trans 'Errors' %}:</span>
+                                                        <span data-notify="message" class="text-danger">{{ field.errors }}</span>
+                                                    </div>
+                                                    <hr>
+                                                {% endif %}
+                                                <br>
+                                                <div class="row">
+                                                    <div class="col-6">
+                                                          <button class="btn btn-outline-warning" type="button" data-toggle="collapse"
+                                                        data-target="#collapseEv{{ field.field.question.pk }}" aria-expanded="false"
+                                                        aria-controls="collapseEv{{ field.field.question.pk }}">
+                                                    {% trans 'Show/Hide Evidence' %} <small id="evCount{{ field.field.question.pk }}" class="badge badge-light">{{ field.field.question.list_of_evidence.count }}</small>
+                                                </button>
+                                                    </div>
+                                                    <div class="col-6">
+                                                          <button  class="btn btn-outline-warning" type="button" data-toggle="collapse"
+                                                        data-target="#collapseTask{{ field.field.question.pk }}" aria-expanded="false"
+                                                        aria-controls="collapseTask{{ field.field.question.pk }}">
+                                                    {% trans 'Tasks' %} <small  id="tasksCount{{ field.field.question.pk }}" class="badge badge-light">{{ field.field.question.question_tasks.count }}</small>
+                                                </button>
+
+                                                    </div>
+                                                </div>
+
+
+                                                <div class="collapse" id="collapseEv{{ field.field.question.pk }}">
+                                                    <div class="card card-body">
+                                                        <button type="button" class="btn btn-primary btn-block"
+                                                                data-toggle="modal"
+                                                                data-target="#exampleModal{{ field.field.question.pk }}">
+                                                            <i class="fa fa-plus-square"></i> {% trans 'Add Evidence' %}
+                                                        </button>
+                                                        <table class="table" id="ev{{ field.field.question.pk }}">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th style="width: 15%">#</th>
+                                                                    <th style="width: 25%">{% trans 'Type' %}</th>
+                                                                    <th style="width: 25%">{% trans 'File' %}</th>
+                                                                    <th style="width: 35%">{% trans 'Notes' %}</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                            {% for evidence in field.field.question.list_of_evidence.all %}
+                                                                <tr>
+                                                                    <td>{{ forloop.counter }}</td>
+                                                                    <td>{{ evidence.get_type_display }}</td>
+                                                                    <td><a href="{% get_media_prefix %}{{ evidence.uploaded_file }}" target="_blank"><i class="fa fa-download"></i> {% trans 'Download'%}</a> </td>
+                                                                    <td>{{ evidence.notes }}</td>
+                                                                </tr>
+                                                            {% endfor %}
+                                                            </tbody>
+
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                                <div class="collapse" id="collapseTask{{ field.field.question.pk }}">
+                                                    <div class="card card-body">
+                                                         <button type="button" class="btn btn-primary btn-block"
+                                                                data-toggle="modal"
+                                                                data-target="#taskModal{{ field.field.question.pk }}">
+                                                            <i class="fa fa-plus-square"></i> {% trans 'Add Task' %}
+                                                        </button>
+                                                        <table class="table" id="task{{ field.field.question.pk }}">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th style="width: 15%">#</th>
+                                                                    <th style="width: 25%">{% trans 'Employee' %}</th>
+                                                                    <th style="width: 25%">{% trans 'Due Date' %}</th>
+                                                                    <th style="width: 35%">{% trans 'Status' %}</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                            {% for task in field.field.question.question_tasks.all %}
+                                                                <tr>
+                                                                    <td>{{ forloop.counter }}</td>
+                                                                    <td>{{ task.employee }}</td>
+                                                                    <td>{{ task.due_date }} </td>
+                                                                    <td>{{ task.get_status_display }}</td>
+                                                                </tr>
+                                                            {% endfor %}
+                                                            </tbody>
+
+                                                        </table>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <br><br>
+                            {% endfor %}
+                        </div>
+                        <div class="row">
+                            <div class="col-12">
+                                <button name="submit" class="btn btn-primary float-right ml-3"
+                                        onclick="return confirm('Do you want to submit?');">
+									<span class="btn-label">
+										<i class="fa fa-check-circle"></i>
+									</span>
+									{% trans 'Submit' %}
+								</button>
+
+                                 <button name="save" class="btn btn-primary float-right ml-3">
+									<span class="btn-label">
+										<i class="fa fa-check-circle"></i>
+									</span>
+									{% trans 'Save' %}
+								</button>
+
+                                <button class="btn btn-danger float-left mr-3">
+									<span class="btn-label">
+										<i class="fa fa-strikethrough"></i>
+									</span>
+									{% trans 'Cancel' %}
+								</button>
+
+                            </div>
+                        </div>
+                    </form>
+                    {% for field in form %}
+                    <!-- Modal -->
+                    <div class="modal fade" id="exampleModal{{ field.field.question.pk }}"  role="dialog"
+                         aria-labelledby="exampleModalLabel{{ field.field.question.pk }}" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabel{{ field.field.question.pk }}">New Evidence for the Question "{{ field.field.question }}"</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    {% create_evidence field.field.question %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                     <!-- TaskModal -->
+                    <div class="modal fade" id="taskModal{{ field.field.question.pk }}"  role="dialog"
+                         aria-labelledby="taskModalLabel{{ field.field.question.pk }}" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="taskModalLabel{{ field.field.question.pk }}">New Task for the Question "{{ field.field.question }}"</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    {% create_task field.field.question %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock content %}
+
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}
+
+{% endblock javascripts %}

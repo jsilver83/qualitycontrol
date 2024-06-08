@@ -94,10 +94,10 @@ class AuditAdmin(admin.ModelAdmin):
 
 
 class SectionAdmin(admin.ModelAdmin):
+
     list_display = (
         'title_ar',
         'title_en',
-        'sub_of',
         'display_order',
         'show_flag',
     )
@@ -154,3 +154,4 @@ admin.site.register(Section, SectionAdmin)
 admin.site.register(Question, QuestionAdmin)
 admin.site.register(Answer, AnswerAdmin)
 admin.site.register(Evidence, EvidenceAdmin)
+admin.site.register(AuditFile)

@@ -1,0 +1,142 @@
+{% extends "layouts/base.html" %}
+{% load static %}
+{% load crispy_forms_tags %}
+{% load i18n %}
+
+{% block title %} Assessment {% endblock %}
+
+<!-- Specific Page CSS goes HERE  -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block content %}
+
+<div class="content" xmlns="http://www.w3.org/1999/html">
+    <div class="panel-header bg-primary-gradient">
+        <div class="page-inner py-5">
+            <div class="d-flex align-items-left align-items-md-center flex-column flex-md-row">
+                <div>
+                    <h2 class="text-white pb-2 fw-bold">Task Details</h2>
+                    <h5 class="text-white op-7 mb-2">Quality Control System</h5>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="page-inner mt--5">
+
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card full-height">
+                    <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-4">
+                                  <label>Organization</label>
+                                    <p> {{object.employee.department.organization}}</p>
+                                </div>
+                                <div class="col-md-4">
+                                    <label>Department</label>
+                                    <p>{{object.employee.department}}</p>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="row">
+                                          <div class="col-md-6">
+                                                 <label>Status</label>
+                                    <p>{{object.get_status_display}}</p>
+                                          </div>
+                                        <div class="col-md-6">
+                                             <a href='{% url "update_task" object.pk %}'
+         class="btn btn-success btn-md " title="Update"> Complete Task </a>
+                                          </div>
+
+                                    </div>
+
+                                </div>
+                            </div>
+
+                             <div class="row">
+                                <div class="col-md-4">
+                                    <label> Employee</label>
+                                    <p>{{object.employee}}</p>
+
+                                </div>
+                                 <div class="col-md-4">
+
+                                    <label>Due Date</label>
+                                    <p>{{object.due_date}}</p>
+                                </div>
+
+                                  <div class="col-md-4">
+                                        <div class="row">
+                                          <div class="col-md-6">
+                                                 <label>Status</label>
+                                    <p>{{object.get_status_display}}</p>
+                                          </div>
+                                        <div class="col-md-6">
+                                             <a href='{% url "update_task" object.pk %}'
+         class="btn btn-danger btn-md " title="Update">Cancel   Task </a>
+                                          </div>
+
+                                    </div>
+
+                                </div>
+                            </div>
+
+
+                    </div>
+                </div>
+            </div>
+                             </div>
+
+                                  <div class="row">
+                <div class="col-md-12">
+                    <div class="card full-height">
+
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <label>Assessment</label>
+                                    <p>{{object.question.audit}}</p>
+
+
+                                </div>
+                                <div class="col-md-6">
+                                    <label>Question</label>
+                                     <p>{{object.question}}</p>
+
+                                </div>
+                            </div>
+                             <div class="row">
+                                <div class="col-md-12">
+                                    <label>Task Description</label>
+                                    <p>{{object.description}}</p>
+
+
+                                </div>
+
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+          <div class="row">
+                <div class="col-md-12">
+                    <div class="card full-height">
+
+                        <div class="card-body">
+
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+
+    </div>
+
+</div>
+
+
+{% endblock content %}

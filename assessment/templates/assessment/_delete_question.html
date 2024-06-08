@@ -1,0 +1,55 @@
+{% load crispy_forms_filters %}
+{% load i18n %}
+
+<div class="p-3 h-100 d-flex flex-column">
+    <div class="chat-textarea mt-auto {{ question.pk }}-comment-div">
+        <div id="{{ question.pk }}-error"></div>
+        <form id="{{ question.pk }}_form" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+        <p>Are you sure you want to delete "{{ question }}"?</p>
+            <button class="btn btn-primary" type="submit"><i class="fa fa-check-circle"></i> {% trans 'Confirm Delete' %}</button>
+
+       </form>
+    </div>
+</div>
+
+
+<script type="application/javascript">
+    $(function () {
+        $('#{{ question.pk }}_form').on('submit', function (e) {
+            e.preventDefault();
+            $.ajax({
+                url: '{% url 'delete_question' question.pk %}',
+                type: "POST",
+                enctype: 'multipart/form-data',
+                processData: false,
+                contentType: false,
+                data: new FormData(this),
+                success: function (json) {
+                    {#$('.{{ question.pk }}-comment-div').html('<div class="alert alert-success" data-alert>{% trans 'Question was deleted successfully...' %}</div>');#}
+                    swal("SUCCESS", "Question was deleted successfully", {
+                        icon: "success",
+                        buttons: {
+                            confirm: {
+                                className: 'btn btn-success'
+                            }
+                        },
+                    }).then(
+                        function () {
+                            $('.modal').modal('hide');
+                             location.reload();
+                        }
+                    );
+                    console.log(json);
+                    console.log("success");
+                },
+                error: function (xhr, errmsg, err) {
+                    $('#{{ question.pk }}-error').html("<div class='alert alert-danger' data-alert>{% trans 'Error' %}: " + xhr.responseText +
+                        " <a href='#' class='close'>&times;</a></div>");
+                    console.log(xhr.status + ": " + xhr.responseText);
+                }
+            });
+        });
+    });
+</script>
+

@@ -1,0 +1,23 @@
+
+<a href='{% url "update_task" record.pk %}'
+         class="btn btn-md " title="Update">
+<i class="fa fa-edit"></i>
+</a>
+
+{% if record.status == "NEW" %}
+<a href='{% url "complete_task" record.pk %}'
+         class="btn btn-md " title="Complete Task">
+<i class="fa fa-check"></i>
+</a>
+
+<a href='{% url "cancel_task" record.pk %}'
+         class="btn btn-md " title="Cancel Task">
+<i class="fa fa-times"></i>
+</a>
+{% endif %}
+
+
+
+
+
+

@@ -1,4 +1,4 @@
-Django==4.2.1
+Django~=4.2.1
 django-constrainedfilefield==5.0.0
 django-phonenumber-field==7.1.0
 phonenumbers==8.13.11
@@ -8,3 +8,13 @@ python-magic==0.4.27
 django-crispy-forms==2.0
 crispy-bootstrap4==2022.1
 django-addanother==2.2.2
+django-tables2==2.7.0
+django-filter==23.5
+django-select2==8.1.2
+et-xmlfile==1.1.0
+lml==0.1.0
+openpyxl==3.0.10
+pyexcel==0.7.0
+pyexcel-io==0.6.6
+pyexcel-xlsx==0.6.0
+tablib==3.6.1

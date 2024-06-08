@@ -1,0 +1,64 @@
+{% load crispy_forms_filters %}
+{% load i18n %}
+
+<div class="p-3 h-100 d-flex flex-column">
+    <div class="chat-textarea mt-auto section-div">
+        <div id="error"></div>
+        <form id="section_form" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{ section_form|crispy }}
+            <button class="btn btn-primary"  type="submit" value="add_section" ><i class="fa fa-check-circle"></i> {% trans 'Add' %}</button>
+        </form>
+    </div>
+</div>
+
+<script type="application/javascript">
+    $(function () {
+        $('#section_form').on('submit', function (e) {
+            e.preventDefault();
+            $.ajax({
+                url: '{% url 'create_section' %}',
+                type: "POST",
+                enctype: 'multipart/form-data',
+                processData: false,
+                contentType: false,
+                data: new FormData(this),
+                success: function (json) {
+                    {#$('.section-div').html('<div class="alert alert-success" data-alert>{% trans 'Section was added successfully...' %}</div>');#}
+                    swal("SUCCESS", "Section was added successfully", {
+                        icon: "success",
+                        buttons: {
+                            confirm: {
+                                className: 'btn btn-success'
+                            }
+                        },
+                    }).then(
+                        function () {
+                            document.getElementById("section_form").reset();
+                             $('.modal').modal('hide');
+                        }
+                    );
+                    console.log(json);
+                    console.log("success");
+                    const result = JSON.parse(json);
+                    console.log(result[0]['pk']);
+                    section_id = result[0]['pk']
+                    section_title = result[0]['fields']['title_en']
+                    if ($('#id_section').find("option[value='" + section_id + "']").length) {
+                            $('#id_section').val(section_id).trigger('change');
+                        } else {
+                            // Create a DOM Option and pre-select by default
+                            var newOption = new Option(section_title, section_id, true, true);
+                            // Append it to the select
+                            $('#id_section').append(newOption).trigger('change');
+                        };
+                },
+                error: function (xhr, errmsg, err) {
+                    $('#error').html("<div class='alert alert-danger' data-alert>{% trans 'Error' %}: " + xhr.responseText +
+                        " <a href='#' class='close'>&times;</a></div>");
+                    console.log(xhr.status + ": " + xhr.responseText);
+                }
+            });
+        });
+    });
+</script>

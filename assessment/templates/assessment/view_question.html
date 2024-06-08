@@ -1,0 +1,78 @@
+{% extends "layouts/base.html" %}
+{% load static %}
+{% load crispy_forms_tags %}
+{% load questions_tags %}
+{% load i18n %}
+
+{% block title %} Assessment {% endblock %}
+
+<!-- Specific Page CSS goes HERE  -->
+{% block stylesheets %}
+{% endblock stylesheets %}
+
+
+{% block content %}
+
+<div class="content">
+    <div class="panel-header bg-primary-gradient">
+        <div class="page-inner py-5">
+            <div class="d-flex align-items-left align-items-md-center flex-column flex-md-row">
+                <div>
+                    <h2 class="text-white pb-2 fw-bold"> Assessment Questions </h2>
+                    <h5 class="text-white op-7 mb-2">{{audit}}</h5>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="page-inner mt--5">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card full-height">
+                    <div class="card-body">
+                         {{object.prompt_en}}
+                         {{object.prompt_ar}}
+                         {{object.section}}
+
+
+                            <div class="table-div" id="answers_table">
+                                <table class="table">
+
+                                    <thead>
+                                    <tr>
+
+                                         <th>Prompt(EN)</th>
+                                         <th>Prompt(AR)</th>
+                                         <th>Weight</th>
+                                         <th>Display Order</th>
+
+                                    </tr>
+                                    </thead>
+
+
+                                     {% for answer in answers %}
+                                    <tr>
+
+                                        <td> {{ answer.prompt_en }} </td>
+                                          <td> {{ answer.prompt_ar }}</td>
+                                          <td>  {{ answer.weight }}</td>
+                                          <td>  {{ answer.display_order }}</td>
+
+                                    </tr>
+                                    {% endfor %}
+                                </table>
+                            </div>
+
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+{% endblock content %}
+

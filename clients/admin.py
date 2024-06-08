@@ -91,6 +91,19 @@ class EmployeeAdmin(admin.ModelAdmin):
     autocomplete_fields = EmployeeTabularInline.autocomplete_fields
 
 
+class TaskAdmin(admin.ModelAdmin):
+    list_display = (
+        'description',
+        'employee',
+        'create_date',
+        'due_date',
+        'question',
+        'status',
+    )
+
+
 admin.site.register(Organization, OrganizationAdmin)
 admin.site.register(Department, DepartmentAdmin)
 admin.site.register(Employee, EmployeeAdmin)
+admin.site.register(Task, TaskAdmin)
+

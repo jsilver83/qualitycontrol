@@ -1,0 +1,26 @@
+
+<a href='{% url "view_assessment" record.pk %}'
+         class="btn btn-md " title="view">
+<i class="fa fa-eye"></i>
+</a>
+
+{% if record.status == "DRAFT" %}
+
+<a href='{% url "questions" record.pk %}'
+         class="btn btn-md " title="update">
+<i class="fa fa-edit"></i>
+</a>
+
+
+<a href='{% url "submit_assessment" record.pk %}'
+         class="btn btn-md " title="submit">
+<i class="fa fa-paper-plane"></i>
+</a>
+
+{% endif %}
+
+<a href='{% url "derive_assessment" record.pk %}'
+         class="btn btn-md " title="Derive">
+<i class="fa fa-plus"></i>
+</a>
+

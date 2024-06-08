@@ -9,3 +9,7 @@ local_settings.py
 *.sqlite
 *.sqlite3
 *.sql
+
+evidence/*.pdf
+evidence/*.png
+evidence/*.jpg

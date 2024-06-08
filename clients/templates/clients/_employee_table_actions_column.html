@@ -1,0 +1,12 @@
+
+<a href='{% url "update_employee" record.pk %}'
+         class="btn btn-md " title="update">
+<i class="fa fa-edit"></i>
+</a>
+
+<a href='{% url "delete_employee" record.pk %}'
+         class="btn btn-md " title="delete"  onclick="return confirm(' you want to delete?');">
+<i class="fa fa-trash"></i>
+</a>
+
+

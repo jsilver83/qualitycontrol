@@ -2,31 +2,38 @@
 {% load i18n %}
 {% load static %}
 
+{% block stylesheets %}
+{{ form.media.css }}
+
+{% endblock stylesheets %}
+
 <div class="p-3 h-100 d-flex flex-column">
     <div class="chat-textarea mt-auto {{ prefix }}-comment-div">
         <div id="{{ prefix }}-error"></div>
-        <form id="{{ prefix }}_form" method="post" enctype="multipart/form-data">
+        <form id="{{ prefix }}_taskform" method="post" enctype="multipart/form-data">
             {% csrf_token %}
             {{ form|crispy }}
-            <button class="btn btn-primary" type="submit"><i class="fa fa-check-circle"></i> {% trans 'Submit Evidence' %}</button>
+            <button class="btn btn-primary" type="submit"><i class="fa fa-check-circle"></i> {% trans 'Add Task' %}</button>
         </form>
     </div>
 </div>
-
+{{ form.media.js }}
 <script type="application/javascript">
+
+
     $(function () {
-        $('#{{ prefix }}_form').on('submit', function (e) {
+        $('#{{ prefix }}_taskform').on('submit', function (e) {
             e.preventDefault();
             $.ajax({
-                url: '{% url 'evidence_create' question.pk %}',
+                url: '{% url 'create_task' question.pk %}',
                 type: "POST",
                 enctype: 'multipart/form-data',
                 processData: false,
                 contentType: false,
                 data: new FormData(this),
                 success: function (json) {
-                    {#$('.{{ prefix }}-comment-div').html('<div class="alert alert-success" data-alert>{% trans 'Your comment was submitted successfully...' %}</div>');#}
-                    swal("SUCCESS", "Evidence was added successfully", {
+                    {#$('.{{ prefix }}-comment-div').html('<div class="alert alert-success" data-alert>{% trans 'Your task was added successfully...' %}</div>');#}
+                    swal("SUCCESS", "Task was added successfully", {
                         icon: "success",
                         buttons: {
                             confirm: {
@@ -35,26 +42,26 @@
                         },
                     }).then(
                         function () {
-                            document.getElementById("{{ prefix }}_form").reset();
+                            document.getElementById("{{ prefix }}_taskform").reset();
                             $('.modal').modal('hide');
                         }
                     );
                     console.log(json);
                     console.log("success");
-                    added_ev =  $.parseJSON(json);
-                    console.log(added_ev);
-                    num = $('#ev{{question.pk}} tr').length;
-                    $('#evCount{{question.pk}}').text(num);
-                    $('#ev{{question.pk}} tbody').append(
-                    "<tr><td>" + num  +"</td><td>" + added_ev.type + "</td><td>" +
-                     '<a href="{% get_media_prefix %}{{ added_ev.uploaded_file }}" target="_blank"><i class="fa fa-download"></i> {% trans 'Download'%}</a>'
-                      + "</td><td>" + added_ev.notes + "</td></tr>");
+                    added_task =  $.parseJSON(json);
+                    console.log(added_task);
+                    num = $('#task{{question.pk}} tr').length;
+                    $('#tasksCount{{question.pk}}').text(num);
+                    $('#task{{question.pk}} tbody').append(
+                    "<tr><td>" + num  +"</td><td>" + added_task.employee + "</td><td>" + added_task.due_date + "</td><td>" + added_task.status + "</td></tr>");
+
 
                 },
                 error: function (xhr, errmsg, err) {
                     $('#{{ prefix }}-error').html("<div class='alert alert-danger' data-alert>{% trans 'Error' %}: " + xhr.responseText +
                         " <a href='#' class='close'>&times;</a></div>");
                     console.log(xhr.status + ": " + xhr.responseText);
+
                 }
             });
         });

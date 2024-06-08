@@ -1,0 +1,10 @@
+
+<a href='{% url "update_question" record.audit_id record.pk %}'
+         class="btn btn-md " title="Update Question">
+<i class="fa fa-edit"></i>
+</a>
+
+<a href='{% url "delete_question"  record.pk %}' class="btn btn-md confirm-delete" title="Delete Question"  data-toggle="modal"
+data-target="#delete_modal{{record.pk}}" question_id={{record.pk}}>
+  <i class="fa fa-trash" style="color:red"></i>
+</a>

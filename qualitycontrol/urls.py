@@ -21,15 +21,20 @@ from django.contrib import admin
 from django.contrib.auth.views import LogoutView, LoginView
 from django.urls import path, include
 
-from shared.views import HomeView, CreateEvidenceView
+from shared.views import HomeView, CreateEvidenceView, SubmitAssessmentView
 
 urlpatterns = i18n_patterns(
+    path("select2/", include("django_select2.urls")),
+
     path('', HomeView.as_view(), name='home'),
+    path('assessment/<int:audit_id>', SubmitAssessmentView.as_view(), name='submit_assessment'),
     path('evidence/create/<int:question_pk>/', CreateEvidenceView.as_view(), name='evidence_create'),
     path('login/', LoginView.as_view(), name='login'),
     path('register/', LoginView.as_view(), name='register'),
     path('logout/', LogoutView.as_view(next_page=settings.LOGOUT_REDIRECT_URL), name='logout'),
     path('admin/', admin.site.urls),
+    path('assessment/', include('assessment.urls')),
+    path('client/', include('clients.urls')),
     prefix_default_language=False,
 )
 

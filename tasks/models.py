@@ -124,11 +124,11 @@ class Task(models.Model):
     )
     # endregion audit
 
-    def __str__(self):
-        return '{} {}'.format(self.assigned_employee, self.question)
-
     def description(self):
         if get_language() == 'ar':
-            return self.description_ar
+            return self.description_ar or self.description_en or ''
         else:
-            return self.description_en
+            return self.description_en or self.description_ar or ''
+
+    def __str__(self):
+        return '{} {} {}'.format(self.assigned_employee, self.question, self.description())

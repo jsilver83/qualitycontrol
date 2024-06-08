@@ -100,11 +100,14 @@ class Organization(models.Model):
     )
     # endregion fields
 
-    def __str__(self):
+    def name(self):
         if get_language() == 'ar':
-            return '{} ({})'.format(self.name_ar, self.get_type_display())
+            return self.name_ar or self.name_en or ''
         else:
-            return '{} ({})'.format(self.name_en, self.get_type_display())
+            return self.name_en or self.name_ar or ''
+
+    def __str__(self):
+        return '{} ({})'.format(self.name(), self.get_type_display())
 
 
 class Department(models.Model):
@@ -131,17 +134,14 @@ class Department(models.Model):
     )
     # endregion fields
 
-    def title(self):
-        if get_language() == 'ar':
-            return self.title_ar
-        else:
-            return self.title_en
-
     def __str__(self):
         if get_language() == 'ar':
-            return self.title_ar
+            return self.title_ar or self.title_en or ''
         else:
-            return self.title_en
+            return self.title_en or self.title_ar or ''
+
+    def title(self):
+        return str(self)
 
 
 class Employee(models.Model):
@@ -242,32 +242,28 @@ class Employee(models.Model):
     )
     # endregion fields
 
-
     @property
     def organization(self):
-        return self.department.organization
+        if self.department:
+            return self.department.organization
 
     def has_owner_permissions(self):
         return self.job_title in [self.JobTitles.OWNER, self.JobTitles.CEO, self.JobTitles.HR]
 
-
     def first_name(self):
         if get_language() == 'ar':
-            return '{}'.format(self.first_name_ar)
+            return self.first_name_ar or self.first_name_en or ''
         else:
-            return '{}'.format(self.first_name_en)
+            return self.first_name_en or self.first_name_ar or ''
 
     def last_name(self):
         if get_language() == 'ar':
-            return '{}'.format(self.last_name_ar)
+            return self.last_name_ar or self.last_name_en or ''
         else:
-            return '{}'.format(self.last_name_en)
+            return self.last_name_en or self.last_name_ar or ''
 
     def full_name(self):
-        if get_language() == 'ar':
-            return '{} {}'.format(self.first_name_ar, self.last_name_ar)
-        else:
-            return '{} {}'.format(self.first_name_en, self.last_name_en)
+        return '{} {}'.format(self.first_name, self.last_name)
 
     def __str__(self):
         if get_language() == 'ar':

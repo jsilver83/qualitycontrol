@@ -93,17 +93,14 @@ class Section(models.Model):
     def score_in_words(self, audit):
         return '{} out of {}'.format(self.total_score(audit), self.full_score(audit))
 
-    def title(self):
-        if get_language() == 'ar':
-            return self.title_ar
-        else:
-            return self.title_en
-
     def __str__(self):
         if get_language() == 'ar':
-            return self.title_ar
+            return self.title_ar or self.title_en or ''
         else:
-            return self.title_en
+            return self.title_en or self.title_ar or ''
+
+    def title(self):
+        return str(self)
 
 
 class Audit(models.Model):
@@ -211,9 +208,9 @@ class Audit(models.Model):
 
     def __str__(self):
         if get_language() == 'ar':
-            return self.title_ar
+            return self.title_ar or self.title_en or ''
         else:
-            return self.title_en
+            return self.title_en or self.title_ar or ''
 
     def title(self):
         return str(self)
@@ -313,9 +310,9 @@ class Question(models.Model):
 
     def __str__(self):
         if get_language() == 'ar':
-            return self.prompt_ar
+            return self.prompt_ar or self.prompt_en or ''
         else:
-            return self.prompt_en
+            return self.prompt_en or self.prompt_ar or ''
 
     def prompt(self):
         return str(self)
@@ -440,9 +437,9 @@ class Answer(models.Model):
 
     def __str__(self):
         if get_language() == 'ar':
-            return self.prompt_ar
+            return self.prompt_ar or self.prompt_en or ''
         else:
-            return self.prompt_en
+            return self.prompt_en or self.prompt_ar or ''
 
     def prompt(self):
         return str(self)

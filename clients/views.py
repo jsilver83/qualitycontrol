@@ -1,7 +1,7 @@
 import datetime
 
 from django.contrib.auth.models import User
-from django.urls import reverse
+# from django.urls import reverse_lazy
 from django.views.generic import DetailView, CreateView, UpdateView, DeleteView
 from django_tables2 import SingleTableView
 
@@ -31,7 +31,7 @@ class CreateOrganizationView(CreateView):
     template_name = "clients/create_organization.html"
 
     def get_success_url(self):
-        return reverse('update_departments', args=(self.object.id, ))
+        return reverse_lazy('update_departments', args=(self.object.id, ))
 
 
 class UpdateDepartmentsView(UpdateView):
@@ -74,7 +74,7 @@ class UpdateOrganizationView(UpdateView):
     model = Organization
 
     def get_success_url(self):
-        return reverse('update_departments', args=(self.object.id,))
+        return reverse_lazy('update_departments', args=(self.object.id,))
 
 
 class DeleteOrganizationView(DetailView):
@@ -108,7 +108,7 @@ class CreateEmployeeView(CreateView):
     template_name = "clients/create_employee.html"
 
     def get_success_url(self):
-        return reverse('employees_list', args=(self.kwargs['org_id'],))
+        return reverse_lazy('employees_list', args=(self.kwargs['org_id'],))
 
     def get_form_kwargs(self):
         kwargs = super(CreateEmployeeView, self).get_form_kwargs()
@@ -134,7 +134,7 @@ class UpdateEmployeeView(UpdateView):
     model = Employee
 
     def get_success_url(self):
-        return reverse('employees_list', args=(self.object.department.organization.id,))
+        return reverse_lazy('employees_list', args=(self.object.department.organization.id,))
 
     def get_form_kwargs(self):
         kwarg = super(UpdateEmployeeView, self).get_form_kwargs()
@@ -156,7 +156,7 @@ class DeleteEmployeeView(DeleteView):
     model = Employee
 
     def get_success_url(self):
-        return reverse('employees_list', args=(self.object.department.organization.id,))
+        return reverse_lazy('employees_list', args=(self.object.department.organization.id,))
 
     def get(self, request, *args, **kwargs):
         return self.delete(request, *args, **kwargs)

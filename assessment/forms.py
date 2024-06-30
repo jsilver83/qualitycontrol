@@ -3,11 +3,12 @@ from crispy_forms.bootstrap import InlineRadios
 from crispy_forms.layout import Layout, Fieldset, Submit, Div, Field
 from django import forms
 from django.forms import BaseFormSet
-from django.utils.safestring import mark_safe
+from django.utils.translation import gettext_lazy as _
 from django_select2 import forms as s2forms
 from django.urls import reverse_lazy
 from textwrap import indent
 
+from shared.forms import MyDateTimeInput
 from .models import Audit, Evidence, Question, Answer, Section
 
 
@@ -23,12 +24,12 @@ class SectionWidget(s2forms.ModelSelect2Widget):
 
     def label_from_instance(self, obj):
         section = obj
-        l = [section.title_en]
+        l = [section.title()]
         while section.sub_of:
-            l.append(section.sub_of.title_en)
+            l.append(section.sub_of.title())
             section = section.sub_of
 
-        return ' | '.join(l) if obj.sub_of else obj.title_en
+        return ' | '.join(l) if obj.sub_of else obj.title()
 
 
 class SubWidget(s2forms.ModelSelect2Widget):
@@ -42,7 +43,6 @@ class SubWidget(s2forms.ModelSelect2Widget):
         self.attrs = {"style": "width: 300px"}
 
     def label_from_instance(self, obj):
-        print(obj)
         section = obj
         l = [section.title_en]
         while section.sub_of:
@@ -55,23 +55,27 @@ class SubWidget(s2forms.ModelSelect2Widget):
 class AuditForm(forms.ModelForm):
     class Meta:
         model = Audit
-        fields = ['title_en', 'title_ar', 'type', 'created_for', 'derived_from', 'description_en', 'description_ar']
+        fields = ['title_en', 'title_ar', 'created_for', 'inspection_date', 'derived_from', 'description_en', 'description_ar']
 
     def __init__(self, *args, **kwargs):
         user = kwargs.pop('user', None)
         derived_from = kwargs.pop('derived_from', None)
         super(AuditForm, self).__init__(*args, **kwargs)
+        self.fields['title_ar'].required = True
+        self.fields['title_en'].required = False
+        self.fields['inspection_date'].required = True
+        self.fields['inspection_date'].widget = MyDateTimeInput(attrs={'style': 'direction: ltr; text-align: right'})
         if derived_from:
             self.initial['derived_from'] = derived_from
-            self.initial['type'] = derived_from.type
+            # self.initial['type'] = derived_from.type
             self.initial['created_for'] = derived_from.created_for
             self.initial['description_en'] = derived_from.description_en
             self.initial['description_ar'] = derived_from.description_ar
-        if not (user.is_superuser or user.is_staff):
-            self.initial['type'] = user.employee.organization.type
-            self.initial['created_for'] = user.employee.organization
-            self.fields['type'].widget = forms.Field.hidden_widget()
-            self.fields['created_for'].widget = forms.Field.hidden_widget()
+        # if not (user.is_superuser or user.is_staff):
+        #     self.initial['type'] = user.employee.organization.type
+        #     self.initial['created_for'] = user.employee.organization
+        #     self.fields['type'].widget = forms.Field.hidden_widget()
+        #     self.fields['created_for'].widget = forms.Field.hidden_widget()
 
 
 class SectionForm(forms.ModelForm):
@@ -106,6 +110,7 @@ class CreateQuestionForm(forms.ModelForm):
             'help_text_en',
             'help_text_ar',
             'display_order',
+            'is_bonus',
             'section',
         ]
         widgets = {
@@ -114,6 +119,7 @@ class CreateQuestionForm(forms.ModelForm):
             "prompt_ar": forms.Textarea(attrs={"rows": 5, "cols": 20}),
             "help_text_en": forms.Textarea(attrs={"rows": 5, "cols": 20}),
             "help_text_ar": forms.Textarea(attrs={"rows": 5, "cols": 20}),
+            "is_bonus": forms.Select(choices=[(None, '---'), (True, _('Yes')), (False, _('No'))]),
         }
 
 
@@ -206,4 +212,3 @@ class EvidenceForm(forms.ModelForm):
                 raise forms.ValidationError('Attachment field is required.')
 
         return cleaned_data
-

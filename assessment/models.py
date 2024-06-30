@@ -2,11 +2,14 @@ from constrainedfilefield.fields import ConstrainedFileField
 from django.conf import settings
 from django.contrib.auth import get_user_model
 from django.db import models
-from django.db.models import Max
+from django.db.models import Max, Q
 from django.utils import timezone
+from django.utils.functional import cached_property
 from django.utils.translation import gettext_lazy as _, get_language
 from pyexcel_xlsx import get_data
 import json
+
+from assessment.utils import full_score, total_score
 
 User = settings.AUTH_USER_MODEL
 
@@ -48,6 +51,9 @@ class Section(models.Model):
 
     # endregion fields
 
+    class Meta:
+        ordering = ('display_order', 'title_ar', 'title_en')
+
     @property
     def root_section(self):
         root_section = self
@@ -68,21 +74,18 @@ class Section(models.Model):
 
         return full_path
 
-    def full_score(self, audit):
-        full_score = 0
-        for question in self.questions.filter(audit=audit):
-            if question.is_scored():
-                full_score += question.weight()
+    def questions_of_subsections(self, audit):
+        all_sub_sections = Section.objects.filter(Q(sub_of=self)
+                                                  | Q(sub_of__sub_of=self)
+                                                  | Q(sub_of__sub_of__sub_of=self))
 
-        return full_score
+        return Question.objects.filter(audit=audit, section__in=all_sub_sections)
+
+    def full_score(self, audit):
+        return full_score(self.questions_of_subsections(audit=audit))
 
     def total_score(self, audit):
-        total = 0
-        for question in self.questions.filter(audit=audit):
-            if question.is_scored():
-                total += question.score()
-
-        return total
+        return total_score(self.questions_of_subsections(audit=audit))
 
     def weighted_total(self, audit):
         if self.full_score(audit=audit):
@@ -107,9 +110,11 @@ class Audit(models.Model):
     class Types(models.TextChoices):
         RESTAURANTS = 'RESTAURANTS', _('Restaurants')
         HOTELS = 'HOTELS', _('Hotels')
+        PILGRIMS_CENTER = 'PILGRIMS_CENTER', _('Pilgrims Center')
         MISC = 'MISC', _('Miscellaneous')
 
     class Status(models.TextChoices):
+        TEMPLATE = 'TEMPLATE', _('Template')
         DRAFT = 'DRAFT', _('Draft')
         SUBMITTED = 'SUBMITTED', _('Submitted')
 
@@ -118,13 +123,15 @@ class Audit(models.Model):
         _('Title (AR)'),
         max_length=512,
         blank=True,
+        help_text=_('Write a meaningful and descriptive title (or name) for this audit in Arabic.'),
     )
 
     title_en = models.CharField(
         _('Title (EN)'),
         max_length=512,
         blank=False,
-        unique=True,
+        unique=False,
+        help_text=_('Write a meaningful and descriptive title (or name) for this audit in English.'),
     )
 
     description_ar = models.TextField(
@@ -151,6 +158,13 @@ class Audit(models.Model):
         on_delete=models.SET_NULL,
         verbose_name=_('Created For'),
         related_name='audits',
+    )
+
+    inspection_date = models.DateTimeField(
+        _('Inspection Date'),
+        blank=True,
+        null=True,
+        help_text=_('Date/time of the inspection visit'),
     )
 
     derived_from = models.ForeignKey(
@@ -215,30 +229,28 @@ class Audit(models.Model):
     def title(self):
         return str(self)
 
+    @cached_property
     def full_score(self):
-        full_score = 0
-        for question in self.questions.all():
-            if question.is_scored():
-                full_score += question.weight()
+        return full_score(self.questions.all())
 
-        return full_score
-
+    @cached_property
     def total_score(self):
-        total = 0
-        for question in self.questions.all():
-            if question.is_scored():
-                total += question.score()
+        return total_score(self.questions.all())
 
-        return total
-
+    @cached_property
     def weighted_total(self):
-        if self.full_score():
-            return self.total_score() / self.full_score() * 100
+        if self.full_score:
+            return self.total_score / self.full_score * 100
+        else:
+            return 0
 
     weighted_total.short_description = _('Weighted Total (%)')
 
+    @cached_property
     def score_in_words(self):
-        return '{} out of {}'.format(self.total_score(), self.full_score())
+        from django.contrib.humanize.templatetags.humanize import number_format
+        return '{} / {} (%{})'.format(self.total_score, self.full_score,
+                                      number_format(self.weighted_total, decimal_pos=2))
 
     def get_sections(self):
         root_sections = {}
@@ -255,6 +267,9 @@ class Audit(models.Model):
                 root_sections[section.root_section].append(section)
 
         return root_sections
+
+    def questions_count(self):
+        return self.questions.count()
 
 
 class Question(models.Model):
@@ -303,10 +318,15 @@ class Question(models.Model):
         blank=True,
     )
 
+    is_bonus = models.BooleanField(
+        _('Is a Bonus Question?'),
+        default=False,
+    )
+
     # endregion fields
 
     class Meta:
-        ordering = ('audit', 'section', 'display_order',)
+        ordering = ('audit', 'section', 'display_order', 'prompt_ar', 'prompt_en', )
 
     def __str__(self):
         if get_language() == 'ar':
@@ -317,6 +337,8 @@ class Question(models.Model):
     def prompt(self):
         return str(self)
 
+    prompt.short_description = _('Prompt')
+
     def help_text(self):
         if get_language() == 'ar':
             return self.help_text_ar
@@ -324,7 +346,10 @@ class Question(models.Model):
             return self.help_text_en
 
     def get_the_answer(self):
-        return self.answers.filter(selected_answer=True).first()
+        if self.answers.filter(selected_answer=True).exists():
+            return self.answers.filter(selected_answer=True).first()
+
+    get_the_answer.short_description = _('Selected Answer')
 
     def is_answered(self):
         return self.answers.filter(selected_answer=True).exists()
@@ -372,6 +397,18 @@ class Question(models.Model):
             the_new_answer.answered_on = timezone.now()
             the_new_answer.selected_answer = True
             the_new_answer.save()
+
+    def evidences(self):
+        return self.list_of_evidence.filter(type__in=[
+            Evidence.Types.VIDEO,
+            Evidence.Types.PICTURE,
+            Evidence.Types.MISC,
+        ])
+
+    def notes(self):
+        return self.list_of_evidence.filter(type__in=[
+            Evidence.Types.TEXT_NOTE,
+        ])
 
 
 class Answer(models.Model):
@@ -529,7 +566,59 @@ class AuditFile(models.Model):
         data = get_data(self.filename.file)
         print(json.dumps(data["Checklist"][0][4]))
         for row in data["Checklist"]:
-            if len(row) > 5:
+            if len(row) == 5:
+
+                main_section, c_main = Section.objects.get_or_create(title_ar=row[0])
+                sub_section, c_sub = Section.objects.get_or_create(title_ar=row[1])
+                if c_sub:
+                    sub_section.sub_of = main_section
+                    sub_section.save()
+
+                # section = Section.objects.filter(title_en=row[2]).first()
+                # if not section:
+                #     section2 = Section.objects.filter(title_en=row[1]).first()
+                #     if not section2:
+                #         section1 = Section.objects.filter(title_en=row[0]).first()
+                #         if not section1:
+                #             section1 = Section.objects.create(title_en=row[0], title_ar=row[0])
+                #         if row[0] != row[1]:
+                #             section2 = Section.objects.create(title_en=row[1], title_ar=row[1], sub_of=section1)
+                #         else:
+                #             section2 = section1
+                #     if row[2] != row[1]:
+                #         section = Section.objects.create(title_en=row[2], title_ar=row[2], sub_of=section2)
+                #     else:
+                #         section = section2
+
+                q = Question.objects.create(
+                    prompt_en=row[3], prompt_ar=row[2], section=sub_section, audit=self.audit)
+
+                Answer.objects.create(
+                    question=q,
+                    prompt_en="Yes",
+                    prompt_ar="Yes",
+                    weight=1,
+                )
+
+                Answer.objects.create(
+                    question=q,
+                    prompt_en="No",
+                    prompt_ar="No",
+                    weight=0,
+                )
+
+                Answer.objects.create(
+                    question=q,
+                    prompt_en="N/A",
+                    prompt_ar="N/A",
+                    weight=None,
+                )
+
+    def multi_section_old(self):
+        data = get_data(self.filename.file)
+        print(json.dumps(data["Checklist"][0][4]))
+        for row in data["Checklist"]:
+            if len(row) == 5:
 
                 section = Section.objects.filter(title_en=row[2]).first()
                 if not section:
@@ -587,6 +676,70 @@ class AuditFile(models.Model):
                 answer2.selected_answer = row[2] == 0
                 answer2.save()
 
+    def import_excel(self):
+        from openpyxl import Workbook, load_workbook
+        from shared.utils import remove_bullet_numbering
+
+        workbook = load_workbook(filename=self.filename.file)
+        data = get_data(self.filename.file)
+        sheet_data = data[workbook.sheetnames[0]]
+
+        # audit = Audit.objects.create(
+        #     title_ar='{} - {}'.format(workbook.sheetnames[0], remove_bullet_numbering(sheet_data[2][0], ":")),
+        #     title_en='{} - {}'.format(workbook.sheetnames[0], remove_bullet_numbering(sheet_data[2][0], ":")),
+        #     type=Audit.Types.PILGRIMS_CENTER,
+        #     status=Audit.Status.DRAFT,
+        #     created_for=None,
+        # )
+
+        for i in range(7, len(sheet_data)-1):
+            row = sheet_data[i]
+            if len(row) >= 4:
+                main_section, c_main = Section.objects.get_or_create(title_ar=remove_bullet_numbering(row[0]))
+                sub_section, c_sub = Section.objects.get_or_create(title_ar=remove_bullet_numbering(row[1]))
+                if c_sub:
+                    sub_section.sub_of = main_section
+                    sub_section.save()
+
+                if workbook.worksheets[0].cell(i+1, 3).fill.fgColor.rgb in ["FFA0D565", "FF92D050"]:
+                    is_bonus = True
+                else:
+                    is_bonus = False
+
+                q = Question.objects.create(
+                    prompt_ar=remove_bullet_numbering(row[2]),
+                    prompt_en=remove_bullet_numbering(row[2]),
+                    section=sub_section,
+                    audit=self.audit,
+                    is_bonus=is_bonus,
+                )
+
+                Answer.objects.create(
+                    question=q,
+                    prompt_en="Compliant",
+                    prompt_ar="ممتثل",
+                    weight=1,
+                    selected_answer=row[3] == "ممتثل",
+                )
+
+                Answer.objects.create(
+                    question=q,
+                    prompt_en="Non-Compliant",
+                    prompt_ar="غير ممتثل",
+                    weight=0,
+                    selected_answer=row[3] == "غير ممتثل",
+                )
+
+                Answer.objects.create(
+                    question=q,
+                    prompt_en="N/A",
+                    prompt_ar="N/A",
+                    weight=None,
+                    selected_answer=row[3] == "لا ينطبق",
+                )
+            else:
+                break
+
     def save(self):
-        self.multi_section()
+        self.import_excel()
         return super(AuditFile, self).save()

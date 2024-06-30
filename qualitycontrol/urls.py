@@ -21,12 +21,13 @@ from django.contrib import admin
 from django.contrib.auth.views import LogoutView, LoginView
 from django.urls import path, include
 
-from shared.views import HomeView, CreateEvidenceView, SubmitAssessmentView
+from shared.views import HomeView, CreateEvidenceView, SubmitAssessmentView, HomeView2
 
 urlpatterns = i18n_patterns(
     path("select2/", include("django_select2.urls")),
 
     path('', HomeView.as_view(), name='home'),
+    path('home2', HomeView2.as_view(), name='home2'),
     path('assessment/<int:audit_id>', SubmitAssessmentView.as_view(), name='submit_assessment'),
     path('evidence/create/<int:question_pk>/', CreateEvidenceView.as_view(), name='evidence_create'),
     path('login/', LoginView.as_view(), name='login'),
@@ -35,12 +36,18 @@ urlpatterns = i18n_patterns(
     path('admin/', admin.site.urls),
     path('assessment/', include('assessment.urls')),
     path('client/', include('clients.urls')),
-    prefix_default_language=False,
+    prefix_default_language=True,
 )
 
 urlpatterns += [
     path('i18n/', include('django.conf.urls.i18n')),
+    path("__debug__/", include("debug_toolbar.urls")),
 ]
 
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
+if 'rosetta' in settings.INSTALLED_APPS:
+    urlpatterns += [
+        path('rosetta/', include('rosetta.urls'))
+    ]

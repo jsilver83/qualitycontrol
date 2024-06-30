@@ -1,0 +1,66 @@
+{% extends "layouts/base.html" %}
+{% load static %}
+{% load crispy_forms_tags %}
+{% load questions_tags %}
+{% load i18n %}
+
+{% block title %} Assessment {% endblock %}
+
+<!-- Specific Page CSS goes HERE  -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block content %}
+    <div class="content">
+        <div class="panel-header bg-primary-gradient">
+            <div class="page-inner py-5">
+                <div class="d-flex align-items-left align-items-md-center flex-column flex-md-row">
+                    <div>
+                        <h2 class="text-white pb-2 fw-bold">{% blocktrans %}New Assessment{% endblocktrans %}</h2>
+                        <h5 class="text-white op-7 mb-2">{% blocktrans %}Quality Control System{% endblocktrans %}</h5>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="page-inner mt--5">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card full-height">
+                        <div class="card-header">
+                            {% blocktrans %}New Assessment Using a Template{% endblocktrans %}
+                        </div>
+                        <div class="card-body">
+                            <div class="row mb-2">
+                                <h4 class="col-12">{% blocktrans %}Choose a template from the list below{% endblocktrans %}: </h4>
+                            </div>
+                            <div class="row mb-2">
+                            {% for audit in audits %}
+                                <div class="col-6">
+                                    <a class="btn btn-outline-primary btn-block" href="{% url "derive_assessment" audit.pk %}">
+                                        <i class="fa fa-file-archive mr-2 ml-2"></i> {{ audit }} ({% trans "Questions" %}: {{ audit.questions.count }}) <i class="fa fa-plus mr-2 ml-2"></i>
+                                    </a>
+                                </div>
+                            {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12 mb-2">
+                    <h4>{% trans "OR create an assessment from scratch" %}:</h4>    
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    <a href="{% url "create_assessment" %}" class="btn btn-primary float-right ml-3">
+                        <span class="btn-label">
+                            <i class="fa fa-check-circle"></i>
+                        </span>
+                        {% trans 'Next' %}
+                    </a>                    
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock content %}

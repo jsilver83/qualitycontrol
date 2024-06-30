@@ -1,0 +1,795 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2024-06-29 20:14+0300\n"
+"PO-Revision-Date: 2024-06-30 03:39+0300\n"
+"Last-Translator:   <>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 && n%100<=10 ? 3 : n%100>=11 && n%100<=99 ? 4 : 5;\n"
+"X-Translated-Using: django-rosetta 0.10.0\n"
+
+#: .\assessment\forms.py:120
+msgid "Yes"
+msgstr "نعم"
+
+#: .\assessment\forms.py:120
+msgid "No"
+msgstr "لا يوجد"
+
+#: .\assessment\models.py:19 .\assessment\models.py:122
+#: .\clients\models.py:125
+msgid "Title (AR)"
+msgstr "العنوان (بالعربية)"
+
+#: .\assessment\models.py:25 .\assessment\models.py:129
+#: .\clients\models.py:131
+msgid "Title (EN)"
+msgstr "العنوان (بالإنجليزية)"
+
+#: .\assessment\models.py:35
+msgid "Sub of"
+msgstr "تابع لـ"
+
+#: .\assessment\models.py:40 .\assessment\models.py:311
+#: .\assessment\models.py:445
+msgid "Display Order"
+msgstr "ترتيب العرض"
+
+#: .\assessment\models.py:46
+msgid "Show?"
+msgstr "عرض؟"
+
+#: .\assessment\models.py:93 .\assessment\models.py:243
+msgid "Weighted Total (%)"
+msgstr "النسبة الإجمالية الموزونة (%)"
+
+#: .\assessment\models.py:110 .\clients\models.py:12
+msgid "Restaurants"
+msgstr "مطاعم"
+
+#: .\assessment\models.py:111 .\clients\models.py:13
+msgid "Hotels"
+msgstr "فنادق"
+
+#: .\assessment\models.py:112 .\clients\models.py:14
+msgid "Pilgrims Center"
+msgstr "مركز الحجاج"
+
+#: .\assessment\models.py:113 .\assessment\models.py:489
+#: .\clients\models.py:15
+msgid "Miscellaneous"
+msgstr "متنوعات"
+
+#: .\assessment\models.py:116
+msgid "Template"
+msgstr "القالب"
+
+#: .\assessment\models.py:117
+msgid "Draft"
+msgstr "مسودة"
+
+#: .\assessment\models.py:118
+msgid "Submitted"
+msgstr "تم التقديم"
+
+#: .\assessment\models.py:125
+msgid ""
+"Write a meaningful and descriptive title (or name) for this audit in Arabic."
+msgstr "اكتب عنوانًا (أو اسمًا) ذا مغزى ووصفًا لهذا التقييم باللغة العربية."
+
+#: .\assessment\models.py:133
+msgid ""
+"Write a meaningful and descriptive title (or name) for this audit in "
+"English."
+msgstr ""
+"اكتب عنواناً (أو اسماً) ذا مغزى ووصفياً لهذا التقييم باللغة الإنجليزية."
+
+#: .\assessment\models.py:137 .\tasks\models.py:10
+msgid "Description (AR)"
+msgstr "الوصف (بالعربية)"
+
+#: .\assessment\models.py:142 .\tasks\models.py:15
+msgid "Description (EN)"
+msgstr "الوصف (بالإنجليزية)"
+
+#: .\assessment\models.py:147 .\assessment\models.py:523
+#: .\assessment\templates\assessment\_audit_table_evidences_column.html:24
+#: .\clients\models.py:31 .\shared\templates\shared\submit_assessment.html:89
+msgid "Type"
+msgstr "النوع"
+
+#: .\assessment\models.py:158
+#: .\assessment\templates\assessment\_audit_info.html:13
+msgid "Created For"
+msgstr "المنشأة"
+
+#: .\assessment\models.py:163
+#| msgid "Completion Date"
+msgid "Inspection Date"
+msgstr "تاريخ التفتيش"
+
+#: .\assessment\models.py:166
+msgid "Date/time of the inspection visit"
+msgstr "تاريخ/وقت زيارة التفتيش"
+
+#: .\assessment\models.py:174
+msgid "Derived From"
+msgstr "مشتق من"
+
+#: .\assessment\models.py:179
+#: .\assessment\templates\assessment\_audit_info.html:9
+#: .\assessment\templates\assessment\_audit_table_tasks_column.html:26
+#: .\clients\models.py:325
+#: .\shared\templates\shared\submit_assessment.html:135
+msgid "Status"
+msgstr "الحالة"
+
+#: .\assessment\models.py:189
+#: .\assessment\templates\assessment\_audit_info.html:24 .\tasks\models.py:95
+msgid "Created On"
+msgstr "تاريخ الإنشاء"
+
+#: .\assessment\models.py:200
+#: .\assessment\templates\assessment\_audit_info.html:28 .\tasks\models.py:106
+msgid "Created By"
+msgstr "تم إنشاؤها بواسطة"
+
+#: .\assessment\models.py:205 .\tasks\models.py:111
+msgid "Updated On"
+msgstr "تم التحديث على"
+
+#: .\assessment\models.py:216 .\tasks\models.py:122
+msgid "Updated By"
+msgstr "تم التحديث بواسطة"
+
+#: .\assessment\models.py:277 .\assessment\models.py:555
+msgid "Audit"
+msgstr "التدقيق"
+
+#: .\assessment\models.py:282 .\assessment\models.py:421
+msgid "Prompt (AR)"
+msgstr "موجه السؤال (بالعربية)"
+
+#: .\assessment\models.py:287 .\assessment\models.py:427
+msgid "Prompt (EN)"
+msgstr "موجه السؤال (بالإنكليزية)"
+
+#: .\assessment\models.py:292
+msgid "Help Text (AR)"
+msgstr "نص المساعدة (بالعربية)"
+
+#: .\assessment\models.py:297
+msgid "Help Text (EN)"
+msgstr "نص المساعدة (بالإنجليزية)"
+
+#: .\assessment\models.py:306
+#: .\assessment\templates\assessment\create_question.html:71
+msgid "Section"
+msgstr "القسم"
+
+#: .\assessment\models.py:317
+msgid "Is a Bonus Question?"
+msgstr "سؤال إضافي؟"
+
+#: .\assessment\models.py:335
+msgid "Prompt"
+msgstr "السؤال"
+
+#: .\assessment\models.py:347 .\assessment\tables.py:59
+#: .\assessment\tables.py:73 .\assessment\tables.py:99
+msgid "Selected Answer"
+msgstr "الإجابة"
+
+#: .\assessment\models.py:353
+msgid "Answered?"
+msgstr "هل تمت الإجابة؟"
+
+#: .\assessment\models.py:366
+msgid "Scored?"
+msgstr "سجلت؟"
+
+#: .\assessment\models.py:416 .\clients\models.py:302 .\tasks\models.py:33
+msgid "Question"
+msgstr "سؤال"
+
+#: .\assessment\models.py:433
+msgid "Weight"
+msgstr "الوزن"
+
+#: .\assessment\models.py:436
+msgid ""
+"Empty wight indicate N/A answers which are not going to be calculated in the"
+" total score"
+msgstr ""
+"تشير الخانات الفارغة إلى إجابات غير متاحة، والتي لن يتم احتسابها في الدرجة "
+"الكلية"
+
+#: .\assessment\models.py:440
+msgid "Selected?"
+msgstr "مختارة؟"
+
+#: .\assessment\models.py:451
+msgid "Answered On"
+msgstr "تمت الإجابة على"
+
+#: .\assessment\models.py:461
+msgid "Answered By"
+msgstr "الإجابة بواسطة"
+
+#: .\assessment\models.py:486
+msgid "Picture"
+msgstr "الصورة الشخصية"
+
+#: .\assessment\models.py:487
+msgid "Video"
+msgstr "فيديو"
+
+#: .\assessment\models.py:488
+msgid "Note (Text only)"
+msgstr "ملاحظة (نص فقط)"
+
+#: .\assessment\models.py:501
+msgid "Attachment"
+msgstr "المرفقات"
+
+#: .\assessment\models.py:518
+#: .\assessment\templates\assessment\_audit_table_evidences_column.html:26
+#: .\clients\models.py:342
+#: .\shared\templates\shared\submit_assessment.html:108
+msgid "Notes"
+msgstr "الملاحظات"
+
+#: .\assessment\models.py:530
+msgid "Uploaded On"
+msgstr "تم التحميل على"
+
+#: .\assessment\models.py:537
+msgid "Uploaded By"
+msgstr "تم التحميل بواسطة"
+
+#: .\assessment\tables.py:12
+#: .\assessment\templates\assessment\_audit_info.html:4
+msgid "Title"
+msgstr "المسمى"
+
+#: .\assessment\tables.py:19
+msgid "Fill"
+msgstr "تعبئة التقييم"
+
+#: .\assessment\tables.py:26
+msgid "Modify"
+msgstr "تعديل"
+
+#: .\assessment\tables.py:38
+msgid "Report"
+msgstr "التقرير"
+
+#: .\assessment\tables.py:48 .\assessment\tables.py:89
+msgid "Delete"
+msgstr "حذف"
+
+#: .\assessment\tables.py:50
+msgid "Questions Count"
+msgstr "عدد الأسئلة"
+
+#: .\assessment\tables.py:80
+msgid "Update"
+msgstr "تحديث"
+
+#: .\assessment\templates\assessment\_audit_table_evidences_column.html:25
+#: .\shared\templates\shared\submit_assessment.html:88
+msgid "File"
+msgstr "ملف"
+
+#: .\assessment\templates\assessment\_audit_table_evidences_column.html:34
+#: .\assessment\templates\assessment\_create_evidence.html:50
+#: .\shared\templates\shared\submit_assessment.html:97
+msgid "Download"
+msgstr "تنزيل"
+
+#: .\assessment\templates\assessment\_audit_table_tasks_column.html:24
+#: .\clients\models.py:293
+#: .\shared\templates\shared\submit_assessment.html:133
+msgid "Employee"
+msgstr "موظف"
+
+#: .\assessment\templates\assessment\_audit_table_tasks_column.html:25
+#: .\clients\models.py:319
+#: .\shared\templates\shared\submit_assessment.html:134 .\tasks\models.py:38
+msgid "Due Date"
+msgstr "تاريخ الاستحقاق"
+
+#: .\assessment\templates\assessment\_create_evidence.html:11
+msgid "Submit Evidence"
+msgstr "تقديم الأدلة"
+
+#: .\assessment\templates\assessment\_create_evidence.html:55
+#: .\assessment\templates\assessment\_create_section.html:57
+#: .\assessment\templates\assessment\_delete_question.html:47
+#: .\clients\templates\clients\_create_task.html:61
+msgid "Error"
+msgstr "خطأ"
+
+#: .\assessment\templates\assessment\_create_section.html:10
+msgid "Add"
+msgstr "إضافة"
+
+#: .\assessment\templates\assessment\_delete_question.html:10
+msgid "Confirm Delete"
+msgstr "تأكيد الحذف"
+
+#: .\assessment\templates\assessment\_question_details.html:35
+#: .\assessment\templates\assessment\question_and_answers_field.html:30
+msgid "Question Score is"
+msgstr "درجة السؤال هي"
+
+#: .\assessment\templates\assessment\_question_details.html:36
+#: .\assessment\templates\assessment\question_and_answers_field.html:31
+msgid "out of"
+msgstr "من"
+
+#: .\assessment\templates\assessment\_question_details.html:38
+#: .\assessment\templates\assessment\_question_details.html:45
+#: .\assessment\templates\assessment\question_and_answers_field.html:33
+#: .\assessment\templates\assessment\question_and_answers_field.html:40
+msgid "Question Weight is"
+msgstr "وزن السؤال هو"
+
+#: .\assessment\templates\assessment\_question_details.html:39
+#: .\assessment\templates\assessment\question_and_answers_field.html:34
+msgid "BUT it is not included in the final score"
+msgstr "ولكن لا يتم تضمينها في النتيجة النهائية"
+
+#: .\assessment\templates\assessment\_question_details.html:42
+#: .\assessment\templates\assessment\question_and_answers_field.html:37
+msgid "Answered by"
+msgstr "تمت الإجابة عن طريق"
+
+#: .\assessment\templates\assessment\audits.html:21
+msgid "Assessments Management"
+msgstr "إدارة التقييمات"
+
+#: .\assessment\templates\assessment\audits.html:22
+#: .\assessment\templates\assessment\create_assessment.html:19
+#: .\assessment\templates\assessment\create_assessment_derive.html:19
+#: .\assessment\templates\assessment\questions.html:21
+#: .\shared\templates\shared\submit_assessment.html:19
+msgid "Quality Control System"
+msgstr "نظام مراقبة الجودة"
+
+#: .\assessment\templates\assessment\audits.html:49
+msgid "Create Assessment"
+msgstr "إنشاء التقييم"
+
+#: .\assessment\templates\assessment\create_assessment.html:18
+#: .\assessment\templates\assessment\create_assessment.html:44
+#: .\assessment\templates\assessment\create_assessment_derive.html:18
+msgid "New Assessment"
+msgstr "تقييم جديد"
+
+#: .\assessment\templates\assessment\create_assessment.html:31
+msgid "Derive From"
+msgstr "استخدم القالب"
+
+#: .\assessment\templates\assessment\create_assessment.html:98
+#: .\assessment\templates\assessment\create_assessment_derive.html:60
+#: .\assessment\templates\assessment\create_section.html:42
+#: .\clients\templates\clients\create_employee.html:113
+#: .\clients\templates\clients\create_organization.html:101
+#: .\clients\templates\clients\update_employee.html:112
+#: .\clients\templates\clients\update_task.html:116
+#: .\clients\templates\clients\update_task_status.html:130
+msgid "Next"
+msgstr "التالي"
+
+#: .\assessment\templates\assessment\create_assessment.html:104
+#: .\assessment\templates\assessment\create_question.html:159
+#: .\assessment\templates\assessment\create_section.html:48
+#: .\clients\templates\clients\create_employee.html:119
+#: .\clients\templates\clients\create_organization.html:107
+#: .\clients\templates\clients\departments.html:92
+#: .\clients\templates\clients\update_employee.html:118
+#: .\clients\templates\clients\update_task.html:122
+#: .\clients\templates\clients\update_task_status.html:136
+#: .\shared\templates\shared\submit_assessment.html:182
+msgid "Cancel"
+msgstr "إلغاء"
+
+#: .\assessment\templates\assessment\create_assessment_derive.html:30
+msgid "New Assessment Using a Template"
+msgstr "تقييم جديد باستخدام قالب"
+
+#: .\assessment\templates\assessment\create_assessment_derive.html:34
+msgid "Choose a template from the list below"
+msgstr "اختر قالباً من القائمة أدناه"
+
+#: .\assessment\templates\assessment\create_assessment_derive.html:40
+msgid "Questions"
+msgstr "الأسئلة"
+
+#: .\assessment\templates\assessment\create_assessment_derive.html:51
+msgid "OR create an assessment from scratch"
+msgstr "أو ابدء إنشاء تقييم جديد من الصفر"
+
+#: .\assessment\templates\assessment\create_question.html:38
+msgid "Question Text"
+msgstr "نص السؤال"
+
+#: .\assessment\templates\assessment\create_question.html:81
+msgid "Add New Section"
+msgstr "إضافة قسم جديد"
+
+#: .\assessment\templates\assessment\create_question.html:94
+msgid "Answers"
+msgstr "الإجابات"
+
+#: .\assessment\templates\assessment\create_question.html:147
+msgid "Save & New"
+msgstr "حفظ و جديد"
+
+#: .\assessment\templates\assessment\create_question.html:153
+#: .\clients\templates\clients\departments.html:85
+#: .\shared\templates\shared\submit_assessment.html:167
+#: .\shared\templates\shared\submit_assessment.html:174
+msgid "Save"
+msgstr "حفظ"
+
+#: .\assessment\templates\assessment\create_question.html:174
+msgid "New Section"
+msgstr "قسم جديد"
+
+#: .\assessment\templates\assessment\create_question.html:191
+msgid "Add Answer"
+msgstr "إضافة إجابة"
+
+#: .\assessment\templates\assessment\questions.html:20
+msgid "Assessment Questions"
+msgstr "أسئلة التقييم"
+
+#: .\assessment\templates\assessment\questions.html:49
+#: .\assessment\templates\assessment\questions.html:82
+msgid "Create Question"
+msgstr "إنشاء سؤال"
+
+#: .\assessment\templates\assessment\questions.html:73
+msgid "Section Score"
+msgstr "نتيجة القسم"
+
+#: .\assessment\templates\assessment\view_assessment.html:49
+msgid "Export CSV"
+msgstr "تصدير CSV"
+
+#: .\clients\models.py:19
+msgid "Name (AR)"
+msgstr "الاسم (بالعربية)"
+
+#: .\clients\models.py:25
+msgid "Name (EN)"
+msgstr "الاسم (بالإنجليزية)"
+
+#: .\clients\models.py:38
+msgid "City"
+msgstr "مدينة"
+
+#: .\clients\models.py:41
+msgid "Which city is this organization located in?"
+msgstr "في أي مدينة تقع هذه المنظمة؟"
+
+#: .\clients\models.py:45
+msgid "Commercial Registration Number"
+msgstr "رقم التسجيل التجاري"
+
+#: .\clients\models.py:51
+msgid "Commercial Licence"
+msgstr "الرخصة التجارية"
+
+#: .\clients\models.py:67
+msgid "Commercial Licence End Date"
+msgstr "تاريخ انتهاء الرخصة التجارية"
+
+#: .\clients\models.py:73
+msgid "Logo"
+msgstr "الشعار"
+
+#: .\clients\models.py:88
+msgid "Address"
+msgstr "العنوان"
+
+#: .\clients\models.py:93
+msgid "Address on Map"
+msgstr "العنوان على الخريطة"
+
+#: .\clients\models.py:98
+msgid "Website"
+msgstr "الموقع الإلكتروني"
+
+#: .\clients\models.py:120
+msgid "Organization"
+msgstr "المنظمة"
+
+#: .\clients\models.py:149
+msgid "CEO"
+msgstr "المدير التنفيذي"
+
+#: .\clients\models.py:150
+msgid "Owner"
+msgstr "المالك"
+
+#: .\clients\models.py:151
+msgid "HR"
+msgstr "الموارد البشرية"
+
+#: .\clients\models.py:152 .\clients\models.py:215
+msgid "Manager"
+msgstr "مدير"
+
+#: .\clients\models.py:153
+msgid "Department Head"
+msgstr "رئيس القسم"
+
+#: .\clients\models.py:154
+msgid "Supervisor"
+msgstr "المشرف"
+
+#: .\clients\models.py:155
+msgid "Secretary"
+msgstr "سكرتير"
+
+#: .\clients\models.py:156
+msgid "Cook"
+msgstr "طباخ"
+
+#: .\clients\models.py:157
+msgid "Worker"
+msgstr "عامل"
+
+#: .\clients\models.py:158
+msgid "Other"
+msgstr "آخر"
+
+#: .\clients\models.py:166
+msgid "Associated User"
+msgstr "المستخدم المرتبط"
+
+#: .\clients\models.py:171
+msgid "First Name (AR)"
+msgstr "الاسم الأول (بالعربية)"
+
+#: .\clients\models.py:177
+msgid "First Name (EN)"
+msgstr "الاسم الأول (بالإنجليزية)"
+
+#: .\clients\models.py:183
+msgid "Last Name (AR)"
+msgstr "الاسم الأخير (بالعربية)"
+
+#: .\clients\models.py:189
+msgid "Last Name (EN)"
+msgstr "الاسم الأخير (بالإنجليزية)"
+
+#: .\clients\models.py:195
+msgid "Job Title"
+msgstr "المسمى الوظيفي"
+
+#: .\clients\models.py:206
+msgid "Department"
+msgstr "القسم"
+
+#: .\clients\models.py:220
+msgid "Personal Picture"
+msgstr "الصورة الشخصية"
+
+#: .\clients\models.py:235
+msgid "Nationality"
+msgstr "الجنسية"
+
+#: .\clients\models.py:241
+msgid "Mobile"
+msgstr "الجوال"
+
+#: .\clients\models.py:282
+msgid "New"
+msgstr "جديد"
+
+#: .\clients\models.py:283
+msgid "Done"
+msgstr "تم"
+
+#: .\clients\models.py:284
+msgid "Cancelled"
+msgstr "ملغى"
+
+#: .\clients\models.py:307
+msgid "Task Description"
+msgstr "وصف المهمة"
+
+#: .\clients\models.py:313
+msgid "Create Date"
+msgstr "تاريخ الإنشاء"
+
+#: .\clients\templates\clients\_create_task.html:16
+#: .\shared\templates\shared\submit_assessment.html:127
+msgid "Add Task"
+msgstr "إضافة مهمة"
+
+#: .\clients\templates\clients\employees_list.html:50
+msgid "Create Employee"
+msgstr "إنشاء موظف"
+
+#: .\clients\templates\clients\organizations_list.html:50
+msgid "Create Organization"
+msgstr "إنشاء منظمة"
+
+#: .\qualitycontrol\settings.py:147
+msgid "Arabic"
+msgstr "اللغة العربية"
+
+#: .\qualitycontrol\settings.py:148
+msgid "English"
+msgstr "اللغة الإنجليزية"
+
+#: .\qualitycontrol\settings.py:195
+msgid "Saudi Arabia"
+msgstr "المملكة العربية السعودية"
+
+#: .\qualitycontrol\settings.py:197
+msgid "Moqeem"
+msgstr "مقيم"
+
+#: .\shared\templates\includes\sidebar.html:27
+msgid "My Profile"
+msgstr "ملفي الشخصي"
+
+#: .\shared\templates\includes\sidebar.html:32
+msgid "Logout"
+msgstr "تسجيل الخروج"
+
+#: .\shared\templates\includes\sidebar.html:44
+#: .\shared\templates\shared\submit_assessment.html:7
+msgid "Dashboard"
+msgstr "لوحة التحكم"
+
+#: .\shared\templates\includes\sidebar.html:51
+msgid "Switch Language"
+msgstr "تبديل اللغة"
+
+#: .\shared\templates\includes\sidebar.html:73
+msgid "Control Panel"
+msgstr "لوحة التحكم"
+
+#: .\shared\templates\includes\sidebar.html:78
+msgid "Assessments"
+msgstr "التقييمات"
+
+#: .\shared\templates\includes\sidebar.html:85
+msgid "Organizations"
+msgstr "المنظمات"
+
+#: .\shared\templates\includes\sidebar.html:93
+#: .\shared\templates\shared\submit_assessment.html:71
+msgid "Tasks"
+msgstr "المهام"
+
+#: .\shared\templates\includes\sidebar.html:100
+msgid "Employees"
+msgstr "الموظفون"
+
+#: .\shared\templates\includes\sidebar.html:106
+msgid "Departments"
+msgstr "الأقسام"
+
+#: .\shared\templates\includes\sidebar.html:116
+msgid "Admin Panel"
+msgstr "لوحة الإدارة"
+
+#: .\shared\templates\layouts\base.html:8
+msgid "Quality Control"
+msgstr "مراقبة الجودة"
+
+#: .\shared\templates\registration\login.html:5
+#: .\shared\templates\registration\login.html:14
+#: .\shared\templates\registration\login.html:31
+msgid "Login"
+msgstr "تسجيل الدخول"
+
+#: .\shared\templates\registration\login.html:25
+msgid "Authentication"
+msgstr "المصادقة"
+
+#: .\shared\templates\shared\submit_assessment.html:18
+msgid "Assessment"
+msgstr "تقييم"
+
+#: .\shared\templates\shared\submit_assessment.html:53
+msgid "Errors"
+msgstr "أخطاء"
+
+#: .\shared\templates\shared\submit_assessment.html:64
+msgid "Notes & Evidences"
+msgstr "ملاحظات وأدلة"
+
+#: .\shared\templates\shared\submit_assessment.html:81
+msgid "Add Note/Evidence"
+msgstr "إضافة ملاحظة/دليل"
+
+#: .\shared\templates\shared\submit_assessment.html:87
+msgid "Description"
+msgstr "الوصف"
+
+#: .\shared\templates\shared\submit_assessment.html:163
+msgid "Do you want to submit?"
+msgstr "هل تريد الإرسال؟"
+
+#: .\shared\templates\shared\submit_assessment.html:167
+msgid "and"
+msgstr "و"
+
+#: .\shared\templates\shared\submit_assessment.html:167
+msgid "Submit"
+msgstr "إرسال"
+
+#: .\shared\templates\shared\submit_assessment.html:178
+msgid "Are you sure? you will lose all unsaved answers"
+msgstr "هل أنت متأكد؟ ستفقد جميع الإجابات غير المحفوظة"
+
+#: .\shared\templates\shared\submit_assessment.html:194
+msgid "New Note/Evidence for the Question"
+msgstr "ملاحظة/دليل جديد للسؤال"
+
+#: .\shared\templates\shared\submit_assessment.html:211
+msgid "New Task for the Question"
+msgstr "مهمة جديدة للسؤال"
+
+#: .\tasks\models.py:24
+msgid "Assigned Employee"
+msgstr "الموظف المكلف"
+
+#: .\tasks\models.py:44
+msgid "Completion Date"
+msgstr "تاريخ الإتمام"
+
+#: .\tasks\models.py:54
+msgid "Completed By"
+msgstr "تم بواسطة"
+
+#: .\tasks\models.py:59
+msgid "Supporting Documents"
+msgstr "المستندات الداعمة"
+
+#: .\tasks\models.py:72
+msgid ""
+"Upload any documents that shall help the assigned personnel to accomplish "
+"the task"
+msgstr "تحميل أي مستندات تساعد الشخص المكلف على إنجاز المهمة"
+
+#: .\tasks\models.py:76
+msgid "Completion Evidence"
+msgstr "دليل الإتمام"
+
+#: .\tasks\models.py:89
+msgid ""
+"Upload any documents that prove that the task was completed successfully"
+msgstr "تحميل أي مستندات تثبت أن المهمة قد أُنجزت بنجاح"
+
+#~ msgid "Edit"
+#~ msgstr "تحرير"
+
+#~ msgid "Derive"
+#~ msgstr "اشتقاق"
+
+#~ msgid "Score"
+#~ msgstr "النتيجة"
+
+#~ msgid "Support"
+#~ msgstr "الدعم"

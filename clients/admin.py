@@ -1,4 +1,7 @@
 from django.contrib import admin
+from import_export import resources
+from import_export.admin import ImportExportMixin
+
 from .models import *
 
 
@@ -35,7 +38,22 @@ class EmployeeTabularInline(admin.TabularInline):
     )
 
 
-class OrganizationAdmin(admin.ModelAdmin):
+class OrganizationResource(resources.ModelResource):
+    class Meta:
+        model = Organization
+        import_id_fields = ('id',)
+        fields = (
+            'id',
+            'name_ar',
+            'name_en',
+            'type',
+            'city',
+        )
+        skip_unchanged = True
+        report_skipped = True
+
+
+class OrganizationAdmin(ImportExportMixin, admin.ModelAdmin):
     list_display = (
         'name_ar',
         'name_en',
@@ -51,6 +69,8 @@ class OrganizationAdmin(admin.ModelAdmin):
     search_fields = list_display
 
     inlines = [DepartmentTabularInline, ]
+
+    resource_class = OrganizationResource
 
 
 class DepartmentAdmin(admin.ModelAdmin):

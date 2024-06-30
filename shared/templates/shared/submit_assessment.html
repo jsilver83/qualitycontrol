@@ -4,7 +4,7 @@
 {% load questions_tags %}
 {% load i18n %}
 
-{% block title %} Dashboard {% endblock %}
+{% block title %} {% trans "Dashboard" %} {% endblock %}
 
 <!-- Specific Page CSS goes HERE  -->
 {% block stylesheets %}{% endblock stylesheets %}
@@ -37,6 +37,9 @@
                         {% csrf_token %}
                         <div class="row">
                             {% for field in form %}
+                                {% ifchanged field.field.question.section %}
+                                <div class="col-12 mb-2 bg-info-gradient pt-3 pb-3"><h5><span style="font-size: 99%; color: white; font-weight: bold" class="badge1 badge1-info ">{{ field.field.question.section }}</span></h5></div>
+                                {% endifchanged %}
                                 <div class="col-md-6">
                                     <div class="card full-height">
                                         <div class="card-body">
@@ -58,14 +61,14 @@
                                                           <button class="btn btn-outline-warning" type="button" data-toggle="collapse"
                                                                 data-target="#collapseEv{{ field.field.question.pk }}" aria-expanded="false"
                                                                 aria-controls="collapseEv{{ field.field.question.pk }}">
-                                                            <i class="fa fa-angle-double-right mr-1"></i><i class="fa fa-angle-double-down mr-1"></i> {% trans 'Notes & Evidences' %} <small id="evCount{{ field.field.question.pk }}" class="badge badge-light ml-5">{{ field.field.question.list_of_evidence.count }}</small>
+                                                            <i class="fa fa-angle-double-right mr-1 ml-1"></i><i class="fa fa-angle-double-down mr-1 ml-1"></i> {% trans 'Notes & Evidences' %} <small id="evCount{{ field.field.question.pk }}" class="badge badge-light ml-3 mr-3">{{ field.field.question.list_of_evidence.count }}</small>
                                                         </button>
                                                     </div>
-                                                    <div class="col-6">
+                                                    <div class="col-6" style="display: none">
                                                           <button  class="btn btn-outline-warning" type="button" data-toggle="collapse"
                                                                 data-target="#collapseTask{{ field.field.question.pk }}" aria-expanded="false"
                                                                 aria-controls="collapseTask{{ field.field.question.pk }}">
-                                                            <i class="fa fa-angle-double-right mr-1"></i><i class="fa fa-angle-double-down mr-1"></i>{% trans 'Tasks' %} <small  id="tasksCount{{ field.field.question.pk }}" class="badge badge-light pull-right ml-5">{{ field.field.question.question_tasks.count }}</small>
+                                                            <i class="fa fa-angle-double-right mr-1 ml-1"></i><i class="fa fa-angle-double-down mr-1 ml-1"></i>{% trans 'Tasks' %} <small  id="tasksCount{{ field.field.question.pk }}" class="badge badge-light ml-3 mr-3">{{ field.field.question.question_tasks.count }}</small>
                                                         </button>
                                                     </div>
                                                 </div>
@@ -75,28 +78,44 @@
                                                         <button type="button" class="btn btn-primary btn-block"
                                                                 data-toggle="modal"
                                                                 data-target="#exampleModal{{ field.field.question.pk }}">
-                                                            <i class="fa fa-plus-square"></i> {% trans 'Add Evidence' %}
+                                                            <i class="fa fa-plus-square"></i> {% trans 'Add Note/Evidence' %}
                                                         </button>
                                                         <table class="table" id="ev{{ field.field.question.pk }}">
                                                             <thead>
                                                                 <tr>
                                                                     <th style="width: 5%">#</th>
-                                                                    <th style="width: 50%">{% trans 'Notes' %}</th>
+                                                                    <th style="width: 50%">{% trans 'Description' %}</th>
                                                                     <th style="width: 30%">{% trans 'File' %}</th>
                                                                     <th style="width: 15%">{% trans 'Type' %}</th>
                                                                 </tr>
                                                             </thead>
                                                             <tbody>
-                                                            {% for evidence in field.field.question.list_of_evidence.all %}
+                                                            {% for evidence in field.field.question.evidences %}
                                                                 <tr>
                                                                     <td>{{ forloop.counter }}</td>
-                                                                    <td {% if not evidence.uploaded_file %}colspan="3"{% endif %}>{{ evidence.notes }}</td>
-                                                                    {% if evidence.uploaded_file %}<td><a href="{% get_media_prefix %}{{ evidence.uploaded_file }}" target="_blank"><i class="fa fa-download"></i> {% trans 'Download'%}</a></td>
-                                                                    <td>{{ evidence.get_type_display }}</td>{% endif %}
+                                                                    <td>{{ evidence.notes }}</td>
+                                                                    <td><a href="{% get_media_prefix %}{{ evidence.uploaded_file }}" target="_blank"><i class="fa fa-download"></i> {% trans 'Download'%}</a></td>
+                                                                    <td>{{ evidence.get_type_display }}</td>
                                                                 </tr>
                                                             {% endfor %}
                                                             </tbody>
-
+                                                        </table>
+                                                        <br><hr><br>
+                                                        <table class="table" id="notes{{ field.field.question.pk }}">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th style="width: 10%">#</th>
+                                                                    <th style="width: 90%">{% trans 'Notes' %}</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                            {% for evidence in field.field.question.notes %}
+                                                                <tr>
+                                                                    <td>{{ forloop.counter }}</td>
+                                                                    <td>{{ evidence.notes }}</td>
+                                                                </tr>
+                                                            {% endfor %}
+                                                            </tbody>
                                                         </table>
                                                     </div>
                                                 </div>
@@ -140,28 +159,28 @@
                         </div>
                         <div class="row">
                             <div class="col-12">
-                                <button name="submit" class="btn btn-primary float-right ml-3"
-                                        onclick="return confirm('Do you want to submit?');">
+                                <button name="submit" class="btn btn-success float-left ml-2 mr-2"
+                                        onclick="return confirm('{% trans 'Do you want to submit?' %}');">
 									<span class="btn-label">
 										<i class="fa fa-check-circle"></i>
 									</span>
 									{% trans 'Save' %} {% trans 'and' %} {% trans 'Submit' %}
 								</button>
 
-                                 <button name="save" class="btn btn-primary float-right ml-3">
+                                 <button name="save" class="btn btn-primary float-left ml-2 mr-2">
 									<span class="btn-label">
 										<i class="fa fa-check-circle"></i>
 									</span>
 									{% trans 'Save' %}
 								</button>
 
-                                <button class="btn btn-danger float-left mr-3">
+                                <a href="/" class="btn btn-danger float-left ml-2 mr-2"
+                                    onclick="return confirm('{% trans 'Are you sure? you will lose all unsaved answers' %}');">
 									<span class="btn-label">
 										<i class="fa fa-strikethrough"></i>
 									</span>
 									{% trans 'Cancel' %}
-								</button>
-
+								</a>
                             </div>
                         </div>
                     </form>
@@ -172,7 +191,7 @@
                         <div class="modal-dialog" role="document">
                             <div class="modal-content">
                                 <div class="modal-header">
-                                    <h5 class="modal-title" id="exampleModalLabel{{ field.field.question.pk }}">New Evidence for the Question "{{ field.field.question }}"</h5>
+                                    <h5 class="modal-title" id="exampleModalLabel{{ field.field.question.pk }}">{% blocktrans %}New Note/Evidence for the Question{% endblocktrans %} "{{ field.field.question }}"</h5>
                                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                         <span aria-hidden="true">&times;</span>
                                     </button>
@@ -189,7 +208,7 @@
                         <div class="modal-dialog" role="document">
                             <div class="modal-content">
                                 <div class="modal-header">
-                                    <h5 class="modal-title" id="taskModalLabel{{ field.field.question.pk }}">New Task for the Question "{{ field.field.question }}"</h5>
+                                    <h5 class="modal-title" id="taskModalLabel{{ field.field.question.pk }}">{% blocktrans %}New Task for the Question{% endblocktrans %} "{{ field.field.question }}"</h5>
                                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                         <span aria-hidden="true">&times;</span>
                                     </button>

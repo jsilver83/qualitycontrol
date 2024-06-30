@@ -1,0 +1,76 @@
+body {
+    direction: rtl !important;
+    text-align: right;
+}
+
+.card-title {
+    text-align: right;
+}
+
+.nav {
+    padding-right: 0;
+    padding-left: inherit !important;
+}
+
+.btn .btn-label i {
+    margin-left: 2px !important;
+    margin-right: -2px !important;
+}
+
+.logo-header .nav-toggle {
+    left: 18px;
+    right: inherit !important;
+}
+
+.user > .mr-2 {
+    margin-left: .5rem !important;
+    margin-right: inherit !important;
+}
+
+.user > .float-left {
+    float: right !important;
+}
+
+.user > .info {
+    text-align: left !important;
+}
+
+.nav li a {
+    text-align: right !important;
+}
+
+.navbar-nav li {
+    float: right !important;
+}
+
+.navbar-expand-lg .navbar-nav .dropdown-menu {
+    right: auto;
+    left: 0;
+}
+
+.navbar .navbar-nav .nav-item:last-child {
+    margin-left: 0px!important;
+    margin-right: inherit!important;
+}
+
+.navbar .navbar-nav .nav-item {
+  margin-left: 7px!important;
+  margin-right: inherit!important;
+}
+
+.sidebar, .sidebar[data-background-color="white"] {
+    right: 0;
+    left: inherit!important;
+}
+
+.main-panel {
+    float: left!important;
+}
+
+.logo-header[data-background-color="dark2"] {
+  float: right!important;
+}
+
+/*nav.navbar {*/
+/*    float: left!important;*/
+/*}*/

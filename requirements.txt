@@ -1,4 +1,4 @@
-Django~=4.2.1
+Django~=4.2.13
 django-constrainedfilefield==5.0.0
 django-phonenumber-field==7.1.0
 phonenumbers==8.13.11
@@ -17,4 +17,6 @@ openpyxl==3.0.10
 pyexcel==0.7.0
 pyexcel-io==0.6.6
 pyexcel-xlsx==0.6.0
-tablib==3.6.1
+django-rosetta==0.10.0
+django-import-export==4.0.7
+django-debug-toolbar==4.4.2

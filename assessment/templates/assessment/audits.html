@@ -4,12 +4,13 @@
 {% load questions_tags %}
 {% load i18n %}
 {% load render_table from django_tables2 %}
+{% load humanize %}
 
 {% block title %} Assessment {% endblock %}
 
 <!-- Specific Page CSS goes HERE  -->
 {% block stylesheets %}{% endblock stylesheets %}
-{{ filter.form.media }
+{{ filter.form.media }}
 {% block content %}
 
 <div class="content">
@@ -17,8 +18,8 @@
             <div class="page-inner py-5">
                 <div class="d-flex align-items-left align-items-md-center flex-column flex-md-row">
                     <div>
-                        <h2 class="text-white pb-2 fw-bold">Assessments Management</h2>
-                        <h5 class="text-white op-7 mb-2">Quality Control System</h5>
+                        <h2 class="text-white pb-2 fw-bold">{% blocktrans %}Assessments Management{% endblocktrans %}</h2>
+                        <h5 class="text-white op-7 mb-2">{% blocktrans %}Quality Control System{% endblocktrans %}</h5>
                     </div>
 
                 </div>
@@ -31,9 +32,7 @@
                 <div class="col-md-12">
                     <div class="card full-height">
                         <div class="card-body">
-
                               {% crispy filter.form filter.form.helper %}
-
                         </div>
                     </div>
                 </div>
@@ -42,20 +41,15 @@
                 <div class="col-md-12">
                     <div class="card full-height">
                         <div class="card-body">
-                            <a href="{% url 'create_assessment' %}">
-                            <button class="btn btn-primary float-right ml-3" >
+                            <a href="{% url 'create_assessment_by_derive' %}">
+                                <button class="btn btn-primary float-right ml-3">
                                 <span class="btn-label">
                                     <i class="fa fa-plus"></i>
                                 </span>
-                                {% trans 'Create Assessment' %}
-
-                            </button>
+                                    {% trans 'Create Assessment' %}
+                                </button>
                             </a>
-
-
                               {% render_table table %}
-
-
                         </div>
                     </div>
                 </div>

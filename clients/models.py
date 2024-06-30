@@ -11,6 +11,7 @@ class Organization(models.Model):
     class Types(models.TextChoices):
         RESTAURANTS = 'RESTAURANTS', _('Restaurants')
         HOTELS = 'HOTELS', _('Hotels')
+        PILGRIMS_CENTER = 'PILGRIMS_CENTER', _('Pilgrims Center')
         MISC = 'MISC', _('Miscellaneous')
 
     # region fields
@@ -44,7 +45,6 @@ class Organization(models.Model):
         _('Commercial Registration Number'),
         blank=False,
         max_length=256,
-        unique=True,
     )
 
     commercial_licence = ConstrainedFileField(
@@ -66,7 +66,7 @@ class Organization(models.Model):
     commercial_licence_end_date = models.DateField(
         _('Commercial Licence End Date'),
         null=True,
-        blank=False,
+        blank=True,
     )
 
     logo = ConstrainedFileField(
@@ -249,6 +249,11 @@ class Employee(models.Model):
 
     def has_owner_permissions(self):
         return self.job_title in [self.JobTitles.OWNER, self.JobTitles.CEO, self.JobTitles.HR]
+
+    @staticmethod
+    def get_employee(user):
+        employee, created = Employee.objects.get_or_create(user=user)
+        return employee
 
     def first_name(self):
         if get_language() == 'ar':

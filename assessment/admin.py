@@ -1,4 +1,7 @@
 from django.contrib import admin
+from import_export import resources
+from import_export.admin import ImportExportMixin
+
 from .models import *
 
 
@@ -37,13 +40,20 @@ class AnswerTabularInlineAdmin(admin.TabularInline):
 class QuestionAdmin(admin.ModelAdmin):
     list_display = (
         'audit',
-        'prompt',
-        'section',
+        'is_bonus',
         'is_answered',
         'weight',
         'score',
         'is_scored',
-        'display_order',
+        'prompt',
+        'section',
+    )
+
+    list_filter = (
+        'is_bonus',
+        'audit',
+        'audit__type',
+        'audit__status',
     )
 
     autocomplete_fields = QuestionTabularInlineAdmin.autocomplete_fields
@@ -59,6 +69,8 @@ class QuestionAdmin(admin.ModelAdmin):
 
 
 class AuditAdmin(admin.ModelAdmin):
+    list_per_page = 5
+
     list_filter = (
         'type',
     )
@@ -67,8 +79,6 @@ class AuditAdmin(admin.ModelAdmin):
         'title_ar',
         'title_en',
         'type',
-        'total_score',
-        'weighted_total',
         'score_in_words',
         'derived_from',
         'created_by',
@@ -93,13 +103,29 @@ class AuditAdmin(admin.ModelAdmin):
     inlines = [QuestionTabularInlineAdmin, ]
 
 
-class SectionAdmin(admin.ModelAdmin):
+class SectionResource(resources.ModelResource):
+    class Meta:
+        model = Section
+        import_id_fields = ('id',)
+        fields = (
+            'id',
+            'title_ar',
+            'title_en',
+            'sub_of',
+            'display_order',
+            'show_flag',
+        )
+        skip_unchanged = True
+        report_skipped = True
+
+
+class SectionAdmin(ImportExportMixin, admin.ModelAdmin):
 
     list_display = (
-        'title_ar',
-        'title_en',
+        'title',
         'display_order',
         'show_flag',
+        'sub_of',
     )
 
     list_filter = (
@@ -110,6 +136,8 @@ class SectionAdmin(admin.ModelAdmin):
         'title_ar',
         'title_en',
     )
+
+    resource_class = SectionResource
 
 
 class AnswerAdmin(admin.ModelAdmin):

@@ -1,11 +1,11 @@
-{% load static %}
+{% load static i18n %}{% get_current_language as LANGUAGE_CODE %}
 <!DOCTYPE html>
-<html lang="en">
+<html lang="{{ LANGUAGE_CODE }}">
 <head>
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
 
     <title>
-        Quality Control - {% block title %}{% endblock %}
+        {% blocktrans %}Quality Control{% endblocktrans %} - {% block title %}{% endblock %}
     </title>
 
     <meta content='width=device-width, initial-scale=1.0, shrink-to-fit=no' name='viewport'/>
@@ -34,6 +34,7 @@
     <!-- CSS Just for demo purpose, don't include it in your project -->
     <link rel="stylesheet" href="{% static 'css/demo.css' %}">
     <link rel="stylesheet" href="{% static 'css/last.css' %}">
+    {% if LANGUAGE_CODE == "ar" %}<link rel="stylesheet" href="{% static 'css/rtl.css' %}">{% endif %}
 
     <!-- include it here to avoid jquery errors -->
     <script src="{% static 'js/core/jquery.3.2.1.min.js' %}"></script>
@@ -47,22 +48,23 @@
 
     {% include 'includes/navigation.html' %}
 
+    {% if LANGUAGE_CODE == "en" %}
     {% include 'includes/sidebar.html' %}
-
+    {% endif %}
     <div class="main-panel">
-
         {% block content %}{% endblock content %}
 
         {% include 'includes/footer.html' %}
-
     </div>
-
-    {% if request.user.is_authenticated %}
-
-        <!-- Custom template | don't include it in your project! -->
-        {% include 'includes/configuration-plugin.html' %}
-
+    {% if LANGUAGE_CODE == "ar" %}
+    {% include 'includes/sidebar.html' %}
     {% endif %}
+{#    {% if request.user.is_authenticated %}#}
+{##}
+{#        <!-- Custom template | don't include it in your project! -->#}
+{#        {% include 'includes/configuration-plugin.html' %}#}
+{##}
+{#    {% endif %}#}
 
 </div>
 

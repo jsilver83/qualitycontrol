@@ -8,203 +8,203 @@
 
 <!-- Specific Page CSS goes HERE  -->
 {% block stylesheets %}
-{{ form.media.css }}
+    {{ form.media.css }}
 {% endblock stylesheets %}
 
 
 {% block content %}
 
-<div class="content">
-    <div class="panel-header bg-primary-gradient">
-        <div class="page-inner py-5">
-            <div class="d-flex align-items-left align-items-md-center flex-column flex-md-row">
-                <div>
-                    <h2 class="text-white pb-2 fw-bold"> Assessment: {{audit}} </h2>
-                    <h5 class="text-white op-7 mb-2"></h5>
+    <div class="content">
+        <div class="panel-header bg-primary-gradient">
+            <div class="page-inner py-5">
+                <div class="d-flex align-items-left align-items-md-center flex-column flex-md-row">
+                    <div>
+                        <h2 class="text-white pb-2 fw-bold"> Assessment: {{ audit }} </h2>
+                        <h5 class="text-white op-7 mb-2"></h5>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
 
 
-    <div class="page-inner mt--5">
-        <form method="post" class="form-horizontal">
-            {% csrf_token %}
-            {{form.non_field_errors}}
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="card full-height">
-                        <div class="card-header">
-                            Question Text
-                        </div>
-                        <div class="card-body">
-                            <div class="row">
-                                <div class="col-md-6">
-                                    {{form.prompt_en | as_crispy_field}}
-                                </div>
-                                <div class="col-md-6">
-                                    {{form.help_text_en | as_crispy_field}}
-                                </div>
+        <div class="page-inner mt--5">
+            <form method="post" class="form-horizontal">
+                {% csrf_token %}
+                {{ form.non_field_errors }}
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="card full-height">
+                            <div class="card-header">
+                                {% blocktrans %}Question Text{% endblocktrans %}
                             </div>
-                            <div class="row">
-                                <div class="col-md-6">
-                                    {{form.prompt_ar | as_crispy_field}}
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        {{ form.prompt_en | as_crispy_field }}
+                                    </div>
+                                    <div class="col-md-6">
+                                        {{ form.help_text_en | as_crispy_field }}
+                                    </div>
                                 </div>
-                                <div class="col-md-6">
-                                    {{form.help_text_ar | as_crispy_field}}
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        {{ form.prompt_ar | as_crispy_field }}
+                                    </div>
+                                    <div class="col-md-6">
+                                        {{ form.help_text_ar | as_crispy_field }}
+                                    </div>
                                 </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="card full-height">
-                        <div class="card-header">
-                            Question Section
-                        </div>
-                        <div class="card-body">
-                            <div class="row">
-                                <div class="col-6">
-                                    {{form.section | as_crispy_field}}
-                                </div>
-                                <div class="col-6">
-                                    <a href="#" data-toggle="modal"
-                                       data-target="#exampleModal" class="btn btn-secondary float-right ml-3"> <i
-                                            class="fa fa-plus-square"></i> {% trans 'Add New Section' %}</a>
-
+                                <div class="row">
+                                    <div class="col-6">
+                                        {{ form.is_bonus | as_crispy_field }}
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
 
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="card full-height">
-                        <div class="card-header">
-                            Question Answers
-                        </div>
-                        <div class="card-body">
-                            {% if not object %}
-                            <div class="row">
-                                <div class="col-12">
-                                    {{form.answers_type | as_crispy_field}}
-                                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="card full-height">
+                            <div class="card-header">
+                                {% blocktrans %}Section{% endblocktrans %}
                             </div>
-                            {% endif %}
-                            <div class="table-div" id="answers_table">
-                                <table class="table">
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-6">
+                                        {{ form.section | as_crispy_field }}
+                                    </div>
+                                    <div class="col-6">
+                                        <a href="#" data-toggle="modal"
+                                           data-target="#exampleModal" class="btn btn-secondary float-right ml-3"> <i
+                                                class="fa fa-plus-square"></i> {% trans 'Add New Section' %}</a>
 
-                                    {{ answer_formset.management_form }}
-
-                                    {% for form in answer_formset.forms %}
-                                    {% if forloop.first %}
-                                    <thead>
-                                    <tr>
-                                        {% for field in form.visible_fields %}
-                                        <th>{{ field.label|capfirst }}</th>
-                                        {% endfor %}
-                                    </tr>
-                                    </thead>
-                                    {% endif %}
-
-                                    <tr class="{% cycle 'row1' 'row2' %} formset_row">
-
-                                        {% for hidden in form.hidden_fields %}
-                                        {{ hidden }}
-                                        {% endfor %}
-
-                                        {% for field in form.visible_fields %}
-                                        <td>
-                                            {{ field.errors.as_ul }}
-                                            {{ field }}
-                                        </td>
-                                        {% endfor %}
-                                    </tr>
-                                    {% endfor %}
-                                </table>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
 
-            <div class="row">
-                <div class="col-12">
-                    <button name="save_and_new" class="btn btn-primary float-right ml-3">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="card full-height">
+                            <div class="card-header">
+                                {% trans "Answers" %}
+                            </div>
+                            <div class="card-body">
+                                {% if not object %}
+                                    <div class="row">
+                                        <div class="col-12">
+                                            {{ form.answers_type | as_crispy_field }}
+                                        </div>
+                                    </div>
+                                {% endif %}
+                                <div class="table-div" id="answers_table">
+                                    <table class="table">
+
+                                        {{ answer_formset.management_form }}
+
+                                        {% for form in answer_formset.forms %}
+                                            {% if forloop.first %}
+                                                <thead>
+                                                <tr>
+                                                    {% for field in form.visible_fields %}
+                                                        <th>{{ field.label|capfirst }}</th>
+                                                    {% endfor %}
+                                                </tr>
+                                                </thead>
+                                            {% endif %}
+
+                                            <tr class="{% cycle 'row1' 'row2' %} formset_row">
+
+                                                {% for hidden in form.hidden_fields %}
+                                                    {{ hidden }}
+                                                {% endfor %}
+
+                                                {% for field in form.visible_fields %}
+                                                    <td>
+                                                        {{ field.errors.as_ul }}
+                                                        {{ field }}
+                                                    </td>
+                                                {% endfor %}
+                                            </tr>
+                                        {% endfor %}
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-12">
+                        <button name="save_and_new" class="btn btn-primary float-right ml-3">
                             <span class="btn-label">
                                 <i class="fa fa-check-circle"></i>
                             </span>
-                        {% trans 'Save & New' %}
-                    </button>
-                    <button class="btn btn-primary float-right ml-3">
+                            {% trans 'Save & New' %}
+                        </button>
+                        <button class="btn btn-primary float-right ml-3">
                             <span class="btn-label">
                                 <i class="fa fa-check-circle"></i>
                             </span>
-                        {% trans 'Save' %}
-                    </button>
-                    <button class="btn btn-danger float-left mr-3">
+                            {% trans 'Save' %}
+                        </button>
+                        <button class="btn btn-danger float-left mr-3">
                             <span class="btn-label">
                                 <i class="fa fa-strikethrough"></i>
                             </span>
-                        {% trans 'Cancel' %}
-                    </button>
+                            {% trans 'Cancel' %}
+                        </button>
+                    </div>
                 </div>
-            </div>
-        </form>
+            </form>
+        </div>
     </div>
 
 
-</div>
-
-
-<!-- Modal -->
-<div class="modal fade" id="exampleModal" role="dialog"
-     aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel{{ field.field.question.pk }}">New Section</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                {% create_section %}
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModal" role="dialog"
+         aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel{{ field.field.question.pk }}">{% blocktrans %}New Section{% endblocktrans %}</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    {% create_section %}
+                </div>
             </div>
         </div>
     </div>
-</div>
 
 
-<script src="{% static 'js/plugin/jquery.formset.js' %}"></script>
-{{ form.media.js }}
-<script type="text/javascript">
-$('.formset_row').formset({
-    addText: '<i class="fa fa-plus-square"></i> Add Answer',
-    prefix: 'answers',
-    deleteText: '<i class="fa fa-trash" style="color:red"></i>',
-    addCssClass: 'btn btn-secondary'
+    <script src="{% static 'js/plugin/jquery.formset.js' %}"></script>
+    {{ form.media.js }}
+    <script type="text/javascript">
+        $('.formset_row').formset({
+            addText: '{% load i18n %}<i class="fa fa-plus-square"></i> {% blocktrans %}Add Answer{% endblocktrans %}',
+            prefix: 'answers',
+            deleteText: '<i class="fa fa-trash" style="color:red"></i>',
+            addCssClass: 'btn btn-secondary'
 
-});
-const annswer_type_list = document.getElementById('id_answers_type');
-annswer_type_list.addEventListener('change', function handleChange(event) {
- if (event.target.value === 'custom') {
-    $('#answers_table').show();
- } else {
-    $('#answers_table').hide();
- }
-});
-
-
+        });
+        const annswer_type_list = document.getElementById('id_answers_type');
+        annswer_type_list.addEventListener('change', function handleChange(event) {
+            if (event.target.value === 'custom') {
+                $('#answers_table').show();
+            } else {
+                $('#answers_table').hide();
+            }
+        });
 
 
-
-</script>
+    </script>
 
 {% endblock content %}
 

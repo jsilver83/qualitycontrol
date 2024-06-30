@@ -7,7 +7,7 @@ from assessment.models import Audit, Answer
 from .mixins import AjaxableModelFormResponseMixin
 
 
-class HomeView(TemplateView):
+class HomeView(LoginRequiredMixin, TemplateView):
     template_name = "shared/home.html"
 
 
@@ -18,12 +18,12 @@ class SubmitAssessmentView(LoginRequiredMixin, FormView):
 
     def get_form_kwargs(self):
         kwargs = super().get_form_kwargs()
-        kwargs['audit'] = Audit.objects.get(id=self.kwargs['audit_id'])
+        kwargs['audit'] = get_object_or_404(Audit, id=self.kwargs['audit_id'])
         return kwargs
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['audit'] = Audit.objects.get(id=self.kwargs['audit_id'])
+        context['audit'] = get_object_or_404(Audit, id=self.kwargs['audit_id'])
         return context
 
     def form_valid(self, form):
@@ -61,3 +61,11 @@ class CreateEvidenceView(PermissionRequiredMixin, AjaxableModelFormResponseMixin
         }
         return super().form_valid(form, response_data)
 
+
+class HomeView2(TemplateView):
+    template_name = "shared/home2.html"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['data'] = []
+        return context

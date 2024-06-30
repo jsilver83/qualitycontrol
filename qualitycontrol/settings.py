@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 
+import os
 from pathlib import Path
 
 from django.utils.translation import gettext_lazy as _
@@ -49,6 +50,8 @@ INSTALLED_APPS = [
     'django_tables2',
     'django_filters',
     "django_select2",
+    'rosetta',
+    'import_export',
 
     'assessment',
     'clients',
@@ -66,6 +69,10 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
+
+if DEBUG:
+    INSTALLED_APPS.append('debug_toolbar')
+    MIDDLEWARE.insert(0, 'debug_toolbar.middleware.DebugToolbarMiddleware')
 
 ROOT_URLCONF = 'qualitycontrol.urls'
 
@@ -122,7 +129,7 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/4.2/topics/i18n/
 
-LANGUAGE_CODE = 'en'
+LANGUAGE_CODE = 'ar'
 
 TIME_ZONE = 'Asia/Riyadh'
 
@@ -141,6 +148,13 @@ LANGUAGES = (
     ('en', _('English')),
 
 )
+
+LOCALE_PATHS = (
+    os.path.join(BASE_DIR, 'locale'),
+)
+
+ROSETTA_ENABLE_TRANSLATION_SUGGESTIONS = True
+DEEPL_AUTH_KEY = '06d7a6c4-aa3b-4c79-bb59-2daf557d103f:fx'
 
 LOGOUT_REDIRECT_URL = 'login'
 LOGIN_REDIRECT_URL = 'assessments_list'

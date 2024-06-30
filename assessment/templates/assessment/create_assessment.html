@@ -6,111 +6,109 @@
 
 {% block title %} Assessment {% endblock %}
 
-<!-- Specific Page CSS goes HERE  -->
 {% block stylesheets %}{% endblock stylesheets %}
 
 {% block content %}
 
-<div class="content">
-    <div class="panel-header bg-primary-gradient">
-        <div class="page-inner py-5">
-            <div class="d-flex align-items-left align-items-md-center flex-column flex-md-row">
-                <div>
-                    <h2 class="text-white pb-2 fw-bold">New Assessment</h2>
-                    <h5 class="text-white op-7 mb-2">Quality Control System</h5>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="page-inner mt--5">
-        {% if derived_from %}
-          <div class="row">
-            <div class="col-md-12">
-                <div class="card full-height">
-                    <div class="card-header">
-                            Derive From
-                        </div>
-                    <div class="card-body">
-        {% include "assessment/_audit_info.html" with audit=derived_from %}
+    <div class="content">
+        <div class="panel-header bg-primary-gradient">
+            <div class="page-inner py-5">
+                <div class="d-flex align-items-left align-items-md-center flex-column flex-md-row">
+                    <div>
+                        <h2 class="text-white pb-2 fw-bold">{% blocktrans %}New Assessment{% endblocktrans %}</h2>
+                        <h5 class="text-white op-7 mb-2">{% blocktrans %}Quality Control System{% endblocktrans %}</h5>
                     </div>
                 </div>
             </div>
-         </div>
-        {% endif %}
-        <div class="row">
-            <div class="col-md-12">
-                <div class="card full-height">
-                    <div class="card-header">
-                            New Assessment
+        </div>
+
+        <div class="page-inner mt--5">
+            {% if derived_from %}
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="card full-height">
+                            <div class="card-header">
+                                {% blocktrans %}Derive From{% endblocktrans %}
+                            </div>
+                            <div class="card-body">
+                                {% include "assessment/_audit_info.html" with audit=derived_from %}
+                            </div>
                         </div>
-                    <div class="card-body">
-                        <form method="post" class="form-horizontal">
-                            {% csrf_token %}
-                            {{ form.derived_from.as_hidden }}
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <div class="card full-height">
-                                        <div class="card-body">
-                                            <div class="row">
-                                                <div class="col-md-6">
-                                                    {{form.title_en | as_crispy_field}}
+                    </div>
+                </div>
+            {% endif %}
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card full-height">
+                        <div class="card-header">
+                            {% blocktrans %}New Assessment{% endblocktrans %}
+                        </div>
+                        <div class="card-body">
+                            <form method="post" class="form-horizontal">
+                                {% csrf_token %}
+                                {{ form.derived_from.as_hidden }}
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="card full-height">
+                                            <div class="card-body">
+                                                <div class="row">
+                                                    <div class="col-md-6">
+                                                        {{ form.title_en | as_crispy_field }}
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        {{ form.title_ar | as_crispy_field }}
+                                                    </div>
                                                 </div>
-                                                <div class="col-md-6">
-                                                    {{form.title_ar | as_crispy_field}}
+
+                                                <div class="row">
+                                                    <div class="col-md-6">
+                                                        {{ form.created_for | as_crispy_field }}
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        {{ form.inspection_date | as_crispy_field }}
+                                                    </div>
                                                 </div>
+
+
+                                                <div class="row">
+                                                    <div class="col-md-6">
+                                                        {{ form.description_en | as_crispy_field }}
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        {{ form.description_ar| as_crispy_field }}
+                                                    </div>
+                                                </div>
+
                                             </div>
-
-
-                                            <div class="row">
-                                                <div class="col-md-6">
-                                                    {{form.type | as_crispy_field}}
-                                                </div>
-                                                <div class="col-md-6">
-                                                    {{form.created_for | as_crispy_field}}
-                                                </div>
-                                            </div>
-
-
-                                            <div class="row">
-                                                <div class="col-md-6">
-                                                    {{form.description_en | as_crispy_field}}
-                                                </div>
-                                                <div class="col-md-6">
-                                                    {{form.description_ar| as_crispy_field}}
-                                                </div>
-                                            </div>
-
                                         </div>
                                     </div>
                                 </div>
-                            </div>
 
 
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="row">
-            <div class="col-12">
-                <button class="btn btn-primary float-right ml-3">
+            <div class="row">
+                <div class="col-12">
+                    <button class="btn btn-primary float-right ml-3">
                         <span class="btn-label">
                             <i class="fa fa-check-circle"></i>
                         </span>
-                    {% trans 'Next' %}
-                </button>
-                <button class="btn btn-danger float-left mr-3">
+                        {% trans 'Next' %}
+                    </button>
+                    <button class="btn btn-danger float-left mr-3">
                         <span class="btn-label">
                             <i class="fa fa-strikethrough"></i>
                         </span>
-                    {% trans 'Cancel' %}
-                </button>
+                        {% trans 'Cancel' %}
+                    </button>
+                </div>
             </div>
+            </form>
         </div>
-        </form>
-    </div>
 
-</div>
+    </div>
 
 
 {% endblock content %}

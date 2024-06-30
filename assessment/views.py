@@ -1,6 +1,9 @@
-from django.shortcuts import render
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.db.models import Q
+from django.shortcuts import render, get_object_or_404, redirect
+from django.views import View
 from django.views.generic import FormView, ListView, CreateView, DetailView, UpdateView, DeleteView,  TemplateView
-from django.urls import reverse
+from django.urls import reverse, reverse_lazy
 from urllib import request
 from django_tables2 import SingleTableView, SingleTableMixin, MultiTableMixin
 from django_tables2.config import RequestConfig
@@ -9,6 +12,8 @@ from django_tables2.paginators import LazyPaginator
 from django_tables2.export.views import ExportMixin
 from django.contrib.messages.views import SuccessMessageMixin
 
+from clients.models import Employee
+from shared.forms import DummyForm
 from .forms import AuditForm, SectionForm, CreateQuestionForm, AnswerFormSet
 from .models import Section, Audit, Question, Answer
 from .tables import QuestionTable, QuestionFilter, AuditTable, AssessmentDetailsTable
@@ -19,7 +24,7 @@ from shared.mixins import AjaxableModelFormResponseMixin, AjaxableModelDeleteMix
 from shared.utils import is_ajax
 
 
-class ListAuditView(FilteredSingleTableView):
+class ListAuditView(LoginRequiredMixin, FilteredSingleTableView):
     template_name = "assessment/audits.html"
     model = Audit
     table_class = AuditTable
@@ -31,11 +36,17 @@ class ListAuditView(FilteredSingleTableView):
     }
 
     def get_queryset(self):
+        queryset = Audit.objects.filter(
+            status__in=[
+                Audit.Status.DRAFT,
+                Audit.Status.SUBMITTED,
+            ],
+        )
         if self.request.user.is_superuser or self.request.user.is_staff:
-            queryset = Audit.objects.all()
+            pass
         else:
-            employee = self.request.user.employee
-            queryset = Audit.objects.filter(created_for=employee.organization)
+            # employee = Employee.get_employee(self.request.user)
+            queryset = queryset.filter(created_by=self.request.user)
 
         return queryset
 
@@ -43,28 +54,26 @@ class ListAuditView(FilteredSingleTableView):
         if self.request.user.is_superuser or self.request.user.is_staff:
             return {
                 'exclude': (
-                    'created_by',
+                    # 'created_by',
                 )
             }
         else:
             return {
                 'exclude': (
-                    'type',
-                    'created_for',
+                    'created_by',
+                    # 'type',
+                    # 'created_for',
                 )
             }
 
     def get_filterset_kwargs(self, filterset_class):
         filterset_kwargs = super().get_filterset_kwargs(filterset_class)
         if self.request.user.is_superuser or self.request.user.is_staff:
-            filterset_kwargs['exclude'] = [
-                'created_by'
-            ]
+            filterset_kwargs['exclude'] = []
 
         else:
             filterset_kwargs['exclude'] = [
-                'type',
-                'created_for',
+                'created_by'
             ]
 
         return filterset_kwargs
@@ -123,6 +132,15 @@ class AssessmentInfoView(DetailView):
     template_name = "assessment/assessment_details.html"
 
 
+class CreateAssessmentDeriveView(ListView):
+    template_name = "assessment/create_assessment_derive.html"
+    model = Audit
+    context_object_name = 'audits'
+
+    def get_queryset(self):
+        return Audit.objects.filter(status=Audit.Status.TEMPLATE)
+
+
 class CreateAssessmentView(CreateView):
     template_name = "assessment/create_assessment.html"
     form_class = AuditForm
@@ -143,9 +161,8 @@ class CreateAssessmentView(CreateView):
             context['derived_from'] = Audit.objects.get(pk=audit_id)
         return context
 
-
     def get_success_url(self):
-        return reverse('questions', args=(self.object.id, ))
+        return reverse_lazy('assessments_list')
     
     def form_valid(self, form):
         if form.is_valid():
@@ -223,9 +240,9 @@ class CreateQuestionView(SuccessMessageMixin, CreateView):
         return context_data
 
     def get_success_url(self):
-        success_url = reverse('questions', args=(self.kwargs['audit_id'],))
+        success_url = reverse_lazy('questions', args=(self.kwargs['audit_id'],))
         if self.request.method == 'POST' and 'save_and_new' in self.request.POST:
-            success_url = reverse('create_question', args=(self.kwargs['audit_id'],))
+            success_url = reverse_lazy('create_question', args=(self.kwargs['audit_id'],))
         return success_url
 
     def form_valid(self, form):
@@ -289,9 +306,9 @@ class UpdateQuestionView(UpdateView):
         return context_data
 
     def get_success_url(self):
-        success_url = reverse('questions', args=(self.kwargs['audit_id'],))
+        success_url = reverse_lazy('questions', args=(self.kwargs['audit_id'],))
         if self.request.method == 'POST' and 'save_and_new' in self.request.POST:
-            success_url = reverse('create_question', args=(self.kwargs['audit_id'],))
+            success_url = reverse_lazy('create_question', args=(self.kwargs['audit_id'],))
         return success_url
 
     def form_valid(self, form):
@@ -320,6 +337,14 @@ class DetailQuestionView(DetailView):
         context_data['audit'] = Audit.objects.get(id=self.kwargs['audit_id'])
         context_data['answers'] = Answer.objects.filter(question=self.kwargs['question_id'])
         return context_data
+
+
+class DeleteAuditView(View):
+
+    def post(self, request, *args, **kwargs):
+        audit = get_object_or_404(Audit, pk=self.kwargs['pk'])
+        audit.delete()
+        return redirect(reverse_lazy('assessments_list'))
 
 
 class DeleteQuestionView(AjaxableModelDeleteMixin, DeleteView):

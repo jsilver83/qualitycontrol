@@ -81,11 +81,18 @@ class ListAuditView(LoginRequiredMixin, FilteredSingleTableView):
 
 class DetailAssessmentView(MultiTableMixin, TemplateView):
     template_name = "assessment/view_assessment.html"
+    audit = None
+    sections = []
 
-    def dispatch(self, request, *args, **kwargs):
+    def setup(self, request, *args, **kwargs):
+        super().setup(request, *args, **kwargs)
         self.audit = Audit.objects.get(id=self.kwargs['audit_id'])
         self.sections = self.audit.get_sections()
-        return super().dispatch(request, *args, **kwargs)
+
+    # def dispatch(self, request, *args, **kwargs):
+    #     self.audit = Audit.objects.get(id=self.kwargs['audit_id'])
+    #     self.sections = self.audit.get_sections()
+    #     return super().dispatch(request, *args, **kwargs)
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -125,11 +132,6 @@ class DetailAssessmentExportView(ExportMixin, SingleTableView):
         return {
             'exclude': ('evidences', 'tasks', )
         }
-
-
-class AssessmentInfoView(DetailView):
-    model = Audit
-    template_name = "assessment/assessment_details.html"
 
 
 class CreateAssessmentDeriveView(ListView):

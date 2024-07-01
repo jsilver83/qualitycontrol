@@ -9,7 +9,6 @@ urlpatterns = [
     path('<int:audit_id>/derive/', views.CreateAssessmentView.as_view(), name="derive_assessment"),
     path('<int:audit_id>/view/', views.DetailAssessmentView.as_view(), name="view_assessment"),
     path('<int:audit_id>/export/', views.DetailAssessmentExportView.as_view(), name="export_assessment"),
-    path('<int:audit_id>/info/', views.AssessmentInfoView.as_view(), name="assessment_info"),
     path('<int:pk>/delete/', views.DeleteAuditView.as_view(), name="delete_assessment"),
 
 

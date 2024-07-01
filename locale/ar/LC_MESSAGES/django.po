@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-06-29 20:14+0300\n"
-"PO-Revision-Date: 2024-06-30 03:39+0300\n"
+"POT-Creation-Date: 2024-06-30 11:29+0300\n"
+"PO-Revision-Date: 2024-06-30 11:30+0300\n"
 "Last-Translator:   <>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
@@ -19,115 +19,119 @@ msgstr ""
 "Plural-Forms: nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 && n%100<=10 ? 3 : n%100>=11 && n%100<=99 ? 4 : 5;\n"
 "X-Translated-Using: django-rosetta 0.10.0\n"
 
-#: .\assessment\forms.py:120
+#: .\assessment\forms.py:122
 msgid "Yes"
 msgstr "نعم"
 
-#: .\assessment\forms.py:120
+#: .\assessment\forms.py:122
 msgid "No"
 msgstr "لا يوجد"
 
-#: .\assessment\models.py:19 .\assessment\models.py:122
+#: .\assessment\models.py:20 .\assessment\models.py:126
 #: .\clients\models.py:125
 msgid "Title (AR)"
 msgstr "العنوان (بالعربية)"
 
-#: .\assessment\models.py:25 .\assessment\models.py:129
+#: .\assessment\models.py:26 .\assessment\models.py:133
 #: .\clients\models.py:131
 msgid "Title (EN)"
 msgstr "العنوان (بالإنجليزية)"
 
-#: .\assessment\models.py:35
+#: .\assessment\models.py:36
 msgid "Sub of"
 msgstr "تابع لـ"
 
-#: .\assessment\models.py:40 .\assessment\models.py:311
-#: .\assessment\models.py:445
+#: .\assessment\models.py:41 .\assessment\models.py:319
+#: .\assessment\models.py:453
 msgid "Display Order"
 msgstr "ترتيب العرض"
 
-#: .\assessment\models.py:46
+#: .\assessment\models.py:47
 msgid "Show?"
 msgstr "عرض؟"
 
-#: .\assessment\models.py:93 .\assessment\models.py:243
+#: .\assessment\models.py:94 .\assessment\models.py:250
 msgid "Weighted Total (%)"
 msgstr "النسبة الإجمالية الموزونة (%)"
 
-#: .\assessment\models.py:110 .\clients\models.py:12
+#: .\assessment\models.py:97
+#, python-brace-format
+msgid "{total_score} out of {full_score}"
+msgstr "{total_score} من {full_score}"
+
+#: .\assessment\models.py:114 .\clients\models.py:12
 msgid "Restaurants"
 msgstr "مطاعم"
 
-#: .\assessment\models.py:111 .\clients\models.py:13
+#: .\assessment\models.py:115 .\clients\models.py:13
 msgid "Hotels"
 msgstr "فنادق"
 
-#: .\assessment\models.py:112 .\clients\models.py:14
+#: .\assessment\models.py:116 .\clients\models.py:14
 msgid "Pilgrims Center"
 msgstr "مركز الحجاج"
 
-#: .\assessment\models.py:113 .\assessment\models.py:489
+#: .\assessment\models.py:117 .\assessment\models.py:497
 #: .\clients\models.py:15
 msgid "Miscellaneous"
 msgstr "متنوعات"
 
-#: .\assessment\models.py:116
+#: .\assessment\models.py:120
 msgid "Template"
 msgstr "القالب"
 
-#: .\assessment\models.py:117
+#: .\assessment\models.py:121
 msgid "Draft"
 msgstr "مسودة"
 
-#: .\assessment\models.py:118
+#: .\assessment\models.py:122
 msgid "Submitted"
 msgstr "تم التقديم"
 
-#: .\assessment\models.py:125
+#: .\assessment\models.py:129
 msgid ""
 "Write a meaningful and descriptive title (or name) for this audit in Arabic."
 msgstr "اكتب عنوانًا (أو اسمًا) ذا مغزى ووصفًا لهذا التقييم باللغة العربية."
 
-#: .\assessment\models.py:133
+#: .\assessment\models.py:137
 msgid ""
 "Write a meaningful and descriptive title (or name) for this audit in "
 "English."
 msgstr ""
 "اكتب عنواناً (أو اسماً) ذا مغزى ووصفياً لهذا التقييم باللغة الإنجليزية."
 
-#: .\assessment\models.py:137 .\tasks\models.py:10
+#: .\assessment\models.py:141 .\tasks\models.py:10
 msgid "Description (AR)"
 msgstr "الوصف (بالعربية)"
 
-#: .\assessment\models.py:142 .\tasks\models.py:15
+#: .\assessment\models.py:146 .\tasks\models.py:15
 msgid "Description (EN)"
 msgstr "الوصف (بالإنجليزية)"
 
-#: .\assessment\models.py:147 .\assessment\models.py:523
+#: .\assessment\models.py:151 .\assessment\models.py:531
 #: .\assessment\templates\assessment\_audit_table_evidences_column.html:24
 #: .\clients\models.py:31 .\shared\templates\shared\submit_assessment.html:89
 msgid "Type"
 msgstr "النوع"
 
-#: .\assessment\models.py:158
+#: .\assessment\models.py:162
 #: .\assessment\templates\assessment\_audit_info.html:13
 msgid "Created For"
 msgstr "المنشأة"
 
-#: .\assessment\models.py:163
-#| msgid "Completion Date"
+#: .\assessment\models.py:167
 msgid "Inspection Date"
 msgstr "تاريخ التفتيش"
 
-#: .\assessment\models.py:166
+#: .\assessment\models.py:170
 msgid "Date/time of the inspection visit"
 msgstr "تاريخ/وقت زيارة التفتيش"
 
-#: .\assessment\models.py:174
+#: .\assessment\models.py:178
 msgid "Derived From"
 msgstr "مشتق من"
 
-#: .\assessment\models.py:179
+#: .\assessment\models.py:183
 #: .\assessment\templates\assessment\_audit_info.html:9
 #: .\assessment\templates\assessment\_audit_table_tasks_column.html:26
 #: .\clients\models.py:325
@@ -135,79 +139,79 @@ msgstr "مشتق من"
 msgid "Status"
 msgstr "الحالة"
 
-#: .\assessment\models.py:189
+#: .\assessment\models.py:193
 #: .\assessment\templates\assessment\_audit_info.html:24 .\tasks\models.py:95
 msgid "Created On"
 msgstr "تاريخ الإنشاء"
 
-#: .\assessment\models.py:200
+#: .\assessment\models.py:204
 #: .\assessment\templates\assessment\_audit_info.html:28 .\tasks\models.py:106
 msgid "Created By"
 msgstr "تم إنشاؤها بواسطة"
 
-#: .\assessment\models.py:205 .\tasks\models.py:111
+#: .\assessment\models.py:209 .\tasks\models.py:111
 msgid "Updated On"
 msgstr "تم التحديث على"
 
-#: .\assessment\models.py:216 .\tasks\models.py:122
+#: .\assessment\models.py:220 .\tasks\models.py:122
 msgid "Updated By"
 msgstr "تم التحديث بواسطة"
 
-#: .\assessment\models.py:277 .\assessment\models.py:555
+#: .\assessment\models.py:285 .\assessment\models.py:563
 msgid "Audit"
 msgstr "التدقيق"
 
-#: .\assessment\models.py:282 .\assessment\models.py:421
+#: .\assessment\models.py:290 .\assessment\models.py:429
 msgid "Prompt (AR)"
 msgstr "موجه السؤال (بالعربية)"
 
-#: .\assessment\models.py:287 .\assessment\models.py:427
+#: .\assessment\models.py:295 .\assessment\models.py:435
 msgid "Prompt (EN)"
 msgstr "موجه السؤال (بالإنكليزية)"
 
-#: .\assessment\models.py:292
+#: .\assessment\models.py:300
 msgid "Help Text (AR)"
 msgstr "نص المساعدة (بالعربية)"
 
-#: .\assessment\models.py:297
+#: .\assessment\models.py:305
 msgid "Help Text (EN)"
 msgstr "نص المساعدة (بالإنجليزية)"
 
-#: .\assessment\models.py:306
+#: .\assessment\models.py:314
 #: .\assessment\templates\assessment\create_question.html:71
 msgid "Section"
 msgstr "القسم"
 
-#: .\assessment\models.py:317
+#: .\assessment\models.py:325
 msgid "Is a Bonus Question?"
 msgstr "سؤال إضافي؟"
 
-#: .\assessment\models.py:335
+#: .\assessment\models.py:343
 msgid "Prompt"
 msgstr "السؤال"
 
-#: .\assessment\models.py:347 .\assessment\tables.py:59
+#: .\assessment\models.py:355 .\assessment\tables.py:59
 #: .\assessment\tables.py:73 .\assessment\tables.py:99
 msgid "Selected Answer"
 msgstr "الإجابة"
 
-#: .\assessment\models.py:353
+#: .\assessment\models.py:361
 msgid "Answered?"
 msgstr "هل تمت الإجابة؟"
 
-#: .\assessment\models.py:366
+#: .\assessment\models.py:374
 msgid "Scored?"
 msgstr "سجلت؟"
 
-#: .\assessment\models.py:416 .\clients\models.py:302 .\tasks\models.py:33
+#: .\assessment\models.py:424 .\clients\models.py:302 .\tasks\models.py:33
 msgid "Question"
 msgstr "سؤال"
 
-#: .\assessment\models.py:433
+#: .\assessment\models.py:441
 msgid "Weight"
 msgstr "الوزن"
 
-#: .\assessment\models.py:436
+#: .\assessment\models.py:444
 msgid ""
 "Empty wight indicate N/A answers which are not going to be calculated in the"
 " total score"
@@ -215,46 +219,46 @@ msgstr ""
 "تشير الخانات الفارغة إلى إجابات غير متاحة، والتي لن يتم احتسابها في الدرجة "
 "الكلية"
 
-#: .\assessment\models.py:440
+#: .\assessment\models.py:448
 msgid "Selected?"
 msgstr "مختارة؟"
 
-#: .\assessment\models.py:451
+#: .\assessment\models.py:459
 msgid "Answered On"
 msgstr "تمت الإجابة على"
 
-#: .\assessment\models.py:461
+#: .\assessment\models.py:469
 msgid "Answered By"
 msgstr "الإجابة بواسطة"
 
-#: .\assessment\models.py:486
+#: .\assessment\models.py:494
 msgid "Picture"
 msgstr "الصورة الشخصية"
 
-#: .\assessment\models.py:487
+#: .\assessment\models.py:495
 msgid "Video"
 msgstr "فيديو"
 
-#: .\assessment\models.py:488
+#: .\assessment\models.py:496
 msgid "Note (Text only)"
 msgstr "ملاحظة (نص فقط)"
 
-#: .\assessment\models.py:501
+#: .\assessment\models.py:509
 msgid "Attachment"
 msgstr "المرفقات"
 
-#: .\assessment\models.py:518
+#: .\assessment\models.py:526
 #: .\assessment\templates\assessment\_audit_table_evidences_column.html:26
 #: .\clients\models.py:342
 #: .\shared\templates\shared\submit_assessment.html:108
 msgid "Notes"
 msgstr "الملاحظات"
 
-#: .\assessment\models.py:530
+#: .\assessment\models.py:538
 msgid "Uploaded On"
 msgstr "تم التحميل على"
 
-#: .\assessment\models.py:537
+#: .\assessment\models.py:545
 msgid "Uploaded By"
 msgstr "تم التحميل بواسطة"
 

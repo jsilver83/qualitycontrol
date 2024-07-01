@@ -94,7 +94,10 @@ class Section(models.Model):
     weighted_total.short_description = _('Weighted Total (%)')
 
     def score_in_words(self, audit):
-        return '{} out of {}'.format(self.total_score(audit), self.full_score(audit))
+        return _('{total_score} out of {full_score}').format(
+            total_score=self.total_score(audit),
+            full_score=self.full_score(audit),
+        )
 
     def __str__(self):
         if get_language() == 'ar':

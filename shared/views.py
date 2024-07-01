@@ -40,8 +40,8 @@ class SubmitAssessmentView(LoginRequiredMixin, FormView):
         return super().form_valid(form)
 
 
-class CreateEvidenceView(PermissionRequiredMixin, AjaxableModelFormResponseMixin, CreateView):
-    permission_required = 'evidence.can_add_evidence'
+class CreateEvidenceView(LoginRequiredMixin, AjaxableModelFormResponseMixin, CreateView):
+    # permission_required = 'evidence.can_add_evidence'
     template_name = 'assessment/question_and_answers_field.html'
     form_class = EvidenceForm
 

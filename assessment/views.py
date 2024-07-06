@@ -92,6 +92,7 @@ class DetailAssessmentView(MultiTableMixin, TemplateView):
         context['tables'] = tables_names
         chart_data = self.audit.get_chart_data()
         context['labels'], context['scores'] = json.dumps(chart_data[0]), json.dumps(chart_data[1])
+        context['full_marks'] = json.dumps([104 for x in chart_data[1]])
         return context
 
     def get_tables(self):

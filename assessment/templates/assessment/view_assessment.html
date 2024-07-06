@@ -142,15 +142,18 @@
 {#                                </div>#}
                             </div>
                         </div>
-                        <br><br><br>
                         <div class="card-body">
-                            <div class="chart-container" style="min-height: 375px">
-                                <canvas id="statisticsChart"></canvas>
-                            </div>
-                        </div>
-                        <div class="card-body" style="background-color: white!important;">
-                            <div class="chart-container" style="min-height: 375px">
-                                <canvas id="radarChart"></canvas>
+                            <div class="row">
+                                <div class="col-lg-6 col-sm-12">
+                                    <div class="chart-container mt-5" style="min-height: 475px">
+                                        <canvas id="statisticsChart"></canvas>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-sm-12">
+                                    <div class="chart-container" style="min-height: 375px; background-color: white!important;">
+                                        <canvas id="radarChart"></canvas>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -162,9 +165,22 @@
 
 {% block javascripts %}
     <script type="application/javascript">
+        function randomInteger(max) {
+            return Math.floor(Math.random()*(max + 1));
+        }
+        
+        function randomRgbColor(a) {
+            let r = randomInteger(255);
+            let g = randomInteger(255);
+            let b = randomInteger(255);
+            //return [r,g,b];
+            return "rgba(" + r +"," + g + "," + "," + a + ")";
+        }
+        
         let labelz = JSON.parse("{{ labels | escapejs }}")
         let scorez = JSON.parse("{{ scores | escapejs }}")
-        
+        let fullMarks = JSON.parse("{{ full_marks | escapejs }}")
+
         var ctx = document.getElementById('statisticsChart').getContext('2d');
 
         const mixedChart = new Chart(ctx, {
@@ -183,7 +199,7 @@
                     }
                 }
             }
-        });       
+        });
 
         var ctx2 = document.getElementById('radarChart').getContext('2d');
 
@@ -199,6 +215,16 @@
                 pointBorderColor: '#fff',
                 pointHoverBackgroundColor: '#fff',
                 pointHoverBorderColor: 'rgb(255, 99, 132)'
+            }, {
+                label: '{% trans "Full Marks" %}',
+                data: fullMarks,
+                fill: true,
+                backgroundColor: 'rgba(1, 135, 73, 0.40)',
+                borderColor: 'green',
+                pointBackgroundColor: 'rgb(54, 162, 235)',
+                pointBorderColor: '#fff',
+                pointHoverBackgroundColor: '#fff',
+                pointHoverBorderColor: 'rgb(54, 162, 235)'
             }]
         };
 
@@ -212,10 +238,19 @@
                         display: true,
                         text: '{% trans "Performance Chart" %}'
                     }
+                },
+                scales: {
+                    r: {
+                        angleLines: {
+                            display: false
+                        },
+                        suggestedMin: 0,
+                        max: 100
+                    }
                 }
             },
         };
-        
+
         const radarChart = new Chart(ctx2, config);
     </script>
 {% endblock javascripts %}

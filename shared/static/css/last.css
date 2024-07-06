@@ -15,3 +15,7 @@ button[aria-expanded=false] .fa-angle-double-right {
 button[aria-expanded=false] .fa-angle-double-down {
   display: none;
 }
+
+.bg-success-gradient em, .bg-success-gradient {
+  color: white!important;
+}

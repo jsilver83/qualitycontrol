@@ -16,10 +16,10 @@
     {% endif %}
 </div>
 <div class="row">
-    {#    <div class="col-md-4">#}
-    {#        <label>{% trans "Score" %}</label>#}
-    {#        <p class="text-success" style="direction: ltr"> {{ audit.score_in_words }}</p>#}
-    {#    </div>#}
+    <div class="col-md-4">
+        <label>{% trans "Score" %}</label>
+        <p class="text-success" style="direction: ltr"> {{ audit.score_in_words }}</p>
+    </div>
     <div class="col-md-4">
         <label>{% trans "Created On" %}</label>
         <p> {{ audit.created_on }}</p>
@@ -28,4 +28,14 @@
         <label>{% trans "Created By" %}</label>
         <p> {{ audit.created_by }}</p>
     </div>
+</div>
+<div class="row">
+    <div class="col-md-4">
+        <label>{% trans "Inspection Date" %}</label>
+        <p>{{ audit.inspection_date }}</p>
+    </div>
+    {% if audit.derived_from %}<div class="col-md-8">
+        <label>{% trans "Derived From" %}</label>
+        <p>{{ audit.derived_from }}</p>
+    </div>{% endif %}
 </div>

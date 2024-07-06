@@ -1,4 +1,5 @@
 import django_filters
+from django.utils.translation import gettext_lazy as _
 from django_select2.forms import Select2Widget
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Layout, Submit, Div, Field
@@ -23,7 +24,6 @@ class AuditFilter(django_filters.FilterSet):
     class Meta:
         model = Audit
         fields = [
-            'type',
             'created_for',
             'created_by',
             'status',
@@ -39,6 +39,7 @@ class AuditFilter(django_filters.FilterSet):
         self.form.fields['created_for'].widget = S2Widget()
         self.form.fields['created_for'].queryset = Organization.objects.all()
 
+
 class Row(Div):
     css_class = 'row'
 
@@ -52,7 +53,7 @@ class AuditFilterFormHelper(FormHelper):
             Field('created_by', wrapper_class='col-md-3 mb-0', css_class="form-control"),
             Field('status', wrapper_class='col-md-3 mb-0', css_class="form-control"),
         ),
-        Submit('submit', 'Apply Filters',wrapper_class='row', css_class='btn btn-primary float-right'),
+        Submit('submit', _('Search'), wrapper_class='row', css_class='btn btn-primary float-right'),
     )
 
 

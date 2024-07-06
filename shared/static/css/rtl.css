@@ -74,3 +74,16 @@ body {
 /*nav.navbar {*/
 /*    float: left!important;*/
 /*}*/
+
+.nav-pills.flex-column.nav-pills-no-bd .nav-link{
+    text-align: center!important;
+}
+
+.accordion .card > .card-header > .span-mode {
+  margin-left: inherit!important;
+  margin-right: auto!important;
+}
+
+.fa-angle-double-right::before {
+  content: "\f100"!important;
+}

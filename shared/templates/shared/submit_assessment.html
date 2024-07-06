@@ -42,7 +42,7 @@
                                 {% endifchanged %}
                                 <div class="col-md-6">
                                     <div class="card full-height">
-                                        <div class="card-body">
+                                        <div class="card-body {% if field.field.question.is_bonus %}bg-success-gradient{% endif %}">
                                             <div class="card-title">{{ forloop.counter }})&nbsp;&nbsp;{{ field.label }}</div>
                                             <div class="card-category">{{ field.help_text }}</div>
                                             <div data-notify="container" class="{% if field.errors %}has-error {% endif %}form-group">

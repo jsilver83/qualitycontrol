@@ -48,11 +48,12 @@ class AuditTable(tables.Table):
         verbose_name=_('Delete'),
     )
     questions_count = tables.Column(verbose_name=_('Questions Count'))
+    score_in_words = tables.Column(verbose_name=_('Score'), orderable=False)
 
     class Meta:
         model = Audit
         template_name = "django_tables2/bootstrap4.html"
-        fields = ("title", "questions_count", "created_for", "created_on", "created_by", "status",)
+        fields = ("title", "score_in_words", "questions_count", "created_for", "inspection_date", "status",)
 
 
 class AssessmentDetailsTable(tables.Table):

@@ -1,27 +1,19 @@
+import json
+
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.db.models import Q
-from django.shortcuts import render, get_object_or_404, redirect
-from django.views import View
-from django.views.generic import FormView, ListView, CreateView, DetailView, UpdateView, DeleteView,  TemplateView
-from django.urls import reverse, reverse_lazy
-from urllib import request
-from django_tables2 import SingleTableView, SingleTableMixin, MultiTableMixin
-from django_tables2.config import RequestConfig
-from django_filters.views import FilterView
-from django_tables2.paginators import LazyPaginator
-from django_tables2.export.views import ExportMixin
 from django.contrib.messages.views import SuccessMessageMixin
-
-from clients.models import Employee
-from shared.forms import DummyForm
-from .forms import AuditForm, SectionForm, CreateQuestionForm, AnswerFormSet
-from .models import Section, Audit, Question, Answer
-from .tables import QuestionTable, QuestionFilter, AuditTable, AssessmentDetailsTable
-from .filters import *
-
+from django.shortcuts import get_object_or_404, redirect
+from django.urls import reverse_lazy
+from django.views import View
+from django.views.generic import ListView, CreateView, DetailView, UpdateView, DeleteView, TemplateView
+from django_tables2 import SingleTableView, MultiTableMixin
+from django_tables2.export.views import ExportMixin
 
 from shared.mixins import AjaxableModelFormResponseMixin, AjaxableModelDeleteMixin, FilteredSingleTableView
-from shared.utils import is_ajax
+from .filters import *
+from .forms import AuditForm, SectionForm, CreateQuestionForm, AnswerFormSet
+from .models import Question, Answer
+from .tables import QuestionTable, AuditTable, AssessmentDetailsTable
 
 
 class ListAuditView(LoginRequiredMixin, FilteredSingleTableView):
@@ -89,11 +81,6 @@ class DetailAssessmentView(MultiTableMixin, TemplateView):
         self.audit = Audit.objects.get(id=self.kwargs['audit_id'])
         self.sections = self.audit.get_sections()
 
-    # def dispatch(self, request, *args, **kwargs):
-    #     self.audit = Audit.objects.get(id=self.kwargs['audit_id'])
-    #     self.sections = self.audit.get_sections()
-    #     return super().dispatch(request, *args, **kwargs)
-
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
 
@@ -103,6 +90,8 @@ class DetailAssessmentView(MultiTableMixin, TemplateView):
         for table in context['tables']:
             tables_names[int(table.prefix)] = table
         context['tables'] = tables_names
+        chart_data = self.audit.get_chart_data()
+        context['labels'], context['scores'] = json.dumps(chart_data[0]), json.dumps(chart_data[1])
         return context
 
     def get_tables(self):

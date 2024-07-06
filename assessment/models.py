@@ -2,16 +2,54 @@ from constrainedfilefield.fields import ConstrainedFileField
 from django.conf import settings
 from django.contrib.auth import get_user_model
 from django.db import models
-from django.db.models import Max, Q
+from django.db.models import Max, Q, OuterRef, Subquery, Prefetch
 from django.utils import timezone
 from django.utils.functional import cached_property
 from django.utils.translation import gettext_lazy as _, get_language
 from pyexcel_xlsx import get_data
 import json
 
-from assessment.utils import full_score, total_score
-
 User = settings.AUTH_USER_MODEL
+
+
+def calculate_score(questions):
+    """
+    An optimized function to calculate the total score of a set of questions.
+    :param questions: a query of type Question
+    :return: tuple (full_score, total_score)
+    """
+    weight_subquery = Answer.objects.filter(
+        question=OuterRef('pk')
+    ).order_by('-weight').values('weight')[:1]
+
+    questions = questions.annotate(
+        weight=Subquery(weight_subquery)
+    ).prefetch_related(
+        Prefetch(
+            'answers',
+            queryset=Answer.objects.filter(selected_answer=True),
+            to_attr='selected_answers'
+        )
+    )
+
+    total = 0.0
+    full_score = 0.0
+
+    for question in questions:
+        is_answered = bool(question.selected_answers)
+        score = question.selected_answers[0].weight if is_answered else None
+        is_scored = score is not None
+
+        if is_scored:
+            if question.is_bonus:
+                if score:
+                    total += score
+                    full_score += question.weight
+            else:
+                total += score
+                full_score += question.weight
+
+    return full_score, total
 
 
 class Section(models.Model):
@@ -75,29 +113,39 @@ class Section(models.Model):
         return full_path
 
     def questions_of_subsections(self, audit):
-        all_sub_sections = Section.objects.filter(Q(sub_of=self)
+        all_sub_sections = Section.objects.filter(Q(pk=self.pk)
+                                                  | Q(sub_of=self)
                                                   | Q(sub_of__sub_of=self)
                                                   | Q(sub_of__sub_of__sub_of=self))
 
         return Question.objects.filter(audit=audit, section__in=all_sub_sections)
 
     def full_score(self, audit):
-        return full_score(self.questions_of_subsections(audit=audit))
+        return calculate_score(self.questions_of_subsections(audit=audit))[0]
 
     def total_score(self, audit):
-        return total_score(self.questions_of_subsections(audit=audit))
+        return calculate_score(self.questions_of_subsections(audit=audit))[1]
 
     def weighted_total(self, audit):
-        if self.full_score(audit=audit):
-            return self.total_score(audit) / self.full_score(audit) * 100
+        full_score, total_score = calculate_score(self.questions_of_subsections(audit=audit))
+        if full_score:
+            return total_score / full_score * 100
+        else:
+            return 0
 
     weighted_total.short_description = _('Weighted Total (%)')
 
     def score_in_words(self, audit):
-        return _('{total_score} out of {full_score}').format(
-            total_score=self.total_score(audit),
-            full_score=self.full_score(audit),
-        )
+        from django.contrib.humanize.templatetags.humanize import number_format
+        full_score, total_score = calculate_score(self.questions_of_subsections(audit=audit))
+        if total_score:
+            return _('{total_score} out of {full_score} (%{weighted_total})').format(
+                total_score=total_score,
+                full_score=full_score,
+                weighted_total=number_format(total_score/full_score*100, decimal_pos=2),
+            )
+        else:
+            return _('No Score')
 
     def __str__(self):
         if get_language() == 'ar':
@@ -232,35 +280,43 @@ class Audit(models.Model):
     def title(self):
         return str(self)
 
-    @cached_property
     def full_score(self):
-        return full_score(self.questions.all())
+        return calculate_score(self.questions.all())[0]
 
-    @cached_property
     def total_score(self):
-        return total_score(self.questions.all())
+        return calculate_score(self.questions.all())[1]
 
-    @cached_property
     def weighted_total(self):
-        if self.full_score:
-            return self.total_score / self.full_score * 100
+        full_score, total = calculate_score(self.questions.all())
+        if full_score:
+            return total / full_score * 100
         else:
             return 0
 
     weighted_total.short_description = _('Weighted Total (%)')
 
-    @cached_property
     def score_in_words(self):
         from django.contrib.humanize.templatetags.humanize import number_format
-        return '{} / {} (%{})'.format(self.total_score, self.full_score,
-                                      number_format(self.weighted_total, decimal_pos=2))
+        full_score, total_score = calculate_score(self.questions.all())
+        if total_score:
+            return _('{total_score} out of {full_score} (%{weighted_total})').format(
+                total_score=total_score,
+                full_score=full_score,
+                weighted_total=number_format(total_score / full_score * 100, decimal_pos=2),
+            )
+        else:
+            return _("No Score")
 
     def get_sections(self):
         root_sections = {}
-        all_sections = Question.objects.filter(audit=self).order_by('section').values_list('section',
-                                                                                           flat=True).distinct()
-        for section_id in all_sections:
-            section = Section.objects.get(pk=section_id)
+        all_sections_pks = Question.objects.filter(audit=self).order_by('section').values_list(
+            'section__pk',
+            flat=True,
+        ).distinct()
+
+        all_sections = Section.objects.filter(pk__in=all_sections_pks)
+
+        for section in all_sections:
             section.score = section.score_in_words(audit=self)
             section.full_path = section.full_path(with_root=False)
             section.root_section.score = section.root_section.score_in_words(self)
@@ -273,6 +329,21 @@ class Audit(models.Model):
 
     def questions_count(self):
         return self.questions.count()
+
+    def get_chart_data(self):
+        all_sections_pks = Question.objects.filter(audit=self).order_by('section').values_list(
+            'section__pk',
+            flat=True,
+        ).distinct()
+
+        all_sections = Section.objects.filter(pk__in=all_sections_pks)
+
+        labels, scores = [], []
+        for section in all_sections:
+            labels.append(str(section)[0:40])
+            scores.append(section.weighted_total(audit=self))
+
+        return labels, scores
 
 
 class Question(models.Model):

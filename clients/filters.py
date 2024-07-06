@@ -1,4 +1,5 @@
 import django_filters
+from django.utils.translation import gettext_lazy as _
 from django_select2.forms import Select2Widget
 from django.db import models
 from django import forms
@@ -10,6 +11,7 @@ from .models import Organization, Task, Employee
 
 class DateInput(forms.DateInput):
     input_type = 'date'
+
 
 class S2Widget(Select2Widget):
     search_fields = [
@@ -80,7 +82,7 @@ class OrganizationFilterFormHelper(FormHelper):
         Row(
             Field('type', wrapper_class='col-md-3 mb-0', css_class="form-control"),
         ),
-        Submit('submit', 'Apply Filters',wrapper_class='row', css_class='btn btn-primary float-right'),
+        Submit('submit', _('Search'), wrapper_class='row', css_class='btn btn-primary float-right'),
     )
 
 
@@ -93,7 +95,7 @@ class TaskFilterFormHelper(FormHelper):
             Field('create_date', wrapper_class='col-md-3 mb-0', css_class="form-control"),
             Field('due_date', wrapper_class='col-md-3 mb-0', css_class="form-control"),
         ),
-        Submit('submit', 'Apply Filters',wrapper_class='row', css_class='btn btn-primary float-right'),
+        Submit('submit', _('Search'), wrapper_class='row', css_class='btn btn-primary float-right'),
     )
 
 
@@ -105,7 +107,7 @@ class EmployeeFilterFormHelper(FormHelper):
             Field('first_name_en', wrapper_class='col-md-3 mb-0', css_class="form-control"),
             Field('last_name_en', wrapper_class='col-md-3 mb-0', css_class="form-control"),
         ),
-        Submit('submit', 'Apply Filters',wrapper_class='row', css_class='btn btn-primary float-right'),
+        Submit('submit', _('Search'), wrapper_class='row', css_class='btn btn-primary float-right'),
     )
 
 

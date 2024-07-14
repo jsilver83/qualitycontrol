@@ -18,7 +18,7 @@
             <div class="page-inner py-5">
                 <div class="d-flex align-items-left align-items-md-center flex-column flex-md-row">
                     <div>
-                        <h2 class="text-white pb-2 fw-bold">Assessment Questions</h2>
+                        <h2 class="text-white pb-2 fw-bold">{% blocktrans %}Assessment Questions{% endblocktrans %}</h2>
                         <h5 class="text-white op-7 mb-2">{{ audit.score_in_words }}</h5>
                     </div>
 
@@ -101,17 +101,10 @@
                                                             </div>
                                                         </div>
                                                     {% endfor %}
-
-
                                                 </div>
-
-
                                             </div>
                                         {% endfor %}
-
                                     </div>
-
-
                                 </div>
                             </div>
                         </div>
@@ -142,15 +135,15 @@
 {#                                </div>#}
                             </div>
                         </div>
-                        <div class="card-body">
+                        <div class="card-body bg-light">
                             <div class="row">
-                                <div class="col-lg-6 col-sm-12">
+                                <div class="col-lg-12 col-sm-12">
                                     <div class="chart-container mt-5" style="min-height: 475px">
                                         <canvas id="statisticsChart"></canvas>
                                     </div>
                                 </div>
-                                <div class="col-lg-6 col-sm-12">
-                                    <div class="chart-container" style="min-height: 375px; background-color: white!important;">
+                                <div class="col-lg-12 col-sm-12">
+                                    <div class="chart-container" style="min-height: 375px;">
                                         <canvas id="radarChart"></canvas>
                                     </div>
                                 </div>
@@ -165,6 +158,7 @@
 
 {% block javascripts %}
     <script type="application/javascript">
+        // to be completed later
         function randomInteger(max) {
             return Math.floor(Math.random()*(max + 1));
         }
@@ -180,6 +174,7 @@
         let labelz = JSON.parse("{{ labels | escapejs }}")
         let scorez = JSON.parse("{{ scores | escapejs }}")
         let fullMarks = JSON.parse("{{ full_marks | escapejs }}")
+        let fullMarks100 = JSON.parse("{{ full_marks_100 | escapejs }}")
 
         var ctx = document.getElementById('statisticsChart').getContext('2d');
 
@@ -188,14 +183,39 @@
                 datasets: [{
                     type: 'bar',
                     label: '{% trans "Sections Scores" %}',
+                    backgroundColor: 'rgba(255, 99, 132, 0.2)',
+                    borderColor: 'rgb(255, 99, 132)',
+                    borderWidth: 1,
                     data: scorez
+                }, {
+                    type: 'line',
+                    label: '{% trans "Full Marks" %}',
+                    backgroundColor: 'rgba(1, 135, 73, 0.40)',
+                    borderColor: 'green',
+                    borderWidth: 1,
+                    data: fullMarks100
                 }],
                 labels: labelz
             },
             options: {
+                responsive: true,
+                plugins: {
+                    title: {
+                        display: false,
+                        text: '{% trans "Performance Chart" %}'
+                    },
+                    legend: {
+                        display: true,
+                        position: 'right',
+                        labels: {
+                            padding: 15
+                        }
+                    }
+                },
                 scales: {
                     y: {
-                        beginAtZero: true
+                        beginAtZero: true,
+                        max: 103
                     }
                 }
             }
@@ -217,7 +237,7 @@
                 pointHoverBorderColor: 'rgb(255, 99, 132)'
             }, {
                 label: '{% trans "Full Marks" %}',
-                data: fullMarks,
+                data: fullMarks100,
                 fill: true,
                 backgroundColor: 'rgba(1, 135, 73, 0.40)',
                 borderColor: 'green',
@@ -235,8 +255,19 @@
                 responsive: true,
                 plugins: {
                     title: {
-                        display: true,
+                        display: false,
                         text: '{% trans "Performance Chart" %}'
+                    },
+                    legend: {
+                        display: true,
+                        position: 'right',
+                        labels: {
+                            padding: 15
+                        },
+                        title: {
+                            display: true,
+                            text: '{% trans "Legend" %}'
+                        }
                     }
                 },
                 scales: {

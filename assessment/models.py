@@ -2,12 +2,15 @@ from constrainedfilefield.fields import ConstrainedFileField
 from django.conf import settings
 from django.contrib.auth import get_user_model
 from django.db import models
-from django.db.models import Max, Q, OuterRef, Subquery, Prefetch
+from django.db.models import Max, Q, OuterRef, Subquery, Prefetch, Count, F, ExpressionWrapper, DecimalField, FloatField
+from django.db.models.functions import Cast
 from django.utils import timezone
 from django.utils.functional import cached_property
 from django.utils.translation import gettext_lazy as _, get_language
 from pyexcel_xlsx import get_data
 import json
+
+from clients.models import Organization
 
 User = settings.AUTH_USER_MODEL
 
@@ -817,3 +820,57 @@ class AuditFile(models.Model):
     def save(self):
         self.import_excel()
         return super(AuditFile, self).save()
+
+
+class Stats:
+    @staticmethod
+    def get_answers_occurrences(lang, answer_prompt_en):
+        if lang == "ar":
+            returned_prompt = 'prompt_ar'
+        else:
+            returned_prompt = 'prompt_en'
+
+        return Question.objects.values(returned_prompt).annotate(
+            answer_count=Cast(Count(
+                'answers',
+                filter=Q(answers__selected_answer=True, answers__prompt_en=answer_prompt_en),
+            ), FloatField()),
+            selected_count=Cast(Count(
+                'answers',
+                filter=Q(answers__selected_answer=True),
+            ), FloatField()),
+            ratio=ExpressionWrapper(
+                F('answer_count') / F('selected_count') * 100.00,
+                output_field=FloatField(),
+            ),
+        ).filter(
+            answer_count__gt=1,
+        ).order_by('-answer_count', '-ratio')
+
+    @staticmethod
+    def get_strengths():
+        return Stats.get_answers_occurrences(lang='ar', answer_prompt_en='Compliant')
+
+    @staticmethod
+    def get_weaknesses():
+        return Stats.get_answers_occurrences(lang='ar', answer_prompt_en='Non-Compliant')
+
+    @staticmethod
+    def get_top_unanswered_questions():
+        return Stats.get_answers_occurrences(lang='ar', answer_prompt_en='N/A')
+
+    @staticmethod
+    def users_count():
+        return get_user_model().objects.all().count()
+
+    @staticmethod
+    def all_organizations_count():
+        return Organization.objects.all().count()
+
+    @staticmethod
+    def visited_organizations_count():
+        return Organization.objects.annotate(visits_count=Count("audits")).filter(visits_count__gt=0).count()
+
+    @staticmethod
+    def inspection_visits_count():
+        return Audit.objects.all().count()

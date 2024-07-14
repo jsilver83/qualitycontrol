@@ -5,12 +5,26 @@ from django.shortcuts import get_object_or_404
 from django.views.generic import FormView, CreateView, TemplateView
 from assessment.forms import AuditQuestionsForm, EvidenceForm
 from clients.forms import TaskForm
-from assessment.models import Audit, Answer
+from assessment.models import Audit, Answer, Stats
 from .mixins import AjaxableModelFormResponseMixin
 
 
 class HomeView(LoginRequiredMixin, TemplateView):
     template_name = "shared/home.html"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+
+        context['strengths'] = Stats.get_strengths()[0:7]
+        context['weaknesses'] = Stats.get_weaknesses()[0:7]
+        context['top_unanswered_questions'] = Stats.get_top_unanswered_questions()[0:7]
+
+        context['users_count'] = Stats.users_count()
+        context['all_organizations_count'] = Stats.all_organizations_count()
+        context['visited_organizations_count'] = Stats.visited_organizations_count()
+        context['inspection_visits_count'] = Stats.inspection_visits_count()
+
+        return context
 
 
 class SubmitAssessmentView(LoginRequiredMixin, FormView):

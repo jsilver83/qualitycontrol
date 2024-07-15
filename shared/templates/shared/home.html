@@ -26,7 +26,7 @@
         <div class="page-inner mt--5">
 
             <div class="row mt-3">
-                <div class="col-md-6">
+                <div class="col-md-8">
                     <div class="card full-height">
                         <div class="card-body">
                             <div class="card-title">{% blocktrans %}Overall statistics{% endblocktrans %}</div>
@@ -43,6 +43,10 @@
                                 <div class="px-2 pb-2 pb-md-0 text-center">
                                     <div id="circles-3"></div>
                                     <h6 class="fw-bold mt-3 mb-0">{% trans "Centers" %}/{% trans "Locations" %}</h6>
+                                </div>
+                                <div class="px-2 pb-2 pb-md-0 text-center">
+                                    <div id="circles-4"></div>
+                                    <h6 class="fw-bold mt-3 mb-0">{% trans "Centers" %}/{% trans "Locations" %} ({% trans "Un-Visited" %})</h6>
                                 </div>
                             </div>
                         </div>
@@ -180,6 +184,21 @@
             maxValue: {{ all_organizations_count }},
             width: 7,
             text: {{ visited_organizations_count }},
+            colors: ['#f1f1f1', '#F25961'],
+            duration: 400,
+            wrpClass: 'circles-wrp',
+            textClass: 'circles-text',
+            styleWrapper: true,
+            styleText: true
+        })
+
+        Circles.create({
+            id: 'circles-4',
+            radius: 45,
+            value: {{ unvisited_organizations_count }},
+            maxValue: {{ all_organizations_count }},
+            width: 7,
+            text: {{ unvisited_organizations_count }},
             colors: ['#f1f1f1', '#F25961'],
             duration: 400,
             wrpClass: 'circles-wrp',

@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-07-14 13:03+0300\n"
-"PO-Revision-Date: 2024-07-14 13:12+0300\n"
+"POT-Creation-Date: 2024-07-15 19:36+0300\n"
+"PO-Revision-Date: 2024-07-15 19:37+0300\n"
 "Last-Translator:   <>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
@@ -215,9 +215,9 @@ msgid "Scored?"
 msgstr "سجلت؟"
 
 #: .\assessment\models.py:498 .\clients\models.py:302
-#: .\shared\templates\shared\home.html:63
-#: .\shared\templates\shared\home.html:91
-#: .\shared\templates\shared\home.html:119 .\tasks\models.py:33
+#: .\shared\templates\shared\home.html:67
+#: .\shared\templates\shared\home.html:95
+#: .\shared\templates\shared\home.html:123 .\tasks\models.py:33
 msgid "Question"
 msgstr "سؤال"
 
@@ -360,9 +360,9 @@ msgstr "درجة السؤال هي"
 
 #: .\assessment\templates\assessment\_question_details.html:36
 #: .\assessment\templates\assessment\question_and_answers_field.html:31
-#: .\shared\templates\shared\home.html:72
-#: .\shared\templates\shared\home.html:100
-#: .\shared\templates\shared\home.html:128
+#: .\shared\templates\shared\home.html:76
+#: .\shared\templates\shared\home.html:104
+#: .\shared\templates\shared\home.html:132
 msgid "out of"
 msgstr "من"
 
@@ -505,7 +505,6 @@ msgstr "الرسوم البيانية"
 
 #: .\assessment\templates\assessment\view_assessment.html:185
 #: .\assessment\templates\assessment\view_assessment.html:229
-#| msgid "Section Score"
 msgid "Sections Scores"
 msgstr "درجات الأقسام"
 
@@ -780,47 +779,50 @@ msgid "Users"
 msgstr "المستخدمون"
 
 #: .\shared\templates\shared\home.html:41
-#| msgid "Inspection Date"
 msgid "Inspection Visits"
 msgstr "الزيارات التفتيشية"
 
 #: .\shared\templates\shared\home.html:45
+#: .\shared\templates\shared\home.html:49
 msgid "Centers"
 msgstr "المراكز"
 
 #: .\shared\templates\shared\home.html:45
-#| msgid "Section"
+#: .\shared\templates\shared\home.html:49
 msgid "Locations"
 msgstr "المواقع"
 
-#: .\shared\templates\shared\home.html:56
-#: .\shared\templates\shared\home.html:84
-#: .\shared\templates\shared\home.html:112
+#: .\shared\templates\shared\home.html:49
+msgid "Un-Visited"
+msgstr "لم تتم زيارتها"
+
+#: .\shared\templates\shared\home.html:60
+#: .\shared\templates\shared\home.html:88
+#: .\shared\templates\shared\home.html:116
 msgid "Top"
 msgstr "أعلى"
 
-#: .\shared\templates\shared\home.html:56
+#: .\shared\templates\shared\home.html:60
 msgid "Strengths"
 msgstr "نقاط القوة"
 
-#: .\shared\templates\shared\home.html:64
-#: .\shared\templates\shared\home.html:92
-#: .\shared\templates\shared\home.html:120
+#: .\shared\templates\shared\home.html:68
+#: .\shared\templates\shared\home.html:96
+#: .\shared\templates\shared\home.html:124
 msgid "Count"
 msgstr "العدد"
 
-#: .\shared\templates\shared\home.html:65
-#: .\shared\templates\shared\home.html:93
-#: .\shared\templates\shared\home.html:121
+#: .\shared\templates\shared\home.html:69
+#: .\shared\templates\shared\home.html:97
+#: .\shared\templates\shared\home.html:125
 msgid "Ratio"
 msgstr "النسبة"
 
-#: .\shared\templates\shared\home.html:84
+#: .\shared\templates\shared\home.html:88
 msgid "Weaknesses"
 msgstr "نقاط الضعف"
 
-#: .\shared\templates\shared\home.html:112
-#| msgid "Answered?"
+#: .\shared\templates\shared\home.html:116
 msgid "Unanswered"
 msgstr "أسئلة لم يتم الرد عليها"
 

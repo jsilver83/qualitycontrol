@@ -22,6 +22,8 @@ class HomeView(LoginRequiredMixin, TemplateView):
         context['users_count'] = Stats.users_count()
         context['all_organizations_count'] = Stats.all_organizations_count()
         context['visited_organizations_count'] = Stats.visited_organizations_count()
+        context['unvisited_organizations_count'] = context['all_organizations_count'] - context[
+            'visited_organizations_count']
         context['inspection_visits_count'] = Stats.inspection_visits_count()
 
         return context

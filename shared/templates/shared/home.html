@@ -142,11 +142,7 @@
 
 <!-- Specific Page JS goes HERE  -->
 {% block javascripts %}
-
-    <!-- Atlantis DEMO methods, don't include it in your project! -->
-    <script src="{% static 'js/setting-demo.js' %}"></script>
-    <script src="{% static 'js/demo.js' %}"></script>
-    <script>
+    <script type="application/javascript">
         Circles.create({
             id: 'circles-1',
             radius: 45,

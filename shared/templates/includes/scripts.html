@@ -34,3 +34,8 @@
 
 <!-- Atlantis JS -->
 <script src="{% static 'js/atlantis.min.js' %}"></script>
+<script type="application/javascript">
+    $(document).ready(function() {
+        $("body").tooltip({ selector: '[data-bs-toggle=tooltip]' });
+    });
+</script>

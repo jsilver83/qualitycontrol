@@ -37,14 +37,14 @@
                     </div>
                 </div>
             {% endif %}
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="card full-height">
-                        <div class="card-header">
-                            {% blocktrans %}New Assessment{% endblocktrans %}
-                        </div>
-                        <div class="card-body">
-                            <form method="post" class="form-horizontal">
+            <form method="post" class="form-horizontal">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="card full-height">
+                            <div class="card-header">
+                                {% blocktrans %}New Assessment{% endblocktrans %}
+                            </div>
+                            <div class="card-body">
                                 {% csrf_token %}
                                 {{ form.derived_from.as_hidden }}
                                 <div class="row">
@@ -69,7 +69,6 @@
                                                     </div>
                                                 </div>
 
-
                                                 <div class="row">
                                                     <div class="col-md-6">
                                                         {{ form.description_en | as_crispy_field }}
@@ -78,37 +77,31 @@
                                                         {{ form.description_ar| as_crispy_field }}
                                                     </div>
                                                 </div>
-
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-
-
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="row">
-                <div class="col-12">
-                    <button class="btn btn-primary float-right ml-3">
+                <div class="row">
+                    <div class="col-12">
+                        <button class="btn btn-primary float-right ml-3">
                         <span class="btn-label">
                             <i class="fa fa-check-circle"></i>
                         </span>
-                        {% trans 'Next' %}
-                    </button>
-                    <button class="btn btn-danger float-left mr-3">
+                            {% trans 'Next' %}
+                        </button>
+                        <button class="btn btn-danger float-left mr-3">
                         <span class="btn-label">
                             <i class="fa fa-strikethrough"></i>
                         </span>
-                        {% trans 'Cancel' %}
-                    </button>
+                            {% trans 'Cancel' %}
+                        </button>
+                    </div>
                 </div>
-            </div>
             </form>
         </div>
-
     </div>
-
-
 {% endblock content %}

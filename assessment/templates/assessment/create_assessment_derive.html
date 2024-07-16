@@ -35,7 +35,7 @@
                             </div>
                             <div class="row mb-2">
                             {% for audit in audits %}
-                                <div class="col-6">
+                                <div class="col-6 mb-4">
                                     <a class="btn btn-outline-primary btn-block" href="{% url "derive_assessment" audit.pk %}">
                                         <i class="fa fa-file-archive mr-2 ml-2"></i> {{ audit }} ({% trans "Questions" %}: {{ audit.questions.count }}) <i class="fa fa-plus mr-2 ml-2"></i>
                                     </a>

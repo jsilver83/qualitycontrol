@@ -48,7 +48,7 @@ class AuditFilterFormHelper(FormHelper):
     form_method = 'GET'
     layout = Layout(
         Row(
-            Field('type', wrapper_class='col-md-3 mb-0', css_class="form-control"),
+            # Field('type', wrapper_class='col-md-3 mb-0', css_class="form-control"),
             Field('created_for', wrapper_class='col-md-3 mb-0', css_class="form-control"),
             Field('created_by', wrapper_class='col-md-3 mb-0', css_class="form-control"),
             Field('status', wrapper_class='col-md-3 mb-0', css_class="form-control"),

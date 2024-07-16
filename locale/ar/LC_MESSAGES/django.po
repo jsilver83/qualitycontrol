@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-07-15 19:36+0300\n"
-"PO-Revision-Date: 2024-07-15 19:37+0300\n"
+"POT-Creation-Date: 2024-07-16 22:55+0300\n"
+"PO-Revision-Date: 2024-07-16 22:56+0300\n"
 "Last-Translator:   <>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
@@ -400,7 +400,7 @@ msgid "Create Assessment"
 msgstr "تقييم جديد"
 
 #: .\assessment\templates\assessment\create_assessment.html:18
-#: .\assessment\templates\assessment\create_assessment.html:44
+#: .\assessment\templates\assessment\create_assessment.html:45
 #: .\assessment\templates\assessment\create_assessment_derive.html:18
 msgid "New Assessment"
 msgstr "تقييم جديد"
@@ -409,7 +409,7 @@ msgstr "تقييم جديد"
 msgid "Derive From"
 msgstr "استخدم القالب"
 
-#: .\assessment\templates\assessment\create_assessment.html:98
+#: .\assessment\templates\assessment\create_assessment.html:94
 #: .\assessment\templates\assessment\create_assessment_derive.html:60
 #: .\assessment\templates\assessment\create_section.html:42
 #: .\clients\templates\clients\create_employee.html:113
@@ -420,7 +420,7 @@ msgstr "استخدم القالب"
 msgid "Next"
 msgstr "التالي"
 
-#: .\assessment\templates\assessment\create_assessment.html:104
+#: .\assessment\templates\assessment\create_assessment.html:100
 #: .\assessment\templates\assessment\create_question.html:159
 #: .\assessment\templates\assessment\create_section.html:48
 #: .\clients\templates\clients\create_employee.html:119
@@ -748,7 +748,12 @@ msgstr "الموظفون"
 msgid "Departments"
 msgstr "الأقسام"
 
-#: .\shared\templates\includes\sidebar.html:116
+#: .\shared\templates\includes\sidebar.html:114
+#| msgid "Report"
+msgid "Reports"
+msgstr "التقارير"
+
+#: .\shared\templates\includes\sidebar.html:122
 msgid "Admin Panel"
 msgstr "لوحة الإدارة"
 
@@ -825,6 +830,25 @@ msgstr "نقاط الضعف"
 #: .\shared\templates\shared\home.html:116
 msgid "Unanswered"
 msgstr "أسئلة لم يتم الرد عليها"
+
+#: .\shared\templates\shared\organization_report.html:21
+#| msgid "Performance Chart"
+msgid "Center's Performance Report"
+msgstr "تقرير أداء المركز"
+
+#: .\shared\templates\shared\organization_report.html:37
+msgid "Change"
+msgstr "تغيير"
+
+#: .\shared\templates\shared\organization_report.html:37
+#| msgid "Selected Answer"
+msgid "Select Center"
+msgstr "اختر المركز"
+
+#: .\shared\templates\shared\organization_report.html:114
+#| msgid "Sections Scores"
+msgid "Latest Visits Scores"
+msgstr "نتائج أحدث الزيارات"
 
 #: .\shared\templates\shared\submit_assessment.html:18
 msgid "Assessment"

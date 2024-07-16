@@ -6,7 +6,10 @@ from django.views.generic import FormView, CreateView, TemplateView
 from assessment.forms import AuditQuestionsForm, EvidenceForm
 from clients.forms import TaskForm
 from assessment.models import Audit, Answer, Stats
+from clients.models import Organization
+from .forms import ReportSearchForm
 from .mixins import AjaxableModelFormResponseMixin
+from .models import Report
 
 
 class HomeView(LoginRequiredMixin, TemplateView):
@@ -86,12 +89,17 @@ class CreateEvidenceView(LoginRequiredMixin, AjaxableModelFormResponseMixin, Cre
         return super().form_valid(form, response_data)
 
 
-class HomeView2(TemplateView):
-    template_name = "shared/home2.html"
+class OrganizationReportView(LoginRequiredMixin, TemplateView):
+    template_name = 'shared/organization_report.html'
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        data = Audit.objects.get(pk=23).get_chart_data()
-        context['labels'], context['scores'] = json.dumps(data[0]), json.dumps(data[1])
-        print(data)
+        context['search_form'] = ReportSearchForm(self.request.GET or None)
+
+        selected_org_pk = self.request.GET.get('org_pk', None)
+        if selected_org_pk:
+            org = get_object_or_404(Organization, pk=selected_org_pk)
+            context['organization'] = org
+            context['labels'], context['scores'] = Report.get_org_performance(org=org)
+            context['labels'], context['scores'] = json.dumps(context['labels']), json.dumps(context['scores'])
         return context

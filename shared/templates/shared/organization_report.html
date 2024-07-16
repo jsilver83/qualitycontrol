@@ -1,0 +1,153 @@
+{% extends "layouts/base.html" %}
+{% load static %}
+{% load crispy_forms_tags %}
+{% load questions_tags %}
+{% load i18n %}
+{% load render_table from django_tables2 %}
+{% load export_url from django_tables2 %}
+
+{% block title %} Assessment {% endblock %}
+
+<!-- Specific Page CSS goes HERE  -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block content %}
+
+    <div class="content">
+        <div class="panel-header bg-primary-gradient">
+            <div class="page-inner py-5">
+                <div class="d-flex align-items-left align-items-md-center flex-column flex-md-row">
+                    <div>
+                        <h2 class="text-white pb-2 fw-bold">{% blocktrans %}Center's Performance Report{% endblocktrans %}</h2>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="page-inner mt--5">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="card-head-row">
+                                <div class="card-title">{{ organization }}</div>
+                                <div class="card-tools">
+                                    <form id="sForm" class="m-4 form-horizontal" method="get">
+                                        {{ search_form.org_pk }}
+                                    </form>
+                                    <a class="m-4" id="changeO" href="#">{% if organization %}{% trans "Change" %}{% else %}{% trans "Select Center" %}{% endif %}</a>
+{#                                    <a href="#" class="btn btn-info btn-border btn-round btn-sm mr-2">#}
+{#										<span class="btn-label">#}
+{#											<i class="fa fa-pencil"></i>#}
+{#										</span>#}
+{#                                        Export#}
+{#                                    </a>#}
+{#                                    <a href="#" class="btn btn-info btn-border btn-round btn-sm">#}
+{#										<span class="btn-label">#}
+{#											<i class="fa fa-print"></i>#}
+{#										</span>#}
+{#                                        Print#}
+{#                                    </a>#}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-body bg-light">
+                            <div class="row">
+                                <div class="col-lg-12 col-sm-12">
+                                    <div class="chart-container mt-5 mb-5" style="min-height: 375px">
+                                        <canvas id="statisticsChart"></canvas>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock content %}
+
+{% block javascripts %}
+    <script type="application/javascript">
+        // to be completed later
+        function randomInteger(max) {
+            return Math.floor(Math.random()*(max + 1));
+        }
+        
+        function randomRgbColor(a) {
+            let r = randomInteger(255);
+            let g = randomInteger(255);
+            let b = randomInteger(255);
+            //return [r,g,b];
+            return "rgba(" + r +"," + g + "," + "," + a + ")";
+        }
+
+        try {
+            let labelz = JSON.parse("{{ labels | escapejs }}")
+            let scorez = JSON.parse("{{ scores | escapejs }}")
+
+            var ctx = document.getElementById('statisticsChart').getContext('2d');
+
+            const mixedChart = new Chart(ctx, {
+                data: {
+                    datasets: [{
+                        type: 'line',
+                        label: 'Score (Line) %',
+                        backgroundColor: 'rgba(1, 135, 73, 0.40)',
+                        borderColor: 'green',
+                        borderWidth: 1,
+                        data: scorez
+                    }, {
+                        type: 'bar',
+                        label: 'Score (Bar) %',
+                        backgroundColor: 'rgba(255, 99, 132, 0.2)',
+                        borderColor: 'rgb(255, 99, 132)',
+                        borderWidth: 1,
+                        data: scorez
+                    }],
+                    labels: labelz
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        title: {
+                            display: true,
+                            text: '{% trans "Latest Visits Scores" %}'
+                        },
+                        legend: {
+                            display: true,
+                            position: 'right',
+                            labels: {
+                                padding: 15
+                            }
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            max: 110
+                        },
+                        //scales: {
+                         //   x: {
+                         //       reverse: isRightToLeft ? true : false
+                         //   }
+                        //}
+                    }
+                }
+            });
+        } catch (e) { console.log(e); }
+
+        $(function(){
+            $("#sForm").hide();
+            $("#changeO").show();
+
+            $("#changeO").on("click", function (){
+                $("#sForm").show();
+                $("#changeO").hide();
+            });
+
+            $("#id_org_pk").on("change", function (){
+               this.form.submit();
+            });
+        });
+    </script>
+{% endblock javascripts %}

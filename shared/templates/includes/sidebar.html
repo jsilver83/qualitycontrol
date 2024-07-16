@@ -108,6 +108,12 @@
                         </li>
                     {% endif %}
                     {% if request.user.is_staff or request.user.is_superuser %}
+                    <li class="nav-item">
+                        <a href="{% url 'org_performance_report' %}">
+                            <i class="fas fa-print"></i>
+                            <p>{% trans 'Reports' %}</p>
+                        </a>
+                    </li>
                     <li class="mx-4 mt-2">
                         <a target="_blank"
                            href="{% url 'admin:index' %}"

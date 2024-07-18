@@ -1,6 +1,7 @@
 {% load i18n %}
 {% load static %}
 
+{% if record.question_tasks.all %}
 <a href='' class=""  data-toggle="modal"
 data-target="#tasks_modal{{record.pk}}" question_id={{record.pk}}>
     <i class="fa fa-eye"></i>
@@ -42,4 +43,8 @@ data-target="#tasks_modal{{record.pk}}" question_id={{record.pk}}>
         </div>
     </div>
 </div>
-
+{% else %}
+<a class="disabled">
+    <i class="fa fa-eye-slash"></i>
+</a>
+{% endif %}

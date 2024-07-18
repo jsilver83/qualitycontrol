@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-07-16 22:55+0300\n"
-"PO-Revision-Date: 2024-07-16 22:56+0300\n"
+"POT-Creation-Date: 2024-07-18 02:54+0300\n"
+"PO-Revision-Date: 2024-07-18 02:54+0300\n"
 "Last-Translator:   <>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
@@ -118,7 +118,7 @@ msgid "Description (EN)"
 msgstr "الوصف (بالإنجليزية)"
 
 #: .\assessment\models.py:202 .\assessment\models.py:605
-#: .\assessment\templates\assessment\_audit_table_evidences_column.html:24
+#: .\assessment\templates\assessment\_audit_table_evidences_column.html:25
 #: .\clients\models.py:31 .\shared\templates\shared\submit_assessment.html:89
 msgid "Type"
 msgstr "النوع"
@@ -144,7 +144,7 @@ msgstr "مشتق من"
 
 #: .\assessment\models.py:234
 #: .\assessment\templates\assessment\_audit_info.html:9
-#: .\assessment\templates\assessment\_audit_table_tasks_column.html:26
+#: .\assessment\templates\assessment\_audit_table_tasks_column.html:27
 #: .\clients\models.py:325
 #: .\shared\templates\shared\submit_assessment.html:135
 msgid "Status"
@@ -201,8 +201,8 @@ msgstr "سؤال إضافي؟"
 msgid "Prompt"
 msgstr "السؤال"
 
-#: .\assessment\models.py:429 .\assessment\tables.py:60
-#: .\assessment\tables.py:74 .\assessment\tables.py:100
+#: .\assessment\models.py:429 .\assessment\tables.py:63
+#: .\assessment\tables.py:83 .\assessment\tables.py:109
 msgid "Selected Answer"
 msgstr "الإجابة"
 
@@ -214,8 +214,8 @@ msgstr "هل تمت الإجابة؟"
 msgid "Scored?"
 msgstr "سجلت؟"
 
-#: .\assessment\models.py:498 .\clients\models.py:302
-#: .\shared\templates\shared\home.html:67
+#: .\assessment\models.py:498 .\assessment\tables.py:64
+#: .\clients\models.py:302 .\shared\templates\shared\home.html:67
 #: .\shared\templates\shared\home.html:95
 #: .\shared\templates\shared\home.html:123 .\tasks\models.py:33
 msgid "Question"
@@ -262,7 +262,7 @@ msgid "Attachment"
 msgstr "المرفقات"
 
 #: .\assessment\models.py:600
-#: .\assessment\templates\assessment\_audit_table_evidences_column.html:26
+#: .\assessment\templates\assessment\_audit_table_evidences_column.html:27
 #: .\clients\models.py:342
 #: .\shared\templates\shared\submit_assessment.html:108
 msgid "Notes"
@@ -276,59 +276,71 @@ msgstr "تم التحميل على"
 msgid "Uploaded By"
 msgstr "تم التحميل بواسطة"
 
-#: .\assessment\tables.py:12
+#: .\assessment\tables.py:14
 #: .\assessment\templates\assessment\_audit_info.html:4
 msgid "Title"
 msgstr "المسمى"
 
-#: .\assessment\tables.py:19
+#: .\assessment\tables.py:21
 msgid "Fill"
 msgstr "تعبئة التقييم"
 
-#: .\assessment\tables.py:26
+#: .\assessment\tables.py:28
 msgid "Modify"
 msgstr "تعديل"
 
-#: .\assessment\tables.py:38
-#: .\assessment\templates\assessment\view_assessment.html:43
+#: .\assessment\tables.py:40 .\assessment\templates\assessment\view_assessment
+#: - Copy.html:43 .\assessment\templates\assessment\view_assessment.html:44
+#: .\assessment\templates\assessment\view_assessment.html:60
 msgid "Report"
 msgstr "التقرير"
 
-#: .\assessment\tables.py:48 .\assessment\tables.py:90
+#: .\assessment\tables.py:50 .\assessment\tables.py:99
 msgid "Delete"
 msgstr "حذف"
 
-#: .\assessment\tables.py:50
+#: .\assessment\tables.py:52
 msgid "Questions Count"
 msgstr "عدد الأسئلة"
 
-#: .\assessment\tables.py:51
+#: .\assessment\tables.py:53 .\assessment\tables.py:65
 #: .\assessment\templates\assessment\_audit_info.html:20
+#: .\assessment\templates\assessment\view_assessment.html:45
 msgid "Score"
 msgstr "النتيجة"
 
-#: .\assessment\tables.py:81
+#: .\assessment\tables.py:66
+#| msgid "Notes & Evidences"
+msgid "Evidences"
+msgstr "ملاحظات وأدلة"
+
+#: .\assessment\tables.py:68 .\shared\templates\includes\sidebar.html:93
+#: .\shared\templates\shared\submit_assessment.html:71
+msgid "Tasks"
+msgstr "المهام"
+
+#: .\assessment\tables.py:90
 msgid "Update"
 msgstr "تحديث"
 
-#: .\assessment\templates\assessment\_audit_table_evidences_column.html:25
+#: .\assessment\templates\assessment\_audit_table_evidences_column.html:26
 #: .\shared\templates\shared\submit_assessment.html:88
 msgid "File"
 msgstr "ملف"
 
-#: .\assessment\templates\assessment\_audit_table_evidences_column.html:34
+#: .\assessment\templates\assessment\_audit_table_evidences_column.html:35
 #: .\assessment\templates\assessment\_create_evidence.html:50
 #: .\shared\templates\shared\submit_assessment.html:97
 msgid "Download"
 msgstr "تنزيل"
 
-#: .\assessment\templates\assessment\_audit_table_tasks_column.html:24
+#: .\assessment\templates\assessment\_audit_table_tasks_column.html:25
 #: .\clients\models.py:293
 #: .\shared\templates\shared\submit_assessment.html:133
 msgid "Employee"
 msgstr "موظف"
 
-#: .\assessment\templates\assessment\_audit_table_tasks_column.html:25
+#: .\assessment\templates\assessment\_audit_table_tasks_column.html:26
 #: .\clients\models.py:319
 #: .\shared\templates\shared\submit_assessment.html:134 .\tasks\models.py:38
 msgid "Due Date"
@@ -481,7 +493,7 @@ msgid "Add Answer"
 msgstr "إضافة إجابة"
 
 #: .\assessment\templates\assessment\questions.html:20
-#: .\assessment\templates\assessment\view_assessment.html:21
+#: .\assessment\templates\assessment\view_assessment - Copy.html:21
 msgid "Assessment Questions"
 msgstr "أسئلة التقييم"
 
@@ -491,36 +503,46 @@ msgid "Create Question"
 msgstr "إنشاء سؤال"
 
 #: .\assessment\templates\assessment\questions.html:73
-#: .\assessment\templates\assessment\view_assessment.html:79
+#: .\assessment\templates\assessment\view_assessment - Copy.html:79
+#: .\assessment\templates\assessment\view_assessment.html:80
 msgid "Section Score"
 msgstr "نتيجة القسم"
 
-#: .\assessment\templates\assessment\view_assessment.html:49
+#: .\assessment\templates\assessment\view_assessment - Copy.html:49
 msgid "Export CSV"
 msgstr "تصدير CSV"
 
-#: .\assessment\templates\assessment\view_assessment.html:121
+#: .\assessment\templates\assessment\view_assessment - Copy.html:121
+#: .\assessment\templates\assessment\view_assessment.html:115
 msgid "Charts"
 msgstr "الرسوم البيانية"
 
-#: .\assessment\templates\assessment\view_assessment.html:185
-#: .\assessment\templates\assessment\view_assessment.html:229
+#: .\assessment\templates\assessment\view_assessment - Copy.html:185
+#: Copy.html:229 .\assessment\templates\assessment\view_assessment.html:179
+#: .\assessment\templates\assessment\view_assessment.html:223
 msgid "Sections Scores"
 msgstr "درجات الأقسام"
 
-#: .\assessment\templates\assessment\view_assessment.html:192
-#: .\assessment\templates\assessment\view_assessment.html:239
+#: .\assessment\templates\assessment\view_assessment - Copy.html:192
+#: Copy.html:239 .\assessment\templates\assessment\view_assessment.html:186
+#: .\assessment\templates\assessment\view_assessment.html:233
 msgid "Full Marks"
 msgstr "العلامات الكاملة"
 
-#: .\assessment\templates\assessment\view_assessment.html:205
-#: .\assessment\templates\assessment\view_assessment.html:259
+#: .\assessment\templates\assessment\view_assessment - Copy.html:205
+#: Copy.html:259 .\assessment\templates\assessment\view_assessment.html:199
+#: .\assessment\templates\assessment\view_assessment.html:253
 msgid "Performance Chart"
 msgstr "مخطط الأداء"
 
-#: .\assessment\templates\assessment\view_assessment.html:269
+#: .\assessment\templates\assessment\view_assessment - Copy.html:269
+#: .\assessment\templates\assessment\view_assessment.html:263
 msgid "Legend"
 msgstr "الأسطورة"
+
+#: .\assessment\templates\assessment\view_assessment.html:60
+msgid "Print"
+msgstr "طباعة"
 
 #: .\clients\models.py:19
 msgid "Name (AR)"
@@ -735,11 +757,6 @@ msgstr "التقييمات"
 msgid "Organizations"
 msgstr "المنظمات"
 
-#: .\shared\templates\includes\sidebar.html:93
-#: .\shared\templates\shared\submit_assessment.html:71
-msgid "Tasks"
-msgstr "المهام"
-
 #: .\shared\templates\includes\sidebar.html:100
 msgid "Employees"
 msgstr "الموظفون"
@@ -749,7 +766,6 @@ msgid "Departments"
 msgstr "الأقسام"
 
 #: .\shared\templates\includes\sidebar.html:114
-#| msgid "Report"
 msgid "Reports"
 msgstr "التقارير"
 
@@ -832,7 +848,6 @@ msgid "Unanswered"
 msgstr "أسئلة لم يتم الرد عليها"
 
 #: .\shared\templates\shared\organization_report.html:21
-#| msgid "Performance Chart"
 msgid "Center's Performance Report"
 msgstr "تقرير أداء المركز"
 
@@ -841,12 +856,10 @@ msgid "Change"
 msgstr "تغيير"
 
 #: .\shared\templates\shared\organization_report.html:37
-#| msgid "Selected Answer"
 msgid "Select Center"
 msgstr "اختر المركز"
 
 #: .\shared\templates\shared\organization_report.html:114
-#| msgid "Sections Scores"
 msgid "Latest Visits Scores"
 msgstr "نتائج أحدث الزيارات"
 

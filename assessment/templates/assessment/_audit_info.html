@@ -1,36 +1,36 @@
 {% load i18n %}
 <div class="row">
-    <div class="col-md-4">
+    <div class="col-sm-4">
         <label>{% trans "Title" %}</label>
         <p>{{ audit }}</p>
     </div>
     {% if audit.status != "TEMPLATE" %}
-    <div class="col-md-4">
+    <div class="col-sm-4">
         <label>{% trans "Status" %}</label>
         <p>{{ audit.get_status_display }}</p>
     </div>
-    <div class="col-md-4">
+    <div class="col-sm-4">
         <label>{% trans "Created For" %}</label>
         <p>{{ audit.created_for }}</p>
     </div>
     {% endif %}
 </div>
 <div class="row">
-    <div class="col-md-4">
+    <div class="col-sm-4">
         <label>{% trans "Score" %}</label>
         <p class="text-success" style="direction: ltr"> {{ audit.score_in_words }}</p>
     </div>
-    <div class="col-md-4">
+    <div class="col-sm-4">
         <label>{% trans "Created On" %}</label>
         <p> {{ audit.created_on }}</p>
     </div>
-    <div class="col-md-4">
+    <div class="col-sm-4">
         <label>{% trans "Created By" %}</label>
         <p> {{ audit.created_by }}</p>
     </div>
 </div>
 <div class="row">
-    <div class="col-md-4">
+    <div class="col-sm-4">
         <label>{% trans "Inspection Date" %}</label>
         <p>{{ audit.inspection_date }}</p>
     </div>

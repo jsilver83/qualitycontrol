@@ -1,3 +1,5 @@
+import itertools
+
 import django_tables2 as tables
 from django_tables2 import TemplateColumn
 from django_filters import FilterSet
@@ -57,17 +59,24 @@ class AuditTable(tables.Table):
 
 
 class AssessmentDetailsTable(tables.Table):
+    counter = tables.Column(verbose_name="#", empty_values=(), orderable=False)
     get_the_answer = tables.Column(verbose_name=_("Selected Answer"), orderable=False)
-    prompt = tables.Column(verbose_name="Question", orderable=False)
-    score = tables.Column(verbose_name="Score", orderable=False)
-    evidences = TemplateColumn(template_name='assessment/_audit_table_evidences_column.html', orderable=False)
-    tasks = TemplateColumn(verbose_name="Tasks", template_name='assessment/_audit_table_tasks_column.html',
+    prompt = tables.Column(verbose_name=_("Question"), orderable=False)
+    score = tables.Column(verbose_name=_("Score"), orderable=False)
+    evidences = TemplateColumn(verbose_name=_('Evidences'),
+                               template_name='assessment/_audit_table_evidences_column.html', orderable=False)
+    tasks = TemplateColumn(verbose_name=_("Tasks"), template_name='assessment/_audit_table_tasks_column.html',
                            orderable=False)
 
     class Meta:
         model = Question
         template_name = "django_tables2/bootstrap4.html"
-        fields = ("section", "prompt", "get_the_answer", "score", "evidences", "tasks",)
+        fields = ("counter", "section", "prompt", "get_the_answer", "score", "evidences", "tasks", )
+
+    def render_counter(self):
+        self.row_counter = getattr(self, 'row_counter',
+                                   itertools.count(self.page.start_index()))
+        return next(self.row_counter)
 
 
 class QuestionTable(tables.Table):

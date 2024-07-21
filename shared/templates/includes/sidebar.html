@@ -5,7 +5,7 @@
         <div class="sidebar-content">
             {% if request.user.is_authenticated %}
                 <div class="user">
-                    <div class="avatar-sm float-left mr-2">
+                    <div class="avatar-sm float-right mr-2">
                         <img src="{% static 'img/profile.jpg' %}" alt="..." class="avatar-img rounded-circle">
                     </div>
                     <div class="info">
@@ -114,12 +114,11 @@
                             <p>{% trans 'Reports' %}</p>
                         </a>
                     </li>
-                    <li class="mx-4 mt-2">
+                    <li class="nav-item">
                         <a target="_blank"
-                           href="{% url 'admin:index' %}"
-                           class="btn btn-primary btn-block">
-                                <span class="btn-label mr-2"> <i
-                                        class="fa fa-rocket"></i> </span>{% trans 'Admin Panel' %}</a>
+                           href="{% url 'admin:index' %}" class="bg-primary-gradient">
+                                <i class="fa fa-rocket"></i> <p>{% trans 'Admin Panel' %}</p>
+                        </a>
                     </li>
                     {% endif %}
                 </ul>

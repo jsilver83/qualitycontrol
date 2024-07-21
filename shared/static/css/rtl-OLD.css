@@ -1,11 +1,6 @@
-* {
-    direction: rtl!important;
-    text-align: right;
-}
-
 body {
-    direction: ltr!important;
-    text-align: inherit!important;
+    direction: rtl !important;
+    text-align: right;
 }
 
 .card-title {
@@ -22,13 +17,9 @@ body {
     margin-right: -2px !important;
 }
 
-/*.logo-header .nav-toggle {*/
-/*    left: 18px;*/
-/*    right: inherit !important;*/
-/*}*/
-
-.logo-header .logo {
-  right: 35px;
+.logo-header .nav-toggle {
+    left: 18px;
+    right: inherit !important;
 }
 
 .user > .mr-2 {
@@ -36,9 +27,9 @@ body {
     margin-right: inherit !important;
 }
 
-/*.user > .float-left {*/
-/*    float: right !important;*/
-/*}*/
+.user > .float-left {
+    float: right !important;
+}
 
 .user > .info {
     text-align: left !important;
@@ -48,9 +39,9 @@ body {
     text-align: right !important;
 }
 
-/*.navbar-nav li {*/
-/*    float: right !important;*/
-/*}*/
+.navbar-nav li {
+    float: right !important;
+}
 
 .navbar-expand-lg .navbar-nav .dropdown-menu {
     right: auto;
@@ -67,18 +58,18 @@ body {
   margin-right: inherit!important;
 }
 
-/*.sidebar, .sidebar[data-background-color="white"] {*/
-/*    right: 0;*/
-/*    left: inherit!important;*/
-/*}*/
+.sidebar, .sidebar[data-background-color="white"] {
+    right: 0;
+    left: inherit!important;
+}
 
-/*.main-panel {*/
-/*    float: left!important;*/
-/*}*/
+.main-panel {
+    float: left!important;
+}
 
-/*.logo-header[data-background-color="dark2"] {*/
-/*  float: right!important;*/
-/*}*/
+.logo-header[data-background-color="dark2"] {
+  float: right!important;
+}
 
 /*nav.navbar {*/
 /*    float: left!important;*/

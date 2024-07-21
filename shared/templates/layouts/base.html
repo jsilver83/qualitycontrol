@@ -48,23 +48,12 @@
 
     {% include 'includes/navigation.html' %}
 
-    {% if LANGUAGE_CODE == "en" %}
     {% include 'includes/sidebar.html' %}
-    {% endif %}
     <div class="main-panel">
         {% block content %}{% endblock content %}
 
         {% include 'includes/footer.html' %}
     </div>
-    {% if LANGUAGE_CODE == "ar" %}
-    {% include 'includes/sidebar.html' %}
-    {% endif %}
-{#    {% if request.user.is_authenticated %}#}
-{##}
-{#        <!-- Custom template | don't include it in your project! -->#}
-{#        {% include 'includes/configuration-plugin.html' %}#}
-{##}
-{#    {% endif %}#}
 
 </div>
 

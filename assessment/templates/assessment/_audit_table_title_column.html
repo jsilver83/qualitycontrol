@@ -1,3 +1,4 @@
+{% load i18n %}
 <a href='' class=""  data-toggle="modal"
 data-target="#detail_modal{{record.pk}}" audit_id={{record.pk}}>
   {{record.title}}
@@ -8,7 +9,7 @@ data-target="#detail_modal{{record.pk}}" audit_id={{record.pk}}>
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel{{record.pk}}">Assessment Details</h5>
+                <h5 class="modal-title" id="exampleModalLabel{{record.pk}}">{% blocktrans %}Assessment Details{% endblocktrans %}</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>

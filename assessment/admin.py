@@ -73,15 +73,16 @@ class AuditAdmin(admin.ModelAdmin):
 
     list_filter = (
         'type',
+        'status',
     )
 
     list_display = (
-        'title_ar',
-        'title_en',
-        'type',
+        'title',
         'score_in_words',
         'derived_from',
-        'created_by',
+        'inspection_date',
+        'status',
+        'created_by_name',
         'created_on',
     )
 

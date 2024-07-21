@@ -348,6 +348,10 @@ class Audit(models.Model):
 
         return labels, scores
 
+    def created_by_name(self):
+        if self.created_by:
+            return self.created_by.get_full_name()
+
 
 class Question(models.Model):
     # region fields

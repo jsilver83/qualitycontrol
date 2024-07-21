@@ -2,6 +2,7 @@ import json
 
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 from django.shortcuts import get_object_or_404
+from django.urls import reverse_lazy
 from django.views.generic import FormView, CreateView, TemplateView
 from assessment.forms import AuditQuestionsForm, EvidenceForm
 from clients.forms import TaskForm
@@ -35,7 +36,7 @@ class HomeView(LoginRequiredMixin, TemplateView):
 class SubmitAssessmentView(LoginRequiredMixin, FormView):
     template_name = 'shared/submit_assessment.html'
     form_class = AuditQuestionsForm
-    success_url = '.'
+    success_url = reverse_lazy('assessments_list')
     audit = None
 
     def setup(self, request, *args, **kwargs):

@@ -42,7 +42,7 @@
                                 <span class="text-danger">{{ msg | safe }}</span>
                             {% else %}
                             <span>
-                                Add your credentials
+                                {% blocktrans %}Use your credentials{% endblocktrans %}
                             </span>
                             {% endif %}
 
@@ -83,9 +83,9 @@
                             </div>
                         </div>
                         <div class="card-action">
-                            <button type="submit" class="btn btn-success">Submit</button>
+                            <button type="submit" class="btn btn-success">{% trans "Submit" %}</button>
                             &nbsp; &nbsp;
-                            <span>Not a member?</span> Please <a href="{% url 'register' %}" >Register</a>
+{#                            <span>Not a member?</span> Please <a href="{% url 'register' %}" >Register</a>#}
                         </div>
 
                     </form>

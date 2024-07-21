@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-07-18 02:54+0300\n"
-"PO-Revision-Date: 2024-07-18 02:54+0300\n"
+"POT-Creation-Date: 2024-07-22 01:53+0300\n"
+"PO-Revision-Date: 2024-07-22 01:54+0300\n"
 "Last-Translator:   <>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
@@ -46,8 +46,8 @@ msgstr "العنوان (بالإنجليزية)"
 msgid "Sub of"
 msgstr "تابع لـ"
 
-#: .\assessment\models.py:82 .\assessment\models.py:393
-#: .\assessment\models.py:527
+#: .\assessment\models.py:82 .\assessment\models.py:397
+#: .\assessment\models.py:531
 msgid "Display Order"
 msgstr "ترتيب العرض"
 
@@ -80,7 +80,7 @@ msgstr "فنادق"
 msgid "Pilgrims Center"
 msgstr "مركز الحجاج"
 
-#: .\assessment\models.py:168 .\assessment\models.py:571
+#: .\assessment\models.py:168 .\assessment\models.py:575
 #: .\clients\models.py:15
 msgid "Miscellaneous"
 msgstr "متنوعات"
@@ -117,7 +117,7 @@ msgstr "الوصف (بالعربية)"
 msgid "Description (EN)"
 msgstr "الوصف (بالإنجليزية)"
 
-#: .\assessment\models.py:202 .\assessment\models.py:605
+#: .\assessment\models.py:202 .\assessment\models.py:609
 #: .\assessment\templates\assessment\_audit_table_evidences_column.html:25
 #: .\clients\models.py:31 .\shared\templates\shared\submit_assessment.html:89
 msgid "Type"
@@ -168,64 +168,64 @@ msgstr "تم التحديث على"
 msgid "Updated By"
 msgstr "تم التحديث بواسطة"
 
-#: .\assessment\models.py:359 .\assessment\models.py:637
+#: .\assessment\models.py:363 .\assessment\models.py:641
 msgid "Audit"
 msgstr "التدقيق"
 
-#: .\assessment\models.py:364 .\assessment\models.py:503
+#: .\assessment\models.py:368 .\assessment\models.py:507
 msgid "Prompt (AR)"
 msgstr "موجه السؤال (بالعربية)"
 
-#: .\assessment\models.py:369 .\assessment\models.py:509
+#: .\assessment\models.py:373 .\assessment\models.py:513
 msgid "Prompt (EN)"
 msgstr "موجه السؤال (بالإنكليزية)"
 
-#: .\assessment\models.py:374
+#: .\assessment\models.py:378
 msgid "Help Text (AR)"
 msgstr "نص المساعدة (بالعربية)"
 
-#: .\assessment\models.py:379
+#: .\assessment\models.py:383
 msgid "Help Text (EN)"
 msgstr "نص المساعدة (بالإنجليزية)"
 
-#: .\assessment\models.py:388
+#: .\assessment\models.py:392
 #: .\assessment\templates\assessment\create_question.html:71
 msgid "Section"
 msgstr "القسم"
 
-#: .\assessment\models.py:399
+#: .\assessment\models.py:403
 msgid "Is a Bonus Question?"
 msgstr "سؤال إضافي؟"
 
-#: .\assessment\models.py:417
+#: .\assessment\models.py:421
 msgid "Prompt"
 msgstr "السؤال"
 
-#: .\assessment\models.py:429 .\assessment\tables.py:63
+#: .\assessment\models.py:433 .\assessment\tables.py:63
 #: .\assessment\tables.py:83 .\assessment\tables.py:109
 msgid "Selected Answer"
 msgstr "الإجابة"
 
-#: .\assessment\models.py:435
+#: .\assessment\models.py:439
 msgid "Answered?"
 msgstr "هل تمت الإجابة؟"
 
-#: .\assessment\models.py:448
+#: .\assessment\models.py:452
 msgid "Scored?"
 msgstr "سجلت؟"
 
-#: .\assessment\models.py:498 .\assessment\tables.py:64
+#: .\assessment\models.py:502 .\assessment\tables.py:64
 #: .\clients\models.py:302 .\shared\templates\shared\home.html:67
 #: .\shared\templates\shared\home.html:95
 #: .\shared\templates\shared\home.html:123 .\tasks\models.py:33
 msgid "Question"
 msgstr "سؤال"
 
-#: .\assessment\models.py:515
+#: .\assessment\models.py:519
 msgid "Weight"
 msgstr "الوزن"
 
-#: .\assessment\models.py:518
+#: .\assessment\models.py:522
 msgid ""
 "Empty wight indicate N/A answers which are not going to be calculated in the"
 " total score"
@@ -233,46 +233,46 @@ msgstr ""
 "تشير الخانات الفارغة إلى إجابات غير متاحة، والتي لن يتم احتسابها في الدرجة "
 "الكلية"
 
-#: .\assessment\models.py:522
+#: .\assessment\models.py:526
 msgid "Selected?"
 msgstr "مختارة؟"
 
-#: .\assessment\models.py:533
+#: .\assessment\models.py:537
 msgid "Answered On"
 msgstr "تمت الإجابة على"
 
-#: .\assessment\models.py:543
+#: .\assessment\models.py:547
 msgid "Answered By"
 msgstr "الإجابة بواسطة"
 
-#: .\assessment\models.py:568
+#: .\assessment\models.py:572
 msgid "Picture"
 msgstr "الصورة الشخصية"
 
-#: .\assessment\models.py:569
+#: .\assessment\models.py:573
 msgid "Video"
 msgstr "فيديو"
 
-#: .\assessment\models.py:570
+#: .\assessment\models.py:574
 msgid "Note (Text only)"
 msgstr "ملاحظة (نص فقط)"
 
-#: .\assessment\models.py:583
+#: .\assessment\models.py:587
 msgid "Attachment"
 msgstr "المرفقات"
 
-#: .\assessment\models.py:600
+#: .\assessment\models.py:604
 #: .\assessment\templates\assessment\_audit_table_evidences_column.html:27
 #: .\clients\models.py:342
 #: .\shared\templates\shared\submit_assessment.html:108
 msgid "Notes"
 msgstr "الملاحظات"
 
-#: .\assessment\models.py:612
+#: .\assessment\models.py:616
 msgid "Uploaded On"
 msgstr "تم التحميل على"
 
-#: .\assessment\models.py:619
+#: .\assessment\models.py:623
 msgid "Uploaded By"
 msgstr "تم التحميل بواسطة"
 
@@ -310,7 +310,6 @@ msgid "Score"
 msgstr "النتيجة"
 
 #: .\assessment\tables.py:66
-#| msgid "Notes & Evidences"
 msgid "Evidences"
 msgstr "ملاحظات وأدلة"
 
@@ -345,6 +344,12 @@ msgstr "موظف"
 #: .\shared\templates\shared\submit_assessment.html:134 .\tasks\models.py:38
 msgid "Due Date"
 msgstr "تاريخ الاستحقاق"
+
+#: .\assessment\templates\assessment\_audit_table_title_column.html:12
+#: .\clients\templates\clients\update_task.html:157
+#: .\clients\templates\clients\update_task_status.html:170
+msgid "Assessment Details"
+msgstr "تفاصيل التقييم"
 
 #: .\assessment\templates\assessment\_create_evidence.html:11
 msgid "Submit Evidence"
@@ -705,11 +710,6 @@ msgstr "إنشاء موظف"
 msgid "Create Organization"
 msgstr "إنشاء منظمة"
 
-#: .\clients\templates\clients\update_task.html:157
-#: .\clients\templates\clients\update_task_status.html:170
-msgid "Assessment Details"
-msgstr "تفاصيل التقييم"
-
 #: .\qualitycontrol\settings.py:147
 msgid "Arabic"
 msgstr "اللغة العربية"
@@ -769,7 +769,7 @@ msgstr "الأقسام"
 msgid "Reports"
 msgstr "التقارير"
 
-#: .\shared\templates\includes\sidebar.html:122
+#: .\shared\templates\includes\sidebar.html:120
 msgid "Admin Panel"
 msgstr "لوحة الإدارة"
 
@@ -786,6 +786,15 @@ msgstr "تسجيل الدخول"
 #: .\shared\templates\registration\login.html:25
 msgid "Authentication"
 msgstr "المصادقة"
+
+#: .\shared\templates\registration\login.html:45
+msgid "Use your credentials"
+msgstr "استخدم معلومات الدخول"
+
+#: .\shared\templates\registration\login.html:86
+#: .\shared\templates\shared\submit_assessment.html:167
+msgid "Submit"
+msgstr "إرسال"
 
 #: .\shared\templates\shared\home.html:21
 msgid "Emtethal System"
@@ -890,10 +899,6 @@ msgstr "هل تريد الإرسال؟"
 #: .\shared\templates\shared\submit_assessment.html:167
 msgid "and"
 msgstr "و"
-
-#: .\shared\templates\shared\submit_assessment.html:167
-msgid "Submit"
-msgstr "إرسال"
 
 #: .\shared\templates\shared\submit_assessment.html:178
 msgid "Are you sure? you will lose all unsaved answers"

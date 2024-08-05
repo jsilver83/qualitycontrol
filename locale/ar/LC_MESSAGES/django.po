@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-07-22 01:53+0300\n"
-"PO-Revision-Date: 2024-07-22 01:54+0300\n"
+"PO-Revision-Date: 2024-08-05 23:47+0300\n"
 "Last-Translator:   <>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
@@ -563,7 +563,7 @@ msgstr "مدينة"
 
 #: .\clients\models.py:41
 msgid "Which city is this organization located in?"
-msgstr "في أي مدينة تقع هذه المنظمة؟"
+msgstr "في أي مدينة يقع هذا المركز/القسم؟"
 
 #: .\clients\models.py:45
 msgid "Commercial Registration Number"
@@ -595,7 +595,7 @@ msgstr "الموقع الإلكتروني"
 
 #: .\clients\models.py:120
 msgid "Organization"
-msgstr "المنظمة"
+msgstr "المركز/القسم"
 
 #: .\clients\models.py:149
 msgid "CEO"
@@ -708,7 +708,7 @@ msgstr "إنشاء موظف"
 
 #: .\clients\templates\clients\organizations_list.html:50
 msgid "Create Organization"
-msgstr "إنشاء منظمة"
+msgstr "إنشاء مركز/قسم"
 
 #: .\qualitycontrol\settings.py:147
 msgid "Arabic"
@@ -755,7 +755,7 @@ msgstr "التقييمات"
 
 #: .\shared\templates\includes\sidebar.html:85
 msgid "Organizations"
-msgstr "المنظمات"
+msgstr "المراكز/الأقسام"
 
 #: .\shared\templates\includes\sidebar.html:100
 msgid "Employees"
@@ -942,6 +942,18 @@ msgstr "دليل الإتمام"
 msgid ""
 "Upload any documents that prove that the task was completed successfully"
 msgstr "تحميل أي مستندات تثبت أن المهمة قد أُنجزت بنجاح"
+
+#: clients\templates\clients\create_organization.html:18
+msgid "New Organization"
+msgstr "إنشاء مركز/قسم"
+
+#: assessment\templates\assessment\create_section.html:19
+msgid "New Audit"
+msgstr "تدقيق جديد"
+
+#: clients\templates\clients\create_employee.html:18
+msgid "New Employee"
+msgstr "موظف جديد"
 
 #~ msgid "Export"
 #~ msgstr "التصدير"

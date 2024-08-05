@@ -24,9 +24,8 @@
             </div>
         </div>
         <div class="page-inner mt--5">
-
-            <div class="row mt-3">
-                <div class="col-md-8">
+            <div class="row justify-content-center mt-3">
+                <div class="col-md-8 col-sm-12 col-xs-12">
                     <div class="card full-height">
                         <div class="card-body">
                             <div class="card-title">{% blocktrans %}Overall statistics{% endblocktrans %}</div>
@@ -54,17 +53,18 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col-md-4">
-                    <div class="card card-success">
+                <div class="col-12">
+                    <div class="card">
                         <div class="card-header">
-                            <div class="card-title">{% trans "Top" %} 5 {% trans "Strengths" %}</div>
+                            <div class="card-title">{% trans "Top" %} 10 {% trans "Strengths" %}</div>
                             <div class="card-category"></div>
                         </div>
-                        <div class="card-body pb-0">
-                            <table class="table table-bordered table-striped">
+                        <div class="card-body table-responsive pb-0">
+                            <table class="table table-bordered-bd-primary table-striped-bg-primary">
                                 <thead>
                                     <tr>
-                                        <th style="width: 70%">{% trans "Question" %}</th>
+                                        <th style="width: 5%">#</th>
+                                        <th style="width: 65%">{% trans "Question" %}</th>
                                         <th style="width: 15%">{% trans "Count" %}</th>
                                         <th style="width: 15%">{% trans "Ratio" %}</th>
                                     </tr>
@@ -72,6 +72,7 @@
                                 <tbody>
                                     {% for strength in strengths %}
                                     <tr>
+                                        <td>{{ forloop.counter }}</td>
                                         <td><span data-bs-toggle="tooltip" data-bs-placement="top" title="{{ strength.prompt_ar }}">{{ strength.prompt_ar | truncatewords:10 }}</span></td>
                                         <td>{{ strength.answer_count | floatformat }}{% trans 'out of' %}{{ strength.selected_count | floatformat }}</td>
                                         <td>%{{ strength.ratio | floatformat }}</td>
@@ -82,17 +83,20 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-md-4">
-                    <div class="card card-danger">
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    <div class="card">
                         <div class="card-header">
-                            <div class="card-title">{% trans "Top" %} 5 {% trans "Weaknesses" %}</div>
+                            <div class="card-title">{% trans "Top" %} 10 {% trans "Weaknesses" %}</div>
                             <div class="card-category"></div>
                         </div>
-                        <div class="card-body pb-0">
-                            <table class="table table-bordered table-striped">
+                        <div class="card-body table-responsive pb-0">
+                            <table class="table table-bordered-bd-danger table-striped-bg-danger">
                                 <thead>
                                     <tr>
-                                        <th style="width: 70%">{% trans "Question" %}</th>
+                                        <th style="width: 5%">#</th>
+                                        <th style="width: 65%">{% trans "Question" %}</th>
                                         <th style="width: 15%">{% trans "Count" %}</th>
                                         <th style="width: 15%">{% trans "Ratio" %}</th>
                                     </tr>
@@ -100,6 +104,7 @@
                                 <tbody>
                                     {% for weakness in weaknesses %}
                                     <tr>
+                                        <td>{{ forloop.counter }}</td>
                                         <td><span data-bs-toggle="tooltip" data-bs-placement="top" title="{{ weakness.prompt_ar }}">{{ weakness.prompt_ar | truncatewords:10 }}</span></td>
                                         <td>{{ weakness.answer_count | floatformat }}{% trans 'out of' %}{{ weakness.selected_count | floatformat }}</td>
                                         <td>%{{ weakness.ratio | floatformat }}</td>
@@ -110,17 +115,20 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-md-4">
-                    <div class="card card-primary">
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    <div class="card">
                         <div class="card-header">
-                            <div class="card-title">{% trans "Top" %} 5 {% trans "Unanswered" %}</div>
+                            <div class="card-title">{% trans "Top" %} 10 {% trans "Unanswered" %}</div>
                             <div class="card-category"></div>
                         </div>
-                        <div class="card-body pb-0">
-                            <table class="table table-bordered table-striped">
+                        <div class="card-body card-pri1mary table-responsive pb-0">
+                            <table class="table table-bordered-bd-secondary table-striped-bg-secondary">
                                 <thead>
                                     <tr>
-                                        <th style="width: 70%">{% trans "Question" %}</th>
+                                        <th style="width: 5%">#</th>
+                                        <th style="width: 65%">{% trans "Question" %}</th>
                                         <th style="width: 15%">{% trans "Count" %}</th>
                                         <th style="width: 15%">{% trans "Ratio" %}</th>
                                     </tr>
@@ -128,6 +136,7 @@
                                 <tbody>
                                     {% for question in top_unanswered_questions %}
                                     <tr>
+                                        <td>{{ forloop.counter }}</td>
                                         <td><span data-bs-toggle="tooltip" data-bs-placement="top" title="{{ question.prompt_ar }}">{{ question.prompt_ar | truncatewords:10 }}</span></td>
                                         <td>{{ question.answer_count | floatformat }}{% trans 'out of' %}{{ question.selected_count | floatformat }}</td>
                                         <td>%{{ question.ratio | floatformat }}</td>

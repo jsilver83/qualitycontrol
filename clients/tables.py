@@ -20,7 +20,7 @@ class OrganizationTable(tables.Table):
     class Meta:
         model = Organization
         template_name = "django_tables2/bootstrap4.html"
-        fields = ("name_en", "name_ar", "type", "commercial_licence_end_date", )
+        fields = ("name_en", "name_ar", "commercial_licence_end_date", )
 
 
 class EmployeeTable(tables.Table):

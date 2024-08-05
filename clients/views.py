@@ -15,14 +15,13 @@ from .filters import *
 # Create your views here.
 
 
-class ListOrganizationView(FilteredSingleTableView):
+class ListOrganizationView(SingleTableView):
     model = Organization
     template_name = "clients/organizations_list.html"
     table_class = OrganizationTable
     table_pagination = {
         "per_page": 20
     }
-    filterset_class = OrganizationFilter
     form_helper_class = OrganizationFilterFormHelper
 
 

@@ -19,9 +19,9 @@ class HomeView(LoginRequiredMixin, TemplateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
 
-        context['strengths'] = Stats.get_strengths()[0:7]
-        context['weaknesses'] = Stats.get_weaknesses()[0:7]
-        context['top_unanswered_questions'] = Stats.get_top_unanswered_questions()[0:7]
+        context['strengths'] = Stats.get_strengths()[0:10]
+        context['weaknesses'] = Stats.get_weaknesses()[0:10]
+        context['top_unanswered_questions'] = Stats.get_top_unanswered_questions()[0:10]
 
         context['users_count'] = Stats.users_count()
         context['all_organizations_count'] = Stats.all_organizations_count()

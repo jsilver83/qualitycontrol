@@ -305,7 +305,7 @@ class Audit(models.Model):
             return _('{total_score} out of {full_score} (%{weighted_total})').format(
                 total_score=total_score,
                 full_score=full_score,
-                weighted_total=number_format(total_score / full_score * 100, decimal_pos=2),
+                weighted_total=number_format(total_score / full_score * 100, decimal_pos=1),
             )
         else:
             return _("No Score")

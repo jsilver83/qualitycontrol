@@ -1,4 +1,5 @@
 from django.conf import settings
+from django.contrib.auth.models import User
 from django.db import models
 
 from assessment.models import Audit
@@ -21,3 +22,12 @@ class Report:
             labels.append(format(audit.inspection_date or audit.created_on, settings.DATE_FORMAT) + ' (#' + str(audit.pk) + ')')
 
         return labels, scores
+
+
+class MyUser(User):
+
+    class Meta:
+        proxy = True
+
+    def __str__(self):
+        return self.get_full_name() if self.get_full_name() else self.get_username()

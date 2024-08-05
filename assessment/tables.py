@@ -51,11 +51,12 @@ class AuditTable(tables.Table):
     )
     questions_count = tables.Column(verbose_name=_('Questions Count'))
     score_in_words = tables.Column(verbose_name=_('Score'), orderable=False)
+    inspection_date_hijri = tables.Column(verbose_name=_('Inspection Date (Hijri)'), orderable=False)
 
     class Meta:
         model = Audit
         template_name = "django_tables2/bootstrap4.html"
-        fields = ("title", "score_in_words", "questions_count", "created_for", "inspection_date", "status",)
+        fields = ("title", "score_in_words", "questions_count", "created_for", "inspection_date_hijri", "status",)
 
 
 class AssessmentDetailsTable(tables.Table):

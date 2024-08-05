@@ -352,6 +352,14 @@ class Audit(models.Model):
         if self.created_by:
             return self.created_by.get_full_name()
 
+    def inspection_date_hijri(self):
+        from hijridate import Gregorian
+        from django.utils.safestring import mark_safe
+        inspection_date = self.inspection_date.date() if self.inspection_date else self.created_on.date()
+        return mark_safe(f"{inspection_date} / {Gregorian.fromdate(inspection_date).to_hijri()}")
+
+    inspection_date_hijri.short_description = _('Inspection Date (Hijri)')
+
 
 class Question(models.Model):
     # region fields

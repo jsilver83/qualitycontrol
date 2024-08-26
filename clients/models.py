@@ -176,7 +176,7 @@ class Employee(models.Model):
     first_name_en = models.CharField(
         _('First Name (EN)'),
         max_length=256,
-        blank=False,
+        blank=True,
     )
 
     last_name_ar = models.CharField(
@@ -188,12 +188,12 @@ class Employee(models.Model):
     last_name_en = models.CharField(
         _('Last Name (EN)'),
         max_length=256,
-        blank=False,
+        blank=True,
     )
 
     job_title = models.CharField(
         _('Job Title'),
-        blank=False,
+        blank=True,
         max_length=128,
         choices=JobTitles.choices,
     )
@@ -233,7 +233,7 @@ class Employee(models.Model):
 
     nationality = CountryField(
         _('Nationality'),
-        blank=False,
+        blank=True,
     )
 
     mobile = PhoneNumberField(
@@ -277,6 +277,7 @@ class Employee(models.Model):
             return '{} {}'.format(self.first_name_en, self.last_name_en)
 
 
+# remove/move this model created by the stupid brood
 class Task(models.Model):
     class Status(models.TextChoices):
         NEW = 'NEW', _('New')
@@ -369,5 +370,3 @@ def create_user_employee(sender, user, request, **kwargs):
 
 
 user_logged_in.connect(create_user_employee)
-
-

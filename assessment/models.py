@@ -200,7 +200,7 @@ class Audit(models.Model):
 
     type = models.CharField(
         _('Type'),
-        blank=False,
+        blank=True,
         max_length=128,
         choices=Types.choices,
     )
@@ -250,7 +250,7 @@ class Audit(models.Model):
     created_by = models.ForeignKey(
         get_user_model(),
         null=True,
-        blank=False,
+        blank=True,
         on_delete=models.SET_NULL,
         verbose_name=_('Created By'),
         related_name='audits',
@@ -266,7 +266,7 @@ class Audit(models.Model):
     updated_by = models.ForeignKey(
         get_user_model(),
         null=True,
-        blank=False,
+        blank=True,
         on_delete=models.SET_NULL,
         verbose_name=_('Updated By'),
         related_name='updated_audits',
